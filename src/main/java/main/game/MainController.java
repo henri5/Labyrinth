@@ -17,7 +17,7 @@ public class MainController {
 	public static void main(String[] args) {
 		JFrame jframe = new JFrame();
 		gameClock = new GameClock(jframe);
-		jframe.setTitle("Dg");
+		jframe.setTitle("Labyrinth");
 		jframe.getContentPane().setPreferredSize(new Dimension(Config.SIZE_WINDOW_WIDTH, Config.SIZE_WINDOW_HEIGHT));
 		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Maze maze = new Maze();

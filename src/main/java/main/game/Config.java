@@ -35,10 +35,10 @@ public final class Config {
 	//Paddings
 	public static final int PADDING_INVENTORY_INTERNAL = 5;
 	public static final int PADDING_INVENTORY_EXTERNAL = 20;
-	public static final int PADDING_ROOM_EXTERNAL = 100;
-	public static final int PADDING_ROOM_INTERNAL = 20;
-	public static final int PADDING_MINIMAP_INTERNAL = 60;	//relative to room width/height
-	public static final int PADDING_MINIMAP_EXTERNAL = 100;	//relative to room width/height
+	public static final int PADDING_BOARD_ROOM_EXTERNAL = 100;
+	public static final int PADDING_BOARD_ROOM_INTERNAL = 20;
+	public static final int PADDING_MINIMAP_ROOM_INTERNAL = 60;	//relative to room width/height
+	public static final int PADDING_MINIMAP_ROOM_EXTERNAL = 100;	//relative to room width/height
 	public static final int PADDING_KEY_IMAGE = 5;
 	public static final int PADDING_ITEM_PICKUP = 5;
 	public static final int PADDING_HEALTHBAR = 5;

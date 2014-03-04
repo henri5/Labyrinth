@@ -50,8 +50,8 @@ public class Board extends JPanel{
 	}
 		
 	private void calculateTotalSize() {
-		totalSize = new Dimension(2*Config.PADDING_ROOM_EXTERNAL+Config.ROOM_COUNT_HORIZONTAL*Config.SIZE_ROOM_WIDTH+(Config.ROOM_COUNT_HORIZONTAL-1)*Config.PADDING_ROOM_INTERNAL,
-				2*Config.PADDING_ROOM_EXTERNAL+Config.ROOM_COUNT_VERTICAL*Config.SIZE_ROOM_HEIGHT+(Config.ROOM_COUNT_VERTICAL-1)*Config.PADDING_ROOM_INTERNAL);
+		totalSize = new Dimension(2*Config.PADDING_BOARD_ROOM_EXTERNAL+Config.ROOM_COUNT_HORIZONTAL*Config.SIZE_ROOM_WIDTH+(Config.ROOM_COUNT_HORIZONTAL-1)*Config.PADDING_BOARD_ROOM_INTERNAL,
+				2*Config.PADDING_BOARD_ROOM_EXTERNAL+Config.ROOM_COUNT_VERTICAL*Config.SIZE_ROOM_HEIGHT+(Config.ROOM_COUNT_VERTICAL-1)*Config.PADDING_BOARD_ROOM_INTERNAL);
 	}
 	
 	@Override
@@ -232,10 +232,10 @@ public class Board extends JPanel{
 									corner.y + Config.SIZE_ROOM_HEIGHT/2-key.getImageSize().height/2);
 							Point keyCorner;
 							switch (direction){
-							case NORTH: keyCorner = new Point(temp.x,temp.y-(Config.PADDING_ROOM_INTERNAL+Config.SIZE_ROOM_HEIGHT)/2); break;
-							case EAST: keyCorner = new Point(temp.x+(Config.PADDING_ROOM_INTERNAL+Config.SIZE_ROOM_WIDTH)/2,temp.y); break;
-							case SOUTH:keyCorner = new Point(temp.x,temp.y+(Config.PADDING_ROOM_INTERNAL+Config.SIZE_ROOM_HEIGHT)/2); break;
-							case WEST: keyCorner = new Point(temp.x-(Config.PADDING_ROOM_INTERNAL+Config.SIZE_ROOM_WIDTH)/2,temp.y); break;
+							case NORTH: keyCorner = new Point(temp.x,temp.y-(Config.PADDING_BOARD_ROOM_INTERNAL+Config.SIZE_ROOM_HEIGHT)/2); break;
+							case EAST: keyCorner = new Point(temp.x+(Config.PADDING_BOARD_ROOM_INTERNAL+Config.SIZE_ROOM_WIDTH)/2,temp.y); break;
+							case SOUTH:keyCorner = new Point(temp.x,temp.y+(Config.PADDING_BOARD_ROOM_INTERNAL+Config.SIZE_ROOM_HEIGHT)/2); break;
+							case WEST: keyCorner = new Point(temp.x-(Config.PADDING_BOARD_ROOM_INTERNAL+Config.SIZE_ROOM_WIDTH)/2,temp.y); break;
 							default:
 								throw new IllegalArgumentException("found no direction " + direction.toString());
 							}
@@ -254,8 +254,8 @@ public class Board extends JPanel{
 	}
 	
 	private Point getRoomCorner(int i, int j){
-		return new Point(Config.PADDING_ROOM_EXTERNAL+i*(Config.PADDING_ROOM_INTERNAL + Config.SIZE_ROOM_WIDTH),
-				Config.PADDING_ROOM_EXTERNAL+j*(Config.PADDING_ROOM_INTERNAL + Config.SIZE_ROOM_HEIGHT));
+		return new Point(Config.PADDING_BOARD_ROOM_EXTERNAL+i*(Config.PADDING_BOARD_ROOM_INTERNAL + Config.SIZE_ROOM_WIDTH),
+				Config.PADDING_BOARD_ROOM_EXTERNAL+j*(Config.PADDING_BOARD_ROOM_INTERNAL + Config.SIZE_ROOM_HEIGHT));
 	}
 
 	private void drawDoors(Graphics g) {

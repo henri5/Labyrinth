@@ -3,8 +3,8 @@ package main.game;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
 
@@ -25,8 +25,8 @@ public class GameClock {
 	}
 
 	public void run() {
-		Timer timer = new Timer();
-		TimerTask timerTask = new TimerTask() {				
+		ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1);
+		executor.scheduleAtFixedRate(new Runnable() {			
 			@Override
 			public void run() {
 				long start = System.currentTimeMillis();
@@ -49,8 +49,7 @@ public class GameClock {
 							+ "longer than refresh delay. Optimize something!");
 				}
 			}
-		};
-		timer.schedule(timerTask, 0, Config.SCREEN_REFRESH_DELAY);
+		}, 0, Config.SCREEN_REFRESH_DELAY, TimeUnit.MILLISECONDS);
 	}
 
 	public void removeGameAction(GameAction gameAction) {

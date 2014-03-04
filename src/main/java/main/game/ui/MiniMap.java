@@ -54,8 +54,8 @@ public class MiniMap extends JPanel {
 	private void calculateSizesToScale() {
 		roomWidth = (int) (scale*Config.SIZE_ROOM_WIDTH);
 		roomHeight = (int) (scale*Config.SIZE_ROOM_HEIGHT);
-		paddingInternal = (int) (scale*Config.PADDING_MINIMAP_INTERNAL);
-		paddingExternal = (int) (scale*Config.PADDING_MINIMAP_EXTERNAL);
+		paddingInternal = (int) (scale*Config.PADDING_MINIMAP_ROOM_INTERNAL);
+		paddingExternal = (int) (scale*Config.PADDING_MINIMAP_ROOM_EXTERNAL);
 		doorSize = (int) (scale*Config.SIZE_DOOR_MINIMAP);
 		imageSize = (int) (scale*IMAGE_SIZE.width);
 	}
@@ -71,8 +71,8 @@ public class MiniMap extends JPanel {
 	}	
 	
 	private void calculateTotalSize() {
-		totalSize = new Dimension(2*Config.PADDING_MINIMAP_EXTERNAL+Config.ROOM_COUNT_HORIZONTAL*Config.SIZE_ROOM_WIDTH+(Config.ROOM_COUNT_HORIZONTAL-1)*Config.PADDING_MINIMAP_INTERNAL,
-				2*Config.PADDING_MINIMAP_EXTERNAL+Config.ROOM_COUNT_VERTICAL*Config.SIZE_ROOM_HEIGHT+(Config.ROOM_COUNT_VERTICAL-1)*Config.PADDING_MINIMAP_INTERNAL);
+		totalSize = new Dimension(2*Config.PADDING_MINIMAP_ROOM_EXTERNAL+Config.ROOM_COUNT_HORIZONTAL*Config.SIZE_ROOM_WIDTH+(Config.ROOM_COUNT_HORIZONTAL-1)*Config.PADDING_MINIMAP_ROOM_INTERNAL,
+				2*Config.PADDING_MINIMAP_ROOM_EXTERNAL+Config.ROOM_COUNT_VERTICAL*Config.SIZE_ROOM_HEIGHT+(Config.ROOM_COUNT_VERTICAL-1)*Config.PADDING_MINIMAP_ROOM_INTERNAL);
 	}	
 	private void calculateTotalSizeToScale() {
 		totalSize = new Dimension(2*paddingExternal+Config.ROOM_COUNT_HORIZONTAL*roomWidth+(Config.ROOM_COUNT_HORIZONTAL-1)*paddingInternal,
