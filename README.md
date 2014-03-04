@@ -26,6 +26,8 @@ Todo:
 * player levelup
 * variation in room types
 * room object implementation
+* win condition ¯\\(º_o)/¯
+* way to spend money
 * ...
 
 If you want to try game out, keys are written in Config.java, but here's overview:
@@ -35,3 +37,4 @@ If you want to try game out, keys are written in Config.java, but here's overvie
 * 1 drops 'permanent' teleport stone and 2 teleports to it. To drop that gatestone, you must currently hold it (i.e. gatestone is not currently laying around in the labyrinth)
 * Space picks up items, keys and permanent gatestone
 * Can attack creatures and pick up items with mouse (leftclick shows list of possible actions)
+* H teleports back to starting room (takes slightly longer to cast, can be interrupted)
