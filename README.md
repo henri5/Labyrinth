@@ -45,3 +45,6 @@ If you want to try game out, keys are written in Config.java, but here's overvie
 * Space picks up items, keys and permanent gatestone
 * Can attack creatures and pick up items with mouse (leftclick shows list of possible actions)
 * H teleports back to starting room (takes slightly longer to cast, can be interrupted)
+
+
+![Picture](https://raw.github.com/henri5/Labyrinth/master/screenshot.png)
