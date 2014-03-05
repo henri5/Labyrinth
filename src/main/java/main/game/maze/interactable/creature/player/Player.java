@@ -55,9 +55,6 @@ public class Player extends Creature{
 		addItem(weapon);
 		addItem(new Bow());
 		addItem(new Staff());
-		addItem(new Bow());
-		addItem(new Staff());
-		addItem(new Coins(100));
 		addItem(new Coins(1000));
 		addItem(new Cake());
 		addItem(new Fish());
