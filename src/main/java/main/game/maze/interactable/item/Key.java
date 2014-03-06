@@ -69,7 +69,7 @@ public final class Key extends Item {
 
 	@Override
 	public void doInteract(Player player) {
-		pickUp(player);		
+		doAction(Option.PICKUP, player);
 	}
 
 	@Override

@@ -37,7 +37,7 @@ public abstract class Weapon extends NonStackable{
 	
 	@Override
 	public void doInteract(Player player){
-		pickUp(player);
+		doAction(Option.PICKUP, player);
 	}
 
 	@Override

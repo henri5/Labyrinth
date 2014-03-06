@@ -64,18 +64,14 @@ public abstract class Monster extends Creature implements Interactable{
 	
 	@Override
 	public void doInteract(Player player) {
-		player.attackCreature(this);
-		if (isDead()){
-			die();
-		}
+		doAction(Option.ATTACK, player);
 	}
 	
 	public void die(){
 		getPosition().getRoom().getMonsters().remove(this);
 		Item[] items = lootTable.getRandomDrops();
 		for (Item item: items){
-			item.setPosition(getPosition());
-			getPosition().getRoom().addDroppedItem(item);
+			item.dropAt(getPosition());
 		}
 	}
 	
@@ -87,7 +83,12 @@ public abstract class Monster extends Creature implements Interactable{
 	@Override
 	public void doAction(Option option, Player player) {
 		switch (option){
-		case ATTACK: player.attackCreature(this); break;
+		case ATTACK: 
+			player.attackCreature(this); 
+			if (isDead()){
+				die();
+			}
+			break;
 		default: return;
 		}
 	}

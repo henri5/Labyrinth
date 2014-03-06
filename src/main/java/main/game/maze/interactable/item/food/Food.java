@@ -32,7 +32,7 @@ public abstract class Food extends NonStackable {
 
 	@Override
 	public void doInteract(Player player) {
-		pickUp(player);
+		doAction(Option.PICKUP, player);
 	}
 
 	@Override

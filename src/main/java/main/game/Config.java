@@ -40,7 +40,6 @@ public final class Config {
 	public static final int PADDING_MINIMAP_ROOM_INTERNAL = 60;	//relative to room width/height
 	public static final int PADDING_MINIMAP_ROOM_EXTERNAL = 100;	//relative to room width/height
 	public static final int PADDING_KEY_IMAGE = 5;
-	public static final int PADDING_ITEM_PICKUP = 5;
 	public static final int PADDING_HEALTHBAR = 5;
 	public static final int PADDING_MOUSE_CLICK = 5;
 	
@@ -90,6 +89,7 @@ public final class Config {
 	public static final String IMAGE_ROOM_DOOR_SOUTH = IMAGES_FOLDER_ROOMS + "room_door_south.png";
 	
 	public static final int DELAY_TELEPORT_TO_BASE = 4000;
+	public static final int MAX_INTERACTION_DISTANCE = 5;
 		
 	private Config(){
 		throw new IllegalAccessError("Config must not be initiated");

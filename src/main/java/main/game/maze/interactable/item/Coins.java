@@ -33,7 +33,7 @@ public class Coins extends Stackable {
 
 	@Override
 	public void doInteract(Player player) {
-		pickUp(player);
+		doAction(Option.PICKUP, player);
 	}
 
 	@Override

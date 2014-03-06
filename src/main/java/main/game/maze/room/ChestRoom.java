@@ -1,9 +1,6 @@
 package main.game.maze.room;
 
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
-
 import main.game.maze.Direction;
 import main.game.maze.Maze;
 import main.game.maze.interactable.Position;

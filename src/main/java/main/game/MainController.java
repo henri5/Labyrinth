@@ -3,6 +3,7 @@ package main.game;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 import main.game.maze.Maze;
 import main.game.maze.interactable.creature.player.Player;

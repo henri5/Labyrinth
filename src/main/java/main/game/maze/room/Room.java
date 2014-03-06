@@ -1,5 +1,6 @@
 package main.game.maze.room;
 
+import java.awt.Dimension;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +10,13 @@ import main.game.maze.Maze;
 import main.game.maze.door.Door;
 import main.game.maze.door.KeyDoor;
 import main.game.maze.door.SimpleDoor;
+import main.game.maze.interactable.Interactable;
+import main.game.maze.interactable.creature.Creature;
 import main.game.maze.interactable.creature.monster.Monster;
 import main.game.maze.interactable.item.Item;
 import main.game.maze.interactable.item.Key;
 import main.game.maze.interactable.object.RoomObject;
+import main.game.util.Util;
 
 public abstract class Room implements Comparable<Room>{
 	private Door north;
@@ -240,6 +244,26 @@ public abstract class Room implements Comparable<Room>{
 	
 	public List<RoomObject> getRoomObjects(){
 		return roomObjects;
+	}
+	
+	public boolean collidesWithRoomObject(Interactable interactable){
+		for (RoomObject ro: roomObjects){
+			if (Util.areasOverlap(ro.getPosition().getPoint(), ro.getImageSize(), interactable.getPosition().getPoint(), interactable.getImageSize())){
+				return true;
+			};
+		}
+		return false;
+	}
+
+	public boolean collidesWithRoomObject(Point point, Dimension dimension) {
+		for (RoomObject ro: roomObjects){
+			if (!ro.isPassable()){
+				if (Util.areasOverlap(ro.getPosition().getPoint(), ro.getImageSize(), point, dimension)){
+					return true;
+				};
+			}
+		}
+		return false;
 	}
 	
 	

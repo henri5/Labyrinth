@@ -29,7 +29,7 @@ public abstract class GateStone extends Item{
 	
 	@Override
 	public void doInteract(Player player) {
-		resetPosition();
+		doAction(Option.PICKUP, player);
 	}
 	
 	@Override

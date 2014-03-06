@@ -52,4 +52,9 @@ public abstract class Item implements Interactable{
 	public Dimension getImageSize() {
 		return imageSize;
 	}
+	
+	public void dropAt(Position position){
+		setPosition(position);
+		position.getRoom().addDroppedItem(this);
+	}
 }

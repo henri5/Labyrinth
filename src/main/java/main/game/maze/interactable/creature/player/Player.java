@@ -88,7 +88,7 @@ public class Player extends Creature{
 	public void pickUpKeys() {
 		Key key = getPosition().getRoom().getKey();
 		if (key != null){
-			if (isCloseToItem(key)){
+			if (isCloseToInteractable(key)){
 				key.pickUp(this);
 			}
 		}
@@ -144,7 +144,7 @@ public class Player extends Creature{
 	private void pickUpDroppedItems() {
 		if (getPosition().getRoom().hasDroppedItems()){
 			for (Item item: getPosition().getRoom().getDroppedItems()){
-				if (isCloseToItem(item)){
+				if (isCloseToInteractable(item)){
 					item.pickUp(this);
 					return;
 				}
@@ -156,7 +156,7 @@ public class Player extends Creature{
 	private void pickUpGroupGateStone() {
 		if (groupGateStone.exists()){
 			if (getPosition().getRoom() == groupGateStone.getPosition().getRoom()){
-				if (isCloseToItem(groupGateStone)){
+				if (isCloseToInteractable(groupGateStone)){
 					groupGateStone.resetPosition();
 				}
 			}
@@ -256,20 +256,20 @@ public class Player extends Creature{
 	public void pickup(Item item) {
 		if (item.getPosition() != null){
 			if (item.getPosition().getRoom() == getPosition().getRoom()){
-				if (isCloseToItem(item)){
+				if (isCloseToInteractable(item)){
 					item.pickUp(this);		
 				}
 			}
 		}
 	}
 
-	public boolean isCloseToItem(Item item) {
-		if (getPosition().getRoom() != item.getPosition().getRoom()){
+	public boolean isCloseToInteractable(Interactable interactable) {
+		if (getPosition().getRoom() != interactable.getPosition().getRoom()){
 			return false;
 		}
 		Point p = getPosition().getPoint();
-		return Util.areasOverlap(p, getImageSize(), item.getPosition().getPoint(), 
-				item.getImageSize(), Config.PADDING_ITEM_PICKUP);
+		return Util.areasOverlap(p, getImageSize(), interactable.getPosition().getPoint(), 
+				interactable.getImageSize(), Config.MAX_INTERACTION_DISTANCE);
 	}
 
 

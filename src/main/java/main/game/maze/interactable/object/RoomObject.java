@@ -49,4 +49,8 @@ public abstract class RoomObject implements Interactable {
 			this.position = new Position(position);
 		}
 	}
+
+	public boolean isPassable() {
+		return isPassable;
+	}
 }

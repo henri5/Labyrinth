@@ -13,6 +13,7 @@ public class MonsterController implements GameAction{
 		this.maze = maze;
 		MainController.addGameAction(this);
 	}
+	
 	@Override
 	public void doAction() {
 		for (int i = 0; i < maze.getWidth(); i++){

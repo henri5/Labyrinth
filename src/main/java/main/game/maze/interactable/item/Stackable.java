@@ -39,7 +39,7 @@ public abstract class Stackable extends Item {
 	}
 	
 	public void pickUp(Player player) {
-		if (player.isCloseToItem(this)){
+		if (player.isCloseToInteractable(this)){
 			if (!player.ownsItem(this)){
 				List<Item> playerItems = player.getItems();
 				for (Item playerItem: playerItems){

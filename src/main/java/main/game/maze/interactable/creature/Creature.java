@@ -69,6 +69,9 @@ public class Creature {
 		if (newPositionY > (Config.SIZE_ROOM_HEIGHT-imageSize.width)){
 			newPositionY = Config.SIZE_ROOM_HEIGHT-imageSize.width;
 		}
+		if (getPosition().getRoom().collidesWithRoomObject(new Point(newPositionX, newPositionY), getImageSize())){
+			return;	//cant collide with an object
+		}
 		getPosition().setPoint(newPositionX, newPositionY);
 	}
 
