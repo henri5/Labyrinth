@@ -1,45 +1,61 @@
 package main.game.maze.interactable.creature.monster;
 
-import java.util.Iterator;
+import java.awt.Dimension;
+import java.awt.Point;
 
-import main.game.GameAction;
-import main.game.MainController;
-import main.game.maze.Maze;
-import main.game.maze.room.Room;
+import main.game.Config;
+import main.game.maze.interactable.creature.Creature;
+import main.game.maze.interactable.item.Item;
+import main.game.util.Util;
 
-public class MonsterController implements GameAction{
-	private Maze maze;
-	public MonsterController(Maze maze){
-		this.maze = maze;
-		MainController.addGameAction(this);
+public class MonsterController {
+	private final int DELAY_MOVEMENT_IDLE = 1000;
+	private Monster monster;
+	private boolean destinationReached = true;
+	private long destinationReachedTime;
+	private Point destination;
+	
+	public MonsterController(Monster monster) {
+		this.monster = monster;
 	}
 	
-	@Override
-	public void doAction() {
-		for (int i = 0; i < maze.getWidth(); i++){
-			for (int j = 0; j < maze.getHeight(); j++){
-				Room room = maze.getRooms().get(i).get(j);
-				if (room != null){
-					if (!room.isLocked()){
-						if (maze.getPlayer().getPosition().getRoom() != room){
-							for (Monster monster: room.getMonsters()){
-								monster.actIdle();
-							}
-						} else {
-							for (Monster monster: room.getMonsters()){
-								monster.target(maze.getPlayer());
-							}
-						}
-						for (Iterator<Monster> it = room.getMonsters().iterator(); it.hasNext();){
-							Monster monster = it.next();
-							if (monster.isDead()){
-								monster.die();
-								it.remove();
-							}
-						}					
-					}
-				}
-			}
+	public void actIdle() {
+		if (destinationReached){
+			destination = Util.randomPointInArea(Config.SIZE_ROOM_WIDTH-monster.getImageSize().width, Config.SIZE_ROOM_HEIGHT-monster.getImageSize().height);
+			destinationReached = false;
+		}
+		if (Util.areasOverlap(monster.getPosition().getPoint(), monster.getImageSize(), destination, new Dimension(1,1))){
+			destinationReached = true;
+			destinationReachedTime = System.currentTimeMillis();
+			return;
+		}
+		if (destinationReachedTime + DELAY_MOVEMENT_IDLE < System.currentTimeMillis()){
+			moveAtDestination();
+		}
+		
+	}
+
+	public void target(Creature creature) {
+		if(monster.isWithinRange(creature)){
+			monster.attackCreature(creature);
+		} else {
+			destination = creature.getPosition().getPoint();
+			moveAtDestination();
+		}
+	}
+
+	public void moveAtDestination() {
+		Point p = monster.getPosition().getPoint();
+		int dx = (int) (Math.signum(destination.x-p.x)*Math.min(Math.abs(destination.x-p.x), monster.getStats().getMovementSpeed()));
+		int dy = (int) (Math.signum(destination.y-p.y)*Math.min(Math.abs(destination.y-p.y), monster.getStats().getMovementSpeed()));
+		monster.moveInRoom(dx, dy);
+	}
+
+	public void die() {
+		monster.getPosition().getRoom().getMonsters().remove(this);
+		Item[] items = monster.lootTable.getRandomDrops();
+		for (Item item: items){
+			item.dropAt(monster.getPosition());
 		}
 	}
 

@@ -9,6 +9,7 @@ import main.game.maze.interactable.item.food.Cake;
 import main.game.maze.interactable.item.food.Fish;
 import main.game.maze.mechanics.shop.Stock;
 import main.game.maze.mechanics.shop.StockItem;
+import main.game.ui.gameinterface.ShopInterface;
 
 public class Merchant extends RoomObject {
 	private static final int WIDTH = 25;
@@ -39,7 +40,7 @@ public class Merchant extends RoomObject {
 	@Override
 	public void doAction(Option option, Player player) {
 		switch (option){
-		case TRADE: System.out.println("Trading with a merchant"); break;
+		case TRADE: System.out.println("Trading with a merchant"); new ShopInterface(STOCK, player); break;
 		default: throw new IllegalArgumentException("Illegal option: " + option);
 		}
 	}

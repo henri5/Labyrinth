@@ -33,6 +33,7 @@ import main.game.maze.interactable.item.Key;
 import main.game.maze.interactable.item.gatestone.GateStone;
 import main.game.maze.interactable.object.RoomObject;
 import main.game.maze.room.Room;
+import main.game.ui.gameinterface.GameInterface;
 import main.game.util.Util;
 
 public class Board extends JPanel {
@@ -45,10 +46,9 @@ public class Board extends JPanel {
 	public Board(Maze maze){
 		this.maze = maze;
 		addKeyListener(new MovementListener());
-		addMouseListener(new MouceClickListener());
+		addMouseListener(new MouseClickListener());
 		setFocusable(true);
-		calculateTotalSize();
-		
+		calculateTotalSize();		
 	}
 		
 	private void calculateTotalSize() {
@@ -69,13 +69,11 @@ public class Board extends JPanel {
 		drawKeys(g);
 		drawGateStones(g);
 		drawMonsters(g);
-		drawPlayer(g);
-		
+		drawPlayer(g);		
 		
 		//a hack to move player to center of the screen.
 		Point temp = getPlayerWindowCorner();
-		setBounds(-temp.x, -temp.y, temp.x+Config.SIZE_WINDOW_BOARD_WIDTH, temp.y+Config.SIZE_WINDOW_BOARD_HEIGHT);
-		
+		setBounds(-temp.x, -temp.y, temp.x+Config.SIZE_WINDOW_BOARD_WIDTH, temp.y+Config.SIZE_WINDOW_BOARD_HEIGHT);	
 	}
 
 	private void drawRoomObjects(Graphics g) {
@@ -165,8 +163,7 @@ public class Board extends JPanel {
 	private void drawKeys(Graphics g) {
 		drawKeysInRooms(g);
 		drawKeysOnDoors(g);
-	}
-	
+	}	
 	
 	private void drawKeysInRooms(Graphics g){
 		for (int i = 0; i < maze.getWidth(); i++){
@@ -441,7 +438,7 @@ public class Board extends JPanel {
 		}
 	}
 	
-	private class MouceClickListener extends MouseAdapter {
+	private class MouseClickListener extends MouseAdapter {
 		public void mousePressed(MouseEvent me){
 			final Point p = me.getPoint();
 			for (int i = 0; i < Config.ROOM_COUNT_HORIZONTAL; i++){
@@ -581,7 +578,7 @@ public class Board extends JPanel {
 		Dimension dim1 = new Dimension(1,1);
 		Point p2 = interactable.getPosition().getPoint();
 		Dimension dim2 = interactable.getImageSize();
-		if (Util.areasOverlap(p1, dim1, p2, dim2,Config.PADDING_MOUSE_CLICK)){
+		if (Util.areasOverlap(p1, dim1, p2, dim2, Config.PADDING_MOUSE_CLICK)){
 			return true;
 		}
 		return false;

@@ -40,5 +40,4 @@ public class GameWindow extends JFrame implements GameAction {
 	public void doAction() {
 		repaint();		
 	}
-
 }

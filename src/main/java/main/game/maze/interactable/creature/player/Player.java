@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.game.Config;
-import main.game.GameAction;
-import main.game.MainController;
 import main.game.maze.Direction;
 import main.game.maze.interactable.Interactable;
 import main.game.maze.interactable.Position;
@@ -23,7 +21,6 @@ import main.game.maze.interactable.item.gatestone.GateStone;
 import main.game.maze.interactable.item.gatestone.GroupGateStone;
 import main.game.maze.interactable.item.gatestone.PersonalGateStone;
 import main.game.maze.interactable.item.weapon.Bow;
-import main.game.maze.interactable.item.weapon.NoWeapon;
 import main.game.maze.interactable.item.weapon.Staff;
 import main.game.maze.interactable.item.weapon.Sword;
 import main.game.maze.interactable.item.weapon.Weapon;
@@ -44,9 +41,12 @@ public class Player extends Creature{
 	private GateStone groupGateStone = new GroupGateStone(this);
 	private Position startingPosition;
 	private List<Item> items = new ArrayList<Item>();
+	private PlayerController controller;
 	
 	public Player(String name){
 		super(name, new Dimension(SIZE_WIDTH,SIZE_HEIGHT));
+		new PlayerGameAction(this);
+		controller = new PlayerController(this);
 		image = Util.readImage(IMAGE);
 		stats = new Stats(5,5,5,10,HEALTH,MOVEMENT_SPEED);
 		//increaseLevel(1000);
@@ -59,7 +59,6 @@ public class Player extends Creature{
 		addItem(new Cake());
 		addItem(new Fish());
 	}
-
 	
 	public void addKey(Key key){
 		keys.add(key);
@@ -86,12 +85,7 @@ public class Player extends Creature{
 	}
 
 	public void pickUpKeys() {
-		Key key = getPosition().getRoom().getKey();
-		if (key != null){
-			if (isCloseToInteractable(key)){
-				key.pickUp(this);
-			}
-		}
+		controller.pickUpKeys();
 	}
 
 	public GateStone getGroupGateStone(){
@@ -135,44 +129,8 @@ public class Player extends Creature{
 		getPosition().setPoint(positionInRoom);
 	}
 
-	public void pickUpItems() {
-		pickUpKeys();
-		pickUpGroupGateStone();
-		pickUpDroppedItems();
-	}
-
-	private void pickUpDroppedItems() {
-		if (getPosition().getRoom().hasDroppedItems()){
-			for (Item item: getPosition().getRoom().getDroppedItems()){
-				if (isCloseToInteractable(item)){
-					item.pickUp(this);
-					return;
-				}
-			}
-		}
-	}
-
-
-	private void pickUpGroupGateStone() {
-		if (groupGateStone.exists()){
-			if (getPosition().getRoom() == groupGateStone.getPosition().getRoom()){
-				if (isCloseToInteractable(groupGateStone)){
-					groupGateStone.resetPosition();
-				}
-			}
-		}
-	}
-
 	public int getMovementSpeed() {
 		return stats.getMovementSpeed();
-	}
-
-	public void respawn() {
-		if (!groupGateStone.exists()){
-			groupGateStone.dropGateStone();
-		}
-		stats.resetHealth();
-		setStartingPosition();
 	}
 
 	public void createStartingPosition(Room startingRoom) {
@@ -198,41 +156,24 @@ public class Player extends Creature{
 		return items.size() < Config.INVENTORY_COUNT_VERTICAL*Config.INVENTORY_COUNT_HORIZONTAL;
 	}
 
-
 	public void addItem(Item item) {
-		if (hasItemSpace()){
-			items.add(item);
-		} else {
-			throw new IllegalStateException("player has no room for extra stuff");
-		}
+		controller.addItem(item);
 	}
-
 
 	public List<Item> getItems() {
 		return items;
 	}
 
-
 	public void equip(Item item) {
-		if (item instanceof Weapon){
-			System.out.println(TAG + ".equip: equipping " + item.getName());
-			weapon = (Weapon) item;
-		} else {
-			throw new IllegalArgumentException(TAG + ".equip: cant equip it");
-		}
+		controller.equip(item);
 	}
 
+	public void teleportToBase(){
+		controller.teleportToBase();
+	}
 
 	public void drop(Item item) {
-		if (!hasEquipped(item)){
-			if (items.contains(item)){
-				items.remove(item);
-				item.setPosition(position);
-				getPosition().getRoom().addDroppedItem(item);
-			}
-		} else {
-			System.out.println(TAG + ".drop: cant drop, equipped item");
-		}
+		controller.drop(item);
 	}
 
 	public boolean hasEquipped(Item item) {
@@ -245,22 +186,7 @@ public class Player extends Creature{
 	}
 
 	public void unequip(Item item) {
-		if (item instanceof Weapon){
-			if (weapon == item){
-				System.out.println(TAG + ".unequip: unequipped " + item.getName());
-				weapon = new NoWeapon();
-			}
-		}
-	}
-
-	public void pickup(Item item) {
-		if (item.getPosition() != null){
-			if (item.getPosition().getRoom() == getPosition().getRoom()){
-				if (isCloseToInteractable(item)){
-					item.pickUp(this);		
-				}
-			}
-		}
+		controller.unequip(item);
 	}
 
 	public boolean isCloseToInteractable(Interactable interactable) {
@@ -272,45 +198,23 @@ public class Player extends Creature{
 				interactable.getImageSize(), Config.MAX_INTERACTION_DISTANCE);
 	}
 
-
-	public void teleportToBase() {
-		MainController.addGameAction(new GameAction() {
-			final long startTeleportTime = System.currentTimeMillis();
-			final Position startTeleportPosition= new Position(getPosition());
-			final long startLastBeingAttackedTime = lastBeingAttackedTime;
-			
-			@Override
-			public void doAction() {
-				if (startTeleportTime < System.currentTimeMillis() - Config.DELAY_TELEPORT_TO_BASE){
-					setStartingPosition();
-					MainController.disposeAction(this);
-					return;
-				}
-				if (!startTeleportPosition.equals(getPosition())){
-					System.out.println(TAG + ".teleportToBase: teleport interrupted by moving");
-					MainController.disposeAction(this);
-					return;
-				}
-				if (startLastBeingAttackedTime != lastBeingAttackedTime){
-					System.out.println(TAG + ".teleportToBase: teleport interrupted by being attacked");
-					MainController.disposeAction(this);
-					return;
-				}
-				
-			}
-		});
-	}
-
-
 	public boolean ownsItem(Item item) {
 		return items.contains(item);
 	}
 
-
 	public void eat(Food food) {
-		if (ownsItem(food)){
-			stats.heal(food.getHealAmount());
-			items.remove(food);
-		}
+		controller.eat(food);
 	}	
+
+	public void pickUpItems() {
+		controller.pickUpItems();
+	}
+
+	public void setWeapon(Weapon weapon) {
+		this.weapon = weapon;
+	}
+
+	public void respawn() {
+		controller.respawn();
+	}
 }

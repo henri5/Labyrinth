@@ -114,7 +114,7 @@ public class Creature {
 		return stats.isDead();
 	}	
 	
-	protected boolean isWithinRange(Creature creature) {
+	public boolean isWithinRange(Creature creature) {
 		if (getPosition().getRoom() != creature.getPosition().getRoom()){
 			return false;
 		}
@@ -143,5 +143,9 @@ public class Creature {
 	
 	public void increaseLevel(int levels){
 		stats.increaseLevel(levels);
+	}
+	
+	public long getLastBeingAttackedTime(){
+		return lastBeingAttackedTime;
 	}
 }
