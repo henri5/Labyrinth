@@ -6,16 +6,11 @@ import java.util.List;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import javax.swing.JFrame;
-
 public class GameClock {
 	private List<GameAction> gameActions = new ArrayList<GameAction>();
-	private JFrame jframe;
 	private final String TAG = "GameClock";
 	private List<GameAction> toBeRemoved = new ArrayList<GameAction>();
-	
-	public GameClock(JFrame jframe){
-		this.jframe = jframe;
+	public GameClock(){
 	}
 	
 	public void addGameAction(GameAction gameAction) {
@@ -29,6 +24,9 @@ public class GameClock {
 		executor.scheduleAtFixedRate(new Runnable() {			
 			@Override
 			public void run() {
+//				if (!jframe.isFocused()){
+//					return;
+//				}
 				long start = System.currentTimeMillis();
 				synchronized (gameActions) {
 					for (GameAction gameAction: gameActions){
@@ -41,8 +39,6 @@ public class GameClock {
 						}
 					}
 				}
-				
-				jframe.repaint();
 				long time = System.currentTimeMillis() - start;
 				if (time > Config.SCREEN_REFRESH_DELAY){
 					System.out.println(TAG + ": took time " + (System.currentTimeMillis() - start) + " ms, "

@@ -9,8 +9,6 @@ import java.awt.Point;
 import javax.swing.JPanel;
 
 import main.game.Config;
-import main.game.GameAction;
-import main.game.MainController;
 import main.game.maze.Direction;
 import main.game.maze.Maze;
 import main.game.maze.interactable.creature.player.Player;
@@ -36,14 +34,6 @@ public class MiniMap extends JPanel {
 		calculateSizesToScale();
 		calculateTotalSizeToScale();
 		calculateOffset();
-		MainController.addGameAction(new GameAction() {
-			
-			@Override
-			public void doAction() {
-				repaint();
-				
-			}
-		});
 	}
 
 	private void calculateOffset() {
@@ -83,8 +73,6 @@ public class MiniMap extends JPanel {
 	public void paint(Graphics g){
 		super.paint(g);
 		setBackground(Config.COLOR_BACKGROUND);
-		/*g.setColor(Config.COLOR_BACKGROUND);		
-		g.fillRect(0, 0, Config.SIZE_WINDOW_MINIMAP_WIDTH, Config.SIZE_WINDOW_MINIMAP_HEIGHT);*/
 		drawRooms(g);	
 		drawDoors(g);
 		drawGateStones(g);

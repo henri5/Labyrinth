@@ -204,7 +204,7 @@ public class SimpleBuilder implements Builder {
 		List<Room> usableRooms = new ArrayList<Room>(currentRooms);
 		Collections.shuffle(usableRooms);
 		maze.removeKey(destinationRoom);
-		// TODO: clean this obscurity up.
+		// TODO: clean this obscurity up if you can
 		Direction[] directions = Direction.values();
 		for (Room room: usableRooms){	//for each room we currently hold
 			for (Direction dir: directions){	//for each direction

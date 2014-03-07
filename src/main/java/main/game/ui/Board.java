@@ -35,18 +35,20 @@ import main.game.maze.interactable.object.RoomObject;
 import main.game.maze.room.Room;
 import main.game.util.Util;
 
-public class Board extends JPanel{
+public class Board extends JPanel {
 	private static final long serialVersionUID = -5300839540150130114L;
 	@SuppressWarnings("unused")
 	private static final String TAG = "Board";
 	private Maze maze;
 	private Dimension totalSize;
+	
 	public Board(Maze maze){
 		this.maze = maze;
 		addKeyListener(new MovementListener());
 		addMouseListener(new MouceClickListener());
 		setFocusable(true);
 		calculateTotalSize();
+		
 	}
 		
 	private void calculateTotalSize() {
@@ -68,6 +70,7 @@ public class Board extends JPanel{
 		drawGateStones(g);
 		drawMonsters(g);
 		drawPlayer(g);
+		
 		
 		//a hack to move player to center of the screen.
 		Point temp = getPlayerWindowCorner();
@@ -468,7 +471,7 @@ public class Board extends JPanel{
 			Point p = new Point(me.getPoint());
 			menu.setVisible(true);	//to initalize menu and generate size
 			menu.setVisible(false);
-			// TODO: Fix
+			// TODO: might need fixing?
 			/*if (p.x > Config.SIZE_WINDOW_BOARD_WIDTH - menu.getWidth()){
 				p.setLocation(Config.SIZE_WINDOW_BOARD_WIDTH - menu.getWidth(), p.y);
 			}
@@ -522,37 +525,11 @@ public class Board extends JPanel{
 	}
 
 	private Interactable getFirstInteractable(Room room, Point mouseClickInRoomPosition) {
-		for (Monster monster: room.getMonsters()){
-			if (wasClickedOn(mouseClickInRoomPosition, monster)){
-				return monster;
-			}
+		try {
+			return getAllInteractables(room, mouseClickInRoomPosition)[0];
+		} catch (IndexOutOfBoundsException e){
+			return DummyObject.getInstance();
 		}
-		for (Item item: room.getDroppedItems()){
-			if (wasClickedOn(mouseClickInRoomPosition, item)){
-				return item;
-			}
-		}
-		for (RoomObject roomObject: room.getRoomObjects()){
-			if (wasClickedOn(mouseClickInRoomPosition, roomObject)){
-				return roomObject;
-			}
-		}
-		if (room.getKey() != null){
-			Key key = room.getKey();
-			if (wasClickedOn(mouseClickInRoomPosition, key)){
-				return key;
-			}
-		}
-		if (maze.getPlayer().getGroupGateStone().exists()){
-			GateStone ggs = maze.getPlayer().getGroupGateStone();
-			Room gateStoneRoom = ggs.getPosition().getRoom();
-			if (gateStoneRoom == room){
-				if (wasClickedOn(mouseClickInRoomPosition, ggs)){
-					return ggs;
-				}
-			}
-		}
-		return DummyObject.getInstance();
 	}
 
 	public Interactable[] getAllInteractables(Room room, Point mouseClickInRoomPosition) {

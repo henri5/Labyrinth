@@ -23,5 +23,6 @@ public class StockItem {
 	public Item getNewItem(){
 		return ItemFactory.getItemForName(item.getName());
 	}
+	
 	//TODO: maybe player wants to buy something in bulk? check if item is stackable and make method for returning items with given quantity
 }

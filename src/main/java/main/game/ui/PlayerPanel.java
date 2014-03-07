@@ -18,8 +18,6 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
 import main.game.Config;
-import main.game.GameAction;
-import main.game.MainController;
 import main.game.maze.Maze;
 import main.game.maze.interactable.Option;
 import main.game.maze.interactable.creature.player.Player;
@@ -38,13 +36,6 @@ public class PlayerPanel extends JPanel {
 		this.maze = maze;
 		calculateInventorySlotSize();
 		addMouseListener(new MouceClickListener());
-		MainController.addGameAction(new GameAction() {
-			
-			@Override
-			public void doAction() {
-				repaint();
-			}
-		});
 	}
 	
 	private void calculateInventorySlotSize() {

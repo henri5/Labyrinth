@@ -11,8 +11,6 @@ import main.game.maze.Maze;
 import main.game.maze.door.Door;
 import main.game.maze.door.KeyDoor;
 import main.game.maze.door.SimpleDoor;
-import main.game.maze.interactable.Interactable;
-import main.game.maze.interactable.creature.Creature;
 import main.game.maze.interactable.creature.monster.Monster;
 import main.game.maze.interactable.item.Item;
 import main.game.maze.interactable.item.Key;
