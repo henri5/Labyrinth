@@ -7,7 +7,7 @@ import java.util.Random;
 import main.game.maze.interactable.item.Item;
 
 public class LootTable {
-	private List<LootEntry> loot = new ArrayList<LootEntry>();
+	private List<LootEntry> loot;
 	private double totalWeight;
 	
 	private LootTable(){}
@@ -56,8 +56,6 @@ public class LootTable {
 				weight += lootEntry.getWeight();
 			}
 			return weight;
-		}
-		
-		
+		}		
 	}
 }

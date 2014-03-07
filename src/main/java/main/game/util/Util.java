@@ -103,4 +103,14 @@ public class Util {
 		
 	}
 
+	/**
+	 * Returns point that will help to position area with size of {@code size2} to the center of area {@code size1}.
+	 * @param size1	target area size
+	 * @param size2 size of item to be placed
+	 * @return a point so that second area would be in the center for first area
+	 */
+	public static Point placeInMiddleOf(Dimension size1, Dimension size2) {
+		return new Point((size1.width-size2.width)/2,(size1.height-size2.height)/2);
+	}
+
 }

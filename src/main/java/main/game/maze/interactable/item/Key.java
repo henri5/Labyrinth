@@ -103,7 +103,7 @@ public final class Key extends Item {
 	@Override
 	public void doAction(Option option, Player player) {
 		switch (option){
-		case PICKUP: pickUp(player); break;
+		case PICKUP: tryPickUp(player); break;
 		default: return;
 		}
 	}

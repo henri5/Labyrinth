@@ -39,21 +39,19 @@ public abstract class Stackable extends Item {
 	}
 	
 	public void pickUp(Player player) {
-		if (player.isCloseToInteractable(this)){
-			if (!player.ownsItem(this)){
-				List<Item> playerItems = player.getItems();
-				for (Item playerItem: playerItems){
-					if (playerItem.getClass().equals(getClass())){
-						Stackable sPlayerItem = (Stackable) playerItem;
-						sPlayerItem.addQuantity(getQuantity());
-						removeFromMaze();
-						return;
-					}
+		if (!player.ownsItem(this)){
+			List<Item> playerItems = player.getItems();
+			for (Item playerItem: playerItems){
+				if (playerItem.getClass().equals(getClass())){
+					Stackable sPlayerItem = (Stackable) playerItem;
+					sPlayerItem.addQuantity(getQuantity());
+					removeFromMaze();
+					return;
 				}
-				if (player.hasItemSpace()){
-						removeFromMaze();
-						player.addItem(this);
-				}
+			}
+			if (player.hasItemSpace()){
+					removeFromMaze();
+					player.addItem(this);
 			}
 		}
 	}

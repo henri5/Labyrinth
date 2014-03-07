@@ -57,4 +57,10 @@ public abstract class Item implements Interactable{
 		setPosition(position);
 		position.getRoom().addDroppedItem(this);
 	}
+	
+	public void tryPickUp(Player player){
+		if (player.isCloseToInteractable(this)){
+			pickUp(player);
+		}
+	}
 }

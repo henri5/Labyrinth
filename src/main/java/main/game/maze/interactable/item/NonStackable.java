@@ -11,13 +11,11 @@ public abstract class NonStackable extends Item{
 	}
 	
 	public void pickUp(Player player) {
-		if (player.isCloseToInteractable(this)){
-			if (player.hasItemSpace()){
-				if (!player.ownsItem(this)){
-					getPosition().getRoom().removeDroppedItem(this);
-					resetPosition();
-					player.addItem(this);
-				}
+		if (player.hasItemSpace()){
+			if (!player.ownsItem(this)){
+				getPosition().getRoom().removeDroppedItem(this);
+				resetPosition();
+				player.addItem(this);
 			}
 		}
 	}

@@ -49,5 +49,13 @@ public abstract class Chest extends RoomObject {
 			}			
 		}
 	}
+	
+	public String getName(){
+		if (opened){
+			return super.getName() + " (empty)";
+		}
+		return super.getName();
+		
+	}
 
 }

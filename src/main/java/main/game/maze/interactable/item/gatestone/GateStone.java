@@ -50,7 +50,7 @@ public abstract class GateStone extends Item{
 	@Override
 	public void doAction(Option option, Player player) {
 		switch (option){
-		case PICKUP: pickUp(player); break;
+		case PICKUP: tryPickUp(player); break;
 		case DROP: player.drop(this); break;
 		default: return;
 		}

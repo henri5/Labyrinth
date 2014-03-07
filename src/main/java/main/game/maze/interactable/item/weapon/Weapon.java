@@ -71,7 +71,7 @@ public abstract class Weapon extends NonStackable{
 	@Override
 	public void doAction(Option option, Player player) {
 		switch (option){
-		case PICKUP: pickUp(player); break;
+		case PICKUP: tryPickUp(player); break;
 		case EQUIP: player.equip(this); break;
 		case UNEQUIP: player.unequip(this); break;
 		case DROP: player.drop(this); break;

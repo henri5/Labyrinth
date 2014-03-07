@@ -5,6 +5,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.game.Config;
 import main.game.maze.Direction;
 import main.game.maze.Maze;
 import main.game.maze.door.Door;
@@ -19,6 +20,9 @@ import main.game.maze.interactable.object.RoomObject;
 import main.game.util.Util;
 
 public abstract class Room implements Comparable<Room>{
+	private static int ROOM_WIDTH = Config.SIZE_ROOM_WIDTH;
+	private static int ROOM_HEIGHT = Config.SIZE_ROOM_HEIGHT;
+	private static Dimension roomSize = new Dimension(ROOM_WIDTH, ROOM_HEIGHT);
 	private Door north;
 	private Door east;
 	private Door south;
@@ -246,15 +250,6 @@ public abstract class Room implements Comparable<Room>{
 		return roomObjects;
 	}
 	
-	public boolean collidesWithRoomObject(Interactable interactable){
-		for (RoomObject ro: roomObjects){
-			if (Util.areasOverlap(ro.getPosition().getPoint(), ro.getImageSize(), interactable.getPosition().getPoint(), interactable.getImageSize())){
-				return true;
-			};
-		}
-		return false;
-	}
-
 	public boolean collidesWithRoomObject(Point point, Dimension dimension) {
 		for (RoomObject ro: roomObjects){
 			if (!ro.isPassable()){
@@ -264,6 +259,11 @@ public abstract class Room implements Comparable<Room>{
 			}
 		}
 		return false;
+	}
+	
+	public Dimension getRoomSize(){
+		// TODO: this might cause problems, as I do not know how safe it is. maybe create own immutable dimension?
+		return roomSize;
 	}
 	
 	

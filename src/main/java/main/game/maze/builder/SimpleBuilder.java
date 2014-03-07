@@ -21,6 +21,7 @@ import main.game.maze.interactable.item.Key;
 import main.game.maze.room.ChestRoom;
 import main.game.maze.room.Room;
 import main.game.maze.room.SimpleRoom;
+import main.game.maze.room.StartingRoom;
 import main.game.util.Util;
 
 public class SimpleBuilder implements Builder {
@@ -323,8 +324,8 @@ public class SimpleBuilder implements Builder {
 		return roomsToUnlock;
 	}
 	
-	protected Room createRoom(Point point) {
-		return new SimpleRoom(maze, point);
+	protected Room createStartingRoom(Point point) {
+		return new StartingRoom(maze, point);
 	}
 	
 	protected Room createRoom(Room room, Direction direction){
@@ -378,7 +379,7 @@ public class SimpleBuilder implements Builder {
 		Random rnd = new Random();
 		int x = rnd.nextInt(maze.getWidth());
 		int y = rnd.nextInt(maze.getHeight());
-		maze.setStartingRoom(createRoom(new Point(x,y)));
+		maze.setStartingRoom(createStartingRoom(new Point(x,y)));
 		maze.getRooms().get(x).put(y, maze.getStartingRoom());
 	}
 }
