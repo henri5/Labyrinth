@@ -16,10 +16,7 @@ import main.game.maze.interactable.item.Key;
 import main.game.maze.room.Room;
 
 public class Maze {
-	@SuppressWarnings("unused")
-	private static final String TAG = "Maze";
 	Room startingRoom;
-	//private Room endingRoom;
 	int width;
 	int height;
 	private List<Key> availableKeys = new ArrayList<Key>(Key.KEYS);

@@ -8,7 +8,6 @@ import java.util.concurrent.TimeUnit;
 
 public class GameClock {
 	private List<GameAction> gameActions = new ArrayList<GameAction>();
-	private final String TAG = "GameClock";
 	private List<GameAction> toBeRemoved = new ArrayList<GameAction>();
 	public GameClock(){
 	}
@@ -41,7 +40,8 @@ public class GameClock {
 				}
 				long time = System.currentTimeMillis() - start;
 				if (time > Config.SCREEN_REFRESH_DELAY){
-					System.out.println(TAG + ": took time " + (System.currentTimeMillis() - start) + " ms, "
+					System.out
+							.println("GameClock.run(): took time " + (System.currentTimeMillis() - start) + " ms, "
 							+ "longer than refresh delay. Optimize something!");
 				}
 			}

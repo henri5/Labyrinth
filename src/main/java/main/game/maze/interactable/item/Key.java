@@ -1,6 +1,5 @@
 package main.game.maze.interactable.item;
 
-import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,12 +8,13 @@ import com.google.common.collect.ImmutableList;
 import main.game.Config;
 import main.game.maze.interactable.Option;
 import main.game.maze.interactable.creature.player.Player;
+import main.game.util.Size;
 
 public final class Key extends Item {
 	private static final int SIZE_WIDTH = 20;
 	private static final int SIZE_HEIGHT = 20;
-	public static final Dimension SIZE_IMAGE_KEYBAG = new Dimension(20,20);
-	private final static Dimension imageSize = new Dimension(SIZE_WIDTH,SIZE_HEIGHT);
+	public static final Size SIZE_IMAGE_KEYBAG = new Size(20,20);
+	private final static Size imageSize = new Size(SIZE_WIDTH,SIZE_HEIGHT);
 	public static enum Color{
 		PURPLE, YELLOW, GOLD, BLUE, SILVER, GREEN, CRIMSON, ORANGE;
 	}

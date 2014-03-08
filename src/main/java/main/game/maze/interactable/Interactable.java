@@ -1,9 +1,9 @@
 package main.game.maze.interactable;
 
-import java.awt.Dimension;
 import java.awt.Image;
 
 import main.game.maze.interactable.creature.player.Player;
+import main.game.util.Size;
 
 public interface Interactable {
 	Option[] getOptions(Player player);
@@ -11,7 +11,7 @@ public interface Interactable {
 	Position getPosition();
 	String getName();
 	Image getImage();
-	Dimension getImageSize();
+	Size getImageSize();
 	void doAction(Option optionFinal, Player player);
 
 }

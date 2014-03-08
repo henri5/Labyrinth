@@ -5,7 +5,6 @@ import main.game.maze.interactable.creature.player.Player;
 import main.game.maze.interactable.item.Item;
 
 public interface RightClickBehaviour {
-
 	Option[] getOptions(Item item, Player player);
 
 }

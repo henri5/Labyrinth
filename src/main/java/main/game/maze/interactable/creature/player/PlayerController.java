@@ -1,8 +1,12 @@
 package main.game.maze.interactable.creature.player;
 
+import java.awt.Dimension;
+import java.awt.Point;
+
 import main.game.Config;
 import main.game.GameAction;
 import main.game.MainController;
+import main.game.maze.Direction;
 import main.game.maze.interactable.Position;
 import main.game.maze.interactable.item.Item;
 import main.game.maze.interactable.item.Key;
@@ -11,13 +15,12 @@ import main.game.maze.interactable.item.weapon.NoWeapon;
 import main.game.maze.interactable.item.weapon.Weapon;
 
 public class PlayerController {
-	private static final String TAG = "PlayerController";
 	private Player player;
 	public PlayerController(Player player){
 		this.player = player;
 	}
 	
-	public void pickUpItems(){
+	void pickUpItems(){
 		pickUpKeys();
 		pickUpGroupGateStone();
 		pickUpDroppedItems();
@@ -75,12 +78,10 @@ public class PlayerController {
 					return;
 				}
 				if (!startTeleportPosition.equals(player.getPosition())){
-					System.out.println(TAG + ".teleportToBase: teleport interrupted by moving");
 					MainController.disposeAction(this);
 					return;
 				}
 				if (startLastBeingAttackedTime != player.getLastBeingAttackedTime()){
-					System.out.println(TAG + ".teleportToBase: teleport interrupted by being attacked");
 					MainController.disposeAction(this);
 					return;
 				}
@@ -105,23 +106,23 @@ public class PlayerController {
 				player.getPosition().getRoom().addDroppedItem(item);
 			}
 		} else {
-			System.out.println(TAG + ".drop: cant drop, equipped item");
+			System.out.println("PlayerController.drop(): cant drop, equipped item");
 		}
 	}
 
 	void equip(Item item) {
 		if (item instanceof Weapon){
-			System.out.println(TAG + ".equip: equipping " + item.getName());
+			System.out.println("PlayerController.equip(): " + item.getName());
 			player.setWeapon((Weapon) item);
 		} else {
-			throw new IllegalArgumentException(TAG + ".equip: cant equip it");
+			throw new IllegalArgumentException("cant equip item " + item.getName());
 		}
 	}
 
 	void unequip(Item item) {
 		if (item instanceof Weapon){
 			if (player.getWeapon() == item){
-				System.out.println(TAG + ".unequip: unequipped " + item.getName());
+				System.out.println("PlayerController.unequip(): " + item.getName());
 				player.setWeapon(new NoWeapon());
 			}
 		}
@@ -133,7 +134,46 @@ public class PlayerController {
 			player.getItems().remove(food);
 		}
 	}
-	
-	
 
+	void interactWithDoor() {
+		Direction dir;
+		if ((dir = getClosestDoorDirection()) != null){
+			move(dir);
+		}	
+	}
+
+	private Direction getClosestDoorDirection(){
+		Point p = player.getPosition().getPoint();
+		Point d = new Point((Config.SIZE_ROOM_WIDTH - Config.SIZE_DOOR_ROOM - player.getImageSize().width)/2,
+				(Config.SIZE_ROOM_HEIGHT - Config.SIZE_DOOR_ROOM - player.getImageSize().height)/2);
+		Point k = new Point((Config.SIZE_ROOM_WIDTH - player.getImageSize().width)/2, (Config.SIZE_ROOM_HEIGHT - player.getImageSize().height)/2);
+		for (Direction dir: Direction.values()){
+			if (!player.getPosition().getRoom().hasDoorAtDirection(dir)){
+				continue;
+			}
+			Point l = dir.getCoordinates();
+			Point s = new Point(d.x*Math.abs(l.y) + (l.x+Math.abs(l.x))*k.x,d.y*Math.abs(l.x) + (l.y+Math.abs(l.y))*k.y);
+			Dimension f = new Dimension(Math.abs(l.y)*Config.SIZE_DOOR_ROOM, Math.abs(l.x)*Config.SIZE_DOOR_ROOM);
+			if (p.x >= s.x && p.x <= s.x+f.width){
+				if (p.y >= s.y && p.y <= s.y + f.height){
+					return dir;
+				}
+			}			
+		}	
+		return null;
+	}
+
+	void move(Direction direction) {
+		if (player.getPosition().getRoom().getDoorByDirection(direction) == null){
+			return;
+		} else if (player.getPosition().getRoom().getDoorByDirection(direction).isLocked()){
+			player.getPosition().getRoom().getDoorByDirection(direction).unlock(player);
+		} else {
+			player.getPosition().setRoom(player.getPosition().getRoom().getDoorByDirection(direction).getRoom());
+			Dimension area = new Dimension((Config.SIZE_ROOM_WIDTH - player.getImageSize().width) * Math.abs(direction.getCoordinates().x),
+					(Config.SIZE_ROOM_HEIGHT - player.getImageSize().height) * Math.abs(direction.getCoordinates().y));
+			Point p = player.getPosition().getPoint();
+			player.getPosition().setPoint(Math.abs(area.width - p.x), Math.abs(area.height - p.y));
+		}
+	}
 }

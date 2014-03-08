@@ -1,21 +1,22 @@
 package main.game.maze.interactable.item;
 
-import java.awt.Dimension;
 import java.awt.Image;
+
 import main.game.maze.interactable.Interactable;
 import main.game.maze.interactable.Position;
 import main.game.maze.interactable.creature.player.Player;
+import main.game.util.Size;
 import main.game.util.Util;
 
 public abstract class Item implements Interactable{
 	private Image image;
 	private String name;
 	private Position position;
-	private Dimension imageSize;
+	private Size imageSize;
 	
-	public Item(String name, String imageSrc, Dimension imagesize) {
+	public Item(String name, String imageSrc, Size imagesize2) {
 		this.name = name;
-		this.imageSize = imagesize;
+		this.imageSize = imagesize2;
 		if (imageSrc != null){
 			this.image = Util.readImage(imageSrc);
 		}
@@ -49,7 +50,7 @@ public abstract class Item implements Interactable{
 	}
 	
 	@Override
-	public Dimension getImageSize() {
+	public Size getImageSize() {
 		return imageSize;
 	}
 	

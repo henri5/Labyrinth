@@ -1,14 +1,14 @@
 package main.game.maze.interactable.item;
 
-import java.awt.Dimension;
 import java.util.List;
 
 import main.game.maze.interactable.creature.player.Player;
+import main.game.util.Size;
 
 public abstract class Stackable extends Item {
 	private int quantity = 0;
 	
-	public Stackable(String name, String imageSrc, Dimension imagesize,
+	public Stackable(String name, String imageSrc, Size imagesize,
 			int quantity) {
 		super(name, imageSrc, imagesize);
 		if (quantity < 0){

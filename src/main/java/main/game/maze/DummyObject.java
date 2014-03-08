@@ -1,12 +1,12 @@
 package main.game.maze;
 
-import java.awt.Dimension;
 import java.awt.Image;
 
 import main.game.maze.interactable.Interactable;
 import main.game.maze.interactable.Option;
 import main.game.maze.interactable.Position;
 import main.game.maze.interactable.creature.player.Player;
+import main.game.util.Size;
 
 public final class DummyObject implements Interactable {
 	private static DummyObject dummyObject = new DummyObject();
@@ -35,7 +35,7 @@ public final class DummyObject implements Interactable {
 	}
 	
 	@Override
-	public Dimension getImageSize(){
+	public Size getImageSize(){
 		return null;
 	}
 

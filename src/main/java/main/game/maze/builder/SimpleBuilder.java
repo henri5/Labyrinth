@@ -30,8 +30,6 @@ public class SimpleBuilder implements Builder {
 	private static final int MONSTERS_MAX_COUNT = 6;	//per room, that is
 	private static final double CHANCE_CHESTROOM = 0.1;
 	private final MonsterFactory monsterFactory = MonsterFactory.getInstance();
-	@SuppressWarnings("unused")
-	private final String TAG = "SimpleProbability";
 	private Maze maze;
 	
 	public SimpleBuilder(Maze maze) {

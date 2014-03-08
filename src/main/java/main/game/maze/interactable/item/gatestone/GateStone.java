@@ -1,14 +1,14 @@
 package main.game.maze.interactable.item.gatestone;
 
-import java.awt.Dimension;
 import main.game.maze.interactable.Option;
 import main.game.maze.interactable.creature.player.Player;
 import main.game.maze.interactable.item.Item;
+import main.game.util.Size;
 
 public abstract class GateStone extends Item{
 	private static final int SIZE_WIDTH = 16;
 	private static final int SIZE_HEIGHT = 16;
-	private static final Dimension imageSize = new Dimension(SIZE_WIDTH,SIZE_HEIGHT);
+	private static final Size imageSize = new Size(SIZE_WIDTH,SIZE_HEIGHT);
 	private final Player player;
 	
 	public GateStone(String imageSource, Player player, String name) {

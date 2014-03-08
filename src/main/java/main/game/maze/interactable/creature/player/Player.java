@@ -1,6 +1,5 @@
 package main.game.maze.interactable.creature.player;
 
-import java.awt.Dimension;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +25,8 @@ import main.game.maze.interactable.item.weapon.Sword;
 import main.game.maze.interactable.item.weapon.Weapon;
 import main.game.maze.mechanics.stats.Stats;
 import main.game.maze.room.Room;
+import main.game.ui.gameinterface.GameInterface;
+import main.game.util.Size;
 import main.game.util.Util;
 
 public class Player extends Creature{
@@ -35,16 +36,16 @@ public class Player extends Creature{
 	private static final int SIZE_HEIGHT = 20;
 	private static final String IMAGE = Config.IMAGES_FOLDER_CREATURES + "player.png";
 	
-	private static final String TAG = "Player";
 	private List<Key> keys = new ArrayList<Key>();
 	private GateStone personalGateStone = new PersonalGateStone(this);
 	private GateStone groupGateStone = new GroupGateStone(this);
 	private Position startingPosition;
 	private List<Item> items = new ArrayList<Item>();
 	private PlayerController controller;
+	private GameInterface gameInterface;
 	
 	public Player(String name){
-		super(name, new Dimension(SIZE_WIDTH,SIZE_HEIGHT));
+		super(name, new Size(SIZE_WIDTH,SIZE_HEIGHT));
 		new PlayerGameAction(this);
 		controller = new PlayerController(this);
 		image = Util.readImage(IMAGE);
@@ -71,17 +72,7 @@ public class Player extends Creature{
 	}
 		
 	public void move(Direction direction){
-		if (getPosition().getRoom().getDoorByDirection(direction) == null){
-			return;
-		} else if (getPosition().getRoom().getDoorByDirection(direction).isLocked()){
-			getPosition().getRoom().getDoorByDirection(direction).unlock(this);
-		} else {
-			getPosition().setRoom(getPosition().getRoom().getDoorByDirection(direction).getRoom());
-			Dimension area = new Dimension((Config.SIZE_ROOM_WIDTH-imageSize.width) * Math.abs(direction.getCoordinates().x),
-					(Config.SIZE_ROOM_HEIGHT-imageSize.height) * Math.abs(direction.getCoordinates().y));
-			Point p = getPosition().getPoint();
-			getPosition().setPoint(Math.abs(area.width-p.x),Math.abs(area.height-p.y));
-		}
+		controller.move(direction);
 	}
 
 	public void pickUpKeys() {
@@ -97,32 +88,7 @@ public class Player extends Creature{
 	}
 
 	public void interactWithDoor() {
-		Direction dir;
-		if ((dir = getClosestDoorDirection()) != null){
-			move(dir);
-		}	
-	}
-	
-	private Direction getClosestDoorDirection(){
-		Point p = getPosition().getPoint();
-		Point d = new Point((Config.SIZE_ROOM_WIDTH - Config.SIZE_DOOR_ROOM - SIZE_WIDTH)/2,
-				(Config.SIZE_ROOM_HEIGHT - Config.SIZE_DOOR_ROOM - SIZE_HEIGHT)/2);
-		Point k = new Point((Config.SIZE_ROOM_WIDTH - SIZE_WIDTH)/2, (Config.SIZE_ROOM_HEIGHT - SIZE_HEIGHT)/2);
-		for (Direction dir: Direction.values()){
-			if (!getPosition().getRoom().hasDoorAtDirection(dir)){
-				continue;
-			}
-			Point l = dir.getCoordinates();
-			Point s = new Point(d.x*Math.abs(l.y) + (l.x+Math.abs(l.x))*k.x,d.y*Math.abs(l.x) + (l.y+Math.abs(l.y))*k.y);
-			Dimension f = new Dimension(Math.abs(l.y)*Config.SIZE_DOOR_ROOM, Math.abs(l.x)*Config.SIZE_DOOR_ROOM);
-			//System.out.printf("am [%d,%d] trying [%d,%d] dimension %d,%d%n", p.x, p.y, s.x, s.y,f.width,f.height);
-			if (p.x >= s.x && p.x <= s.x+f.width){
-				if (p.y >= s.y && p.y <= s.y + f.height){
-					return dir;
-				}
-			}			
-		}	
-		return null;
+		controller.interactWithDoor();
 	}
 
 	public void moveTo(Point positionInRoom) {
@@ -216,5 +182,13 @@ public class Player extends Creature{
 
 	public void respawn() {
 		controller.respawn();
+	}
+
+	public void setInterface(GameInterface gameInterface) {
+		this.gameInterface = gameInterface;
+	}
+	
+	public GameInterface getGameInterface(){
+		return gameInterface;
 	}
 }

@@ -1,7 +1,5 @@
 package main.game.maze.interactable.creature.monster;
 
-import java.awt.Dimension;
-
 import main.game.Config;
 import main.game.maze.interactable.item.Coins;
 import main.game.maze.interactable.item.armour.LeatherArmour;
@@ -11,6 +9,7 @@ import main.game.maze.interactable.item.weapon.Bow;
 import main.game.maze.mechanics.lootTable.LootEntry;
 import main.game.maze.mechanics.lootTable.LootTable;
 import main.game.maze.mechanics.stats.Stats;
+import main.game.util.Size;
 import main.game.util.Util;
 
 public class Ranger extends Monster{
@@ -28,7 +27,7 @@ public class Ranger extends Monster{
 	}
 
 	public Ranger() {
-		super("ranger", new Dimension(SIZE_WIDTH,SIZE_HEIGHT));
+		super("ranger", new Size(SIZE_WIDTH,SIZE_HEIGHT));
 		weapon = new Bow();
 		armour = new LeatherArmour();
 		image = Util.readImage(IMAGE_SRC);

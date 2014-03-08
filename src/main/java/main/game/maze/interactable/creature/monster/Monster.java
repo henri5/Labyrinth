@@ -1,21 +1,20 @@
 package main.game.maze.interactable.creature.monster;
 
-import java.awt.Dimension;
 import main.game.Config;
 import main.game.maze.interactable.Interactable;
 import main.game.maze.interactable.Option;
 import main.game.maze.interactable.creature.Creature;
 import main.game.maze.interactable.creature.player.Player;
 import main.game.maze.mechanics.lootTable.LootTable;
+import main.game.util.Size;
 import main.game.util.Util;
 
 public abstract class Monster extends Creature implements Interactable{
-	static final int MOVEMENT_SPEED = 1;
-
-	LootTable lootTable;
 	private MonsterController controller;
+	static final int MOVEMENT_SPEED = 1;
+	LootTable lootTable;
 	
-	public Monster(String name, Dimension imageSize) {
+	public Monster(String name, Size imageSize) {
 		super(name, imageSize);
 		controller = new MonsterController(this);
 		setStartingPosition();

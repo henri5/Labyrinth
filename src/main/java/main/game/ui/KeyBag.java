@@ -14,8 +14,11 @@ import main.game.util.Util;
 
 public class KeyBag extends JPanel {
 	private static final long serialVersionUID = 6640663680636318930L;
-
+	public static final int HEIGHT = 30;	//2*padding for key image + keybag key image size
+	public static final int WIDTH = Board.WIDTH;
+	public static final int PADDING_KEY_IMAGE = 5;
 	private Maze maze;
+	
 	public KeyBag(Maze maze){
 		this.maze = maze;
 	}
@@ -31,8 +34,8 @@ public class KeyBag extends JPanel {
 		Player player = maze.getPlayer();
 		for (int i = 0; i < player.getKeys().size(); i++){
 			Image image = player.getKeys().get(i).getImage();
-			Point point = new Point(Config.PADDING_KEY_IMAGE + i*(Config.PADDING_KEY_IMAGE + Key.SIZE_IMAGE_KEYBAG.width),
-					Config.PADDING_KEY_IMAGE);
+			Point point = new Point(PADDING_KEY_IMAGE + i * (PADDING_KEY_IMAGE + Key.SIZE_IMAGE_KEYBAG.width),
+					PADDING_KEY_IMAGE);
 			Util.drawImage(g, image, point, Key.SIZE_IMAGE_KEYBAG);
 		}
 	}

@@ -1,7 +1,6 @@
 package main.game.ui;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -23,11 +22,16 @@ import main.game.maze.interactable.Option;
 import main.game.maze.interactable.creature.player.Player;
 import main.game.maze.interactable.item.Item;
 import main.game.maze.interactable.item.Stackable;
+import main.game.util.Size;
 import main.game.util.Util;
 
 public class PlayerPanel extends JPanel {
 	private static final long serialVersionUID = 8598148008009578889L;
-	private static final String TAG = "PlayerPanel";
+	private static final int PADDING_INVENTORY_INTERNAL = 5;
+	private static final int PADDING_INVENTORY_EXTERNAL = 20;
+	private static final int SWITCHTAB_HEIGHT = 30;
+	public static final int WIDTH = MiniMap.WIDTH;
+	public static final int HEIGHT = Board.HEIGHT + KeyBag.HEIGHT - MiniMap.HEIGHT;
 
 	private Maze maze;
 	private int imageSize;
@@ -39,8 +43,8 @@ public class PlayerPanel extends JPanel {
 	}
 	
 	private void calculateInventorySlotSize() {
-		imageSize = (Config.SIZE_WINDOW_PLAYERPANEL_WIDTH - 2*Config.PADDING_INVENTORY_EXTERNAL - 
-				(Config.INVENTORY_COUNT_HORIZONTAL - 1)*Config.PADDING_INVENTORY_INTERNAL) / Config.INVENTORY_COUNT_HORIZONTAL;
+		imageSize = (WIDTH - 2 * PADDING_INVENTORY_EXTERNAL - 
+				(Config.INVENTORY_COUNT_HORIZONTAL - 1) * PADDING_INVENTORY_INTERNAL) / Config.INVENTORY_COUNT_HORIZONTAL;
 	}
 
 	@Override
@@ -88,7 +92,6 @@ public class PlayerPanel extends JPanel {
 	}
 
 	private void drawInventorySlots(Graphics g) {
-		g.setColor(Config.COLOR_HEALTHBAR_HEALTHY);
 		for (int i = 0; i < Config.INVENTORY_COUNT_HORIZONTAL; i++){
 			for (int j = 0; j < Config.INVENTORY_COUNT_VERTICAL; j++){
 				Point imageCorner = getItemCorner(i,j);
@@ -102,8 +105,8 @@ public class PlayerPanel extends JPanel {
 	}
 
 	private Point getItemCorner(int i, int j) {
-		return new Point(Config.PADDING_INVENTORY_EXTERNAL + i*(imageSize + Config.PADDING_INVENTORY_INTERNAL), 
-				Config.PADDING_INVENTORY_EXTERNAL + Config.SIZE_PLAYERPANEL_SWITCHTAB_HEIGHT + j*(imageSize + Config.PADDING_INVENTORY_INTERNAL));
+		return new Point(PADDING_INVENTORY_EXTERNAL + i*(imageSize + PADDING_INVENTORY_INTERNAL), 
+				PADDING_INVENTORY_EXTERNAL + SWITCHTAB_HEIGHT + j*(imageSize + PADDING_INVENTORY_INTERNAL));
 	}
 	
 	private class MouceClickListener extends MouseAdapter {
@@ -132,17 +135,17 @@ public class PlayerPanel extends JPanel {
 				menu.setVisible(true);	//to initalize menu and generate size
 				menu.setVisible(false);
 				Point point = me.getPoint();
-				if (point.x > Config.SIZE_WINDOW_PLAYERPANEL_WIDTH - menu.getWidth()){
-					point.setLocation(Config.SIZE_WINDOW_PLAYERPANEL_WIDTH - menu.getWidth(), point.y);
+				if (point.x > WIDTH - menu.getWidth()){
+					point.setLocation(WIDTH - menu.getWidth(), point.y);
 				}
-				if (point.y > Config.SIZE_WINDOW_PLAYERPANEL_HEIGHT - menu.getHeight()){
-					point.setLocation(point.x, Config.SIZE_WINDOW_PLAYERPANEL_HEIGHT - menu.getHeight());
+				if (point.y > HEIGHT - menu.getHeight()){
+					point.setLocation(point.x, HEIGHT - menu.getHeight());
 				}
 				menu.addMouseListener(new MouseAdapter() {
-					Dimension dim = menu.getSize();
+					Size dim = new Size(menu.getSize());
 					@Override
 					public void mouseExited(MouseEvent e) {
-						if (!Util.areasOverlap(new Point(0,0), dim, e.getPoint(), new Dimension(1,1))){
+						if (!Util.areasOverlap(new Point(0,0), dim, e.getPoint(), new Size(1,1))){
 							menu.setVisible(false);
 						}
 					}
@@ -159,7 +162,7 @@ public class PlayerPanel extends JPanel {
 				if (options.length > 0){
 					item.doAction(options[0], maze.getPlayer());
 				} else {
-					throw new IllegalStateException(TAG + ".mousepressed: every item should return atleast 1 option!");
+					throw new IllegalStateException("every item should return atleast 1 option!: " + item.getName());
 				}			 
 			}
 		}

@@ -1,19 +1,19 @@
 package main.game.maze.interactable.item;
 
-import java.awt.Dimension;
 import main.game.Config;
 import main.game.maze.interactable.Option;
 import main.game.maze.interactable.creature.player.Player;
 import main.game.maze.interactable.item.behaviours.ItemBehaviourFactory;
 import main.game.maze.interactable.item.behaviours.ItemType;
 import main.game.maze.interactable.item.behaviours.rightclickbehaviour.RightClickBehaviour;
+import main.game.util.Size;
 
 public class Coins extends Stackable {
 	private static final int SIZE_WIDTH = 20;
 	private static final int SIZE_HEIGHT = 20;
 	private static final String IMAGE_SRC = Config.IMAGES_FOLDER_ITEMS + "coins.png";
 	public static final String NAME = "coins";
-	private static final Dimension imageSize = new Dimension(SIZE_WIDTH, SIZE_HEIGHT);
+	private static final Size imageSize = new Size(SIZE_WIDTH, SIZE_HEIGHT);
 	private static final ItemType itemType = ItemType.COINS;
 	
 	private final RightClickBehaviour rightClickBehaviour = ItemBehaviourFactory.getRightClickBehaviour(itemType);

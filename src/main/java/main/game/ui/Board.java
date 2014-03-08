@@ -1,6 +1,6 @@
 package main.game.ui;
 
-import java.awt.Dimension;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
@@ -33,15 +33,18 @@ import main.game.maze.interactable.item.Key;
 import main.game.maze.interactable.item.gatestone.GateStone;
 import main.game.maze.interactable.object.RoomObject;
 import main.game.maze.room.Room;
-import main.game.ui.gameinterface.GameInterface;
+import main.game.util.Size;
 import main.game.util.Util;
 
 public class Board extends JPanel {
 	private static final long serialVersionUID = -5300839540150130114L;
-	@SuppressWarnings("unused")
-	private static final String TAG = "Board";
+	public static final Color COLOR_HEALTHBAR_HEALTHY = Color.GREEN;
+	public static final Color COLOR_HEALTHBAR_DAMAGED = Color.RED;
+	public static final int WIDTH = 1000;
+	public static final int HEIGHT = 600;
+	private static final Size SIZE = new Size(WIDTH, HEIGHT);
 	private Maze maze;
-	private Dimension totalSize;
+	private Size totalSize;
 	
 	public Board(Maze maze){
 		this.maze = maze;
@@ -52,7 +55,7 @@ public class Board extends JPanel {
 	}
 		
 	private void calculateTotalSize() {
-		totalSize = new Dimension(2*Config.PADDING_BOARD_ROOM_EXTERNAL+Config.ROOM_COUNT_HORIZONTAL*Config.SIZE_ROOM_WIDTH+(Config.ROOM_COUNT_HORIZONTAL-1)*Config.PADDING_BOARD_ROOM_INTERNAL,
+		totalSize = new Size(2*Config.PADDING_BOARD_ROOM_EXTERNAL+Config.ROOM_COUNT_HORIZONTAL*Config.SIZE_ROOM_WIDTH+(Config.ROOM_COUNT_HORIZONTAL-1)*Config.PADDING_BOARD_ROOM_INTERNAL,
 				2*Config.PADDING_BOARD_ROOM_EXTERNAL+Config.ROOM_COUNT_VERTICAL*Config.SIZE_ROOM_HEIGHT+(Config.ROOM_COUNT_VERTICAL-1)*Config.PADDING_BOARD_ROOM_INTERNAL);
 	}
 	
@@ -73,7 +76,11 @@ public class Board extends JPanel {
 		
 		//a hack to move player to center of the screen.
 		Point temp = getPlayerWindowCorner();
-		setBounds(-temp.x, -temp.y, temp.x+Config.SIZE_WINDOW_BOARD_WIDTH, temp.y+Config.SIZE_WINDOW_BOARD_HEIGHT);	
+		setBounds(-temp.x, -temp.y, temp.x + WIDTH, temp.y + HEIGHT);	
+		
+		if (maze.getPlayer().getGameInterface() != null){
+			maze.getPlayer().getGameInterface().drawInterface(g, temp, SIZE);
+		}
 	}
 
 	private void drawRoomObjects(Graphics g) {
@@ -210,10 +217,10 @@ public class Board extends JPanel {
 
 	private void drawHealthBar(Graphics g, int x, int y, Creature creature) {
 		Point p = creature.getPosition().getPoint();
-		g.setColor(Config.COLOR_HEALTHBAR_DAMAGED);
+		g.setColor(COLOR_HEALTHBAR_DAMAGED);
 		p = new Point(x + p.x, y + p.y-Config.SIZE_HEALTHBAR_HEIGHT-Config.PADDING_HEALTHBAR);
 		g.fillRect(p.x, p.y, Config.SIZE_HEALTHBAR_WIDTH, Config.SIZE_HEALTHBAR_HEIGHT);
-		g.setColor(Config.COLOR_HEALTHBAR_HEALTHY);
+		g.setColor(COLOR_HEALTHBAR_HEALTHY);
 		int width = (int) (((double) creature.getCurrentHealth()/ (double) creature.getMaxHealth())*Config.SIZE_HEALTHBAR_WIDTH);
 		g.fillRect(p.x, p.y, width, Config.SIZE_HEALTHBAR_HEIGHT);
 	}
@@ -279,7 +286,7 @@ public class Board extends JPanel {
 										- Math.abs(d.y)*((Config.SIZE_DOOR_ROOM-Config.SIZE_THICKNESS_DOOR)/2),
 										corner.y + c.y + d.y*(Config.SIZE_ROOM_HEIGHT+Config.SIZE_THICKNESS_DOOR)/2
 										- Math.abs(d.x)*((Config.SIZE_DOOR_ROOM-Config.SIZE_THICKNESS_DOOR)/2));
-								Dimension dim = new Dimension(Math.abs(d.x)*Config.SIZE_THICKNESS_DOOR+Math.abs(d.y)*Config.SIZE_DOOR_ROOM,
+								Size dim = new Size(Math.abs(d.x)*Config.SIZE_THICKNESS_DOOR+Math.abs(d.y)*Config.SIZE_DOOR_ROOM,
 										Math.abs(d.y)*Config.SIZE_THICKNESS_DOOR+Math.abs(d.x)*Config.SIZE_DOOR_ROOM);
 								Image image = null;
 								switch (dir){
@@ -356,23 +363,23 @@ public class Board extends JPanel {
 		}
 	}
 	
-	private Point getPlayerWindowCorner(){
+	private Point getPlayerWindowCorner(){		
 		Player player = maze.getPlayer();
 		Point pos_room = player.getPosition().getPoint();
 		Point corner = getRoomCorner(player.getPosition().getRoom());
-		int x = corner.x + pos_room.x - Config.SIZE_WINDOW_BOARD_WIDTH/2;
-		int y = corner.y + pos_room.y - Config.SIZE_WINDOW_BOARD_HEIGHT/2; 
+		int x = corner.x + pos_room.x - WIDTH/2;
+		int y = corner.y + pos_room.y - HEIGHT/2; 
 		if (x < 0){
 			x = 0;
 		}
 		if (y < 0){
 			y = 0;
 		}		
-		if (x > totalSize.width - Config.SIZE_WINDOW_BOARD_WIDTH){
-			x = totalSize.width - Config.SIZE_WINDOW_BOARD_WIDTH;
+		if (x > totalSize.width - WIDTH){
+			x = totalSize.width - WIDTH;
 		}	
-		if (y > totalSize.height - Config.SIZE_WINDOW_BOARD_HEIGHT){
-			y = totalSize.height - Config.SIZE_WINDOW_BOARD_HEIGHT;
+		if (y > totalSize.height - HEIGHT){
+			y = totalSize.height - HEIGHT;
 		}
 		return new Point(x,y);
 	}
@@ -384,6 +391,10 @@ public class Board extends JPanel {
 			MainController.addGameAction(this);
 		}
 		public void keyPressed(KeyEvent e){
+			if (maze.getPlayer().getGameInterface() != null){
+				maze.getPlayer().getGameInterface().keyPressed(e);
+				return;
+			}
 			int keyCode = e.getKeyCode();
 			switch (keyCode){
 			case Config.DEBUG_MOVE_ROOM_UP: player.move(Direction.NORTH); break;
@@ -440,6 +451,10 @@ public class Board extends JPanel {
 	
 	private class MouseClickListener extends MouseAdapter {
 		public void mousePressed(MouseEvent me){
+			if (maze.getPlayer().getGameInterface() != null){
+				maze.getPlayer().getGameInterface().mousePressed(me);
+				return;
+			}
 			final Point p = me.getPoint();
 			for (int i = 0; i < Config.ROOM_COUNT_HORIZONTAL; i++){
 				for (int j = 0; j < Config.ROOM_COUNT_VERTICAL; j++){
@@ -476,10 +491,10 @@ public class Board extends JPanel {
 				p.setLocation(p.x, Config.SIZE_WINDOW_BOARD_HEIGHT - menu.getHeight());
 			}*/
 			menu.addMouseListener(new MouseAdapter() {
-				Dimension dim = menu.getSize();
+				Size dim = new Size(menu.getSize());
 				@Override
 				public void mouseExited(MouseEvent e) {
-					if (!Util.areasOverlap(new Point(0,0), dim, e.getPoint(), new Dimension(1,1))){
+					if (!Util.areasOverlap(new Point(0,0), dim, e.getPoint(), new Size(1,1))){
 						menu.setVisible(false);
 					}
 				}
@@ -575,9 +590,9 @@ public class Board extends JPanel {
 
 	private boolean wasClickedOn(Point mouseClickInRoomPosition, Interactable interactable) {
 		Point p1 = mouseClickInRoomPosition;
-		Dimension dim1 = new Dimension(1,1);
+		Size dim1 = new Size(1,1);
 		Point p2 = interactable.getPosition().getPoint();
-		Dimension dim2 = interactable.getImageSize();
+		Size dim2 = interactable.getImageSize();
 		if (Util.areasOverlap(p1, dim1, p2, dim2, Config.PADDING_MOUSE_CLICK)){
 			return true;
 		}

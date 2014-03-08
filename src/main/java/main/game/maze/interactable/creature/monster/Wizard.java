@@ -1,7 +1,5 @@
 package main.game.maze.interactable.creature.monster;
 
-import java.awt.Dimension;
-
 import main.game.Config;
 import main.game.maze.interactable.item.Coins;
 import main.game.maze.interactable.item.armour.RobeArmour;
@@ -11,6 +9,7 @@ import main.game.maze.interactable.item.weapon.Staff;
 import main.game.maze.mechanics.lootTable.LootEntry;
 import main.game.maze.mechanics.lootTable.LootTable;
 import main.game.maze.mechanics.stats.Stats;
+import main.game.util.Size;
 import main.game.util.Util;
 
 public class Wizard extends Monster{
@@ -28,7 +27,7 @@ public class Wizard extends Monster{
 	}
 
 	public Wizard() {
-		super("wizard", new Dimension(SIZE_WIDTH,SIZE_HEIGHT));
+		super("wizard", new Size(SIZE_WIDTH,SIZE_HEIGHT));
 		weapon = new Staff();
 		armour = new RobeArmour();
 		image = Util.readImage(IMAGE_SRC);

@@ -1,11 +1,11 @@
 package main.game.maze.interactable.creature.monster;
 
-import java.awt.Dimension;
 import java.awt.Point;
 
 import main.game.Config;
 import main.game.maze.interactable.creature.Creature;
 import main.game.maze.interactable.item.Item;
+import main.game.util.Size;
 import main.game.util.Util;
 
 public class MonsterController {
@@ -24,7 +24,7 @@ public class MonsterController {
 			destination = Util.randomPointInArea(Config.SIZE_ROOM_WIDTH-monster.getImageSize().width, Config.SIZE_ROOM_HEIGHT-monster.getImageSize().height);
 			destinationReached = false;
 		}
-		if (Util.areasOverlap(monster.getPosition().getPoint(), monster.getImageSize(), destination, new Dimension(1,1))){
+		if (Util.areasOverlap(monster.getPosition().getPoint(), monster.getImageSize(), destination, new Size(1,1))){
 			destinationReached = true;
 			destinationReachedTime = System.currentTimeMillis();
 			return;

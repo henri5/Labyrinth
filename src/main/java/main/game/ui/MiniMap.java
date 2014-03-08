@@ -15,6 +15,8 @@ import main.game.maze.interactable.creature.player.Player;
 import main.game.maze.room.Room;
 
 public class MiniMap extends JPanel {
+	public static final int WIDTH = 300;
+	public static final int HEIGHT = 200;
 	private final Dimension IMAGE_SIZE = new Dimension(100,100);
 	private static final long serialVersionUID = -3846521993094337688L;
 	private Maze maze;
@@ -37,8 +39,7 @@ public class MiniMap extends JPanel {
 	}
 
 	private void calculateOffset() {
-		offset = new Point((int) (Config.SIZE_WINDOW_MINIMAP_WIDTH-totalSize.width)/2,
-				(int) (Config.SIZE_WINDOW_MINIMAP_HEIGHT-totalSize.height)/2);
+		offset = new Point((int) (WIDTH-totalSize.width)/2,	(int) (HEIGHT-totalSize.height)/2);
 	}
 
 	private void calculateSizesToScale() {
@@ -51,8 +52,8 @@ public class MiniMap extends JPanel {
 	}
 
 	private void calculateScale() {
-		double scaleW = (double)Config.SIZE_WINDOW_MINIMAP_WIDTH/(double)totalSize.width;
-		double scaleH = (double)Config.SIZE_WINDOW_MINIMAP_HEIGHT/(double)totalSize.height;
+		double scaleW = (double) WIDTH/ (double)totalSize.width;
+		double scaleH = (double) HEIGHT/ (double)totalSize.height;
 		if (scaleW > scaleH){
 			scale = scaleH;
 		} else {

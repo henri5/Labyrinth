@@ -1,18 +1,17 @@
 package main.game.maze.interactable.item.food;
 
-import java.awt.Dimension;
-
 import main.game.maze.interactable.Option;
 import main.game.maze.interactable.creature.player.Player;
 import main.game.maze.interactable.item.NonStackable;
 import main.game.maze.interactable.item.behaviours.ItemBehaviourFactory;
 import main.game.maze.interactable.item.behaviours.ItemType;
 import main.game.maze.interactable.item.behaviours.rightclickbehaviour.RightClickBehaviour;
+import main.game.util.Size;
 
 public abstract class Food extends NonStackable {
 	private static final int SIZE_WIDTH = 20;
 	private static final int SIZE_HEIGHT = 20;
-	private static final Dimension imageSize = new Dimension(SIZE_WIDTH, SIZE_HEIGHT);
+	private static final Size imageSize = new Size(SIZE_WIDTH, SIZE_HEIGHT);
 	private static final ItemType itemType = ItemType.EDIBLE;
 	private static final RightClickBehaviour rightClickBehaviour = ItemBehaviourFactory.getRightClickBehaviour(itemType);
 	private final int healAmount;

@@ -6,8 +6,6 @@ import main.game.maze.interactable.creature.player.Player;
 
 public class PersonalGateStone extends GateStone{
 	private static final String IMAGE_SRC = Config.IMAGES_FOLDER_ITEMS + "gatestone.png";
-	@SuppressWarnings("unused")
-	private static final String TAG = "PersonalGateStone";
 	
 	public PersonalGateStone(Player player){
 		super(IMAGE_SRC, player, "PersonalGateStone");

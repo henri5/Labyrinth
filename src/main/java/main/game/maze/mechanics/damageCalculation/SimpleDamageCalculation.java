@@ -7,8 +7,6 @@ import main.game.maze.interactable.item.armour.armourType.ArmourType;
 import main.game.maze.interactable.item.weapon.weaponType.WeaponType;
 
 public class SimpleDamageCalculation implements DamageCalculation {
-	@SuppressWarnings("unused")
-	private final static String TAG = "SimpleDamageCalculation";
 	
 	public int getDamage(Creature attacker, Creature defender){
 		double modifier = compareTypes(attacker.getWeapon().getWeaponType(), defender.getArmour().getArmourType());

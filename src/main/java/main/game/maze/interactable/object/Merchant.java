@@ -1,7 +1,5 @@
 package main.game.maze.interactable.object;
 
-import java.awt.Dimension;
-
 import main.game.Config;
 import main.game.maze.interactable.Option;
 import main.game.maze.interactable.creature.player.Player;
@@ -10,13 +8,14 @@ import main.game.maze.interactable.item.food.Fish;
 import main.game.maze.mechanics.shop.Stock;
 import main.game.maze.mechanics.shop.StockItem;
 import main.game.ui.gameinterface.ShopInterface;
+import main.game.util.Size;
 
 public class Merchant extends RoomObject {
 	private static final int WIDTH = 25;
 	private static final int HEIGHT = 25;
 	private static final String NAME = "merchant";
 	private static final boolean IS_PASSABLE = true;
-	private static final Dimension imageSize = new Dimension(WIDTH, HEIGHT);
+	private static final Size imageSize = new Size(WIDTH, HEIGHT);
 	private static final String IMAGE_SRC = Config.IMAGES_FOLDER_OBJECTS + "merchant.png";
 	private static final Stock STOCK;
 	static {
@@ -40,7 +39,7 @@ public class Merchant extends RoomObject {
 	@Override
 	public void doAction(Option option, Player player) {
 		switch (option){
-		case TRADE: System.out.println("Trading with a merchant"); new ShopInterface(STOCK, player); break;
+		case TRADE: System.out.println("Trading with a merchant"); player.setInterface(new ShopInterface(STOCK, player)); break;
 		default: throw new IllegalArgumentException("Illegal option: " + option);
 		}
 	}

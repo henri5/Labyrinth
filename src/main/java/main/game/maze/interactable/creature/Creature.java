@@ -1,6 +1,5 @@
 package main.game.maze.interactable.creature;
 
-import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Point;
 
@@ -11,6 +10,7 @@ import main.game.maze.interactable.item.weapon.Weapon;
 import main.game.maze.mechanics.damageCalculation.DamageCalculation;
 import main.game.maze.mechanics.damageCalculation.SimpleDamageCalculation;
 import main.game.maze.mechanics.stats.Stats;
+import main.game.util.Size;
 import main.game.util.Util;
 
 public class Creature {
@@ -20,13 +20,13 @@ public class Creature {
 	protected Weapon weapon;
 	protected Armour armour;
 	protected Image image;
-	protected Dimension imageSize;
+	protected Size imageSize;
 	private long lastOpponentAttackedTime;
 	protected long lastBeingAttackedTime;
 	protected Position position = new Position();
 	
 	protected Stats stats;
-	public Creature(String name, Dimension imageSize) {
+	public Creature(String name, Size imageSize) {
 		this.name = name;
 		this.imageSize = imageSize;
 	}
@@ -46,7 +46,7 @@ public class Creature {
 		return image;
 	}
 
-	public Dimension getImageSize() {
+	public Size getImageSize() {
 		return imageSize;
 	}
 	
@@ -120,8 +120,8 @@ public class Creature {
 		}
 		Point p1 = getPosition().getPoint();
 		Point p2 = creature.getPosition().getPoint();
-		Dimension dim1 = getImageSize();
-		Dimension dim2 = creature.getImageSize();
+		Size dim1 = getImageSize();
+		Size dim2 = creature.getImageSize();
 		return Util.areasOverlap(p1, dim1, p2, dim2, weapon.getWeaponRange());
 	}
 	

@@ -65,7 +65,7 @@ public class Util {
 	 *  {@link Util#areasOverlap(Point areaCorner1, Dimension areaSize1, Point areaCorner2, Dimension areaSize2, int padding)}
 	 *  with padding 0
 	 */
-	public static boolean areasOverlap(Point areaCorner1, Dimension areaSize1, Point areaCorner2, Dimension areaSize2){
+	public static boolean areasOverlap(Point areaCorner1, Size areaSize1, Point areaCorner2, Size areaSize2){
 		return areasOverlap(areaCorner1, areaSize1, areaCorner2, areaSize2, 0);
 	}	
 
@@ -78,7 +78,7 @@ public class Util {
 	 * @param padding if areas don't overlap, maximum distance between area borders allowed for true to be returned
 	 * @return true if areas overlap
 	 */
-	public static boolean areasOverlap(Point areaCorner1, Dimension areaSize1, Point areaCorner2, Dimension areaSize2, int padding){
+	public static boolean areasOverlap(Point areaCorner1, Size areaSize1, Point areaCorner2, Size areaSize2, int padding){
 		Point _areaCorner2 = new Point(areaCorner2.x-padding,areaCorner2.y-padding);
 		Dimension _areaSize2 = new Dimension(areaSize2.width+2*padding,areaSize2.height+2*padding);
 		if (areaCorner1.x > _areaCorner2.x - areaSize1.width && areaCorner1.x < _areaCorner2.x + _areaSize2.width){
@@ -97,7 +97,7 @@ public class Util {
 	 * @param dimension
 	 */
 	public static void drawImage(Graphics g, Image image, Point point,
-			Dimension dimension) {
+			Size dimension) {
 		g.drawImage(image,point.x, point.y, dimension.width, dimension.height, null);
 		
 	}
@@ -108,7 +108,7 @@ public class Util {
 	 * @param size2 size of item to be placed
 	 * @return a point so that second area would be in the center for first area
 	 */
-	public static Point placeInMiddleOf(Dimension size1, Dimension size2) {
+	public static Point placeInMiddleOf(Size size1, Size size2) {
 		return new Point((size1.width-size2.width)/2,(size1.height-size2.height)/2);
 	}
 

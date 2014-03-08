@@ -10,18 +10,6 @@ public final class Config {
 	public static final int INVENTORY_COUNT_HORIZONTAL = 5;
 	public static final int INVENTORY_COUNT_VERTICAL = 6;
 	
-	//Sizes
-	public static final int SIZE_WINDOW_BOARD_WIDTH = 1000;
-	public static final int SIZE_WINDOW_BOARD_HEIGHT = 600;
-	public static final int SIZE_WINDOW_MINIMAP_WIDTH = 300;
-	public static final int SIZE_WINDOW_MINIMAP_HEIGHT = 200;
-	public static final int SIZE_WINDOW_KEYBAG_WIDTH = SIZE_WINDOW_BOARD_WIDTH;
-	public static final int SIZE_WINDOW_KEYBAG_HEIGHT = 30;	//2*padding for key image + keybag key image size
-	public static final int SIZE_WINDOW_PLAYERPANEL_WIDTH = SIZE_WINDOW_MINIMAP_WIDTH;
-	public static final int SIZE_WINDOW_PLAYERPANEL_HEIGHT = SIZE_WINDOW_BOARD_HEIGHT + SIZE_WINDOW_KEYBAG_HEIGHT - SIZE_WINDOW_MINIMAP_HEIGHT;
-	public static final int SIZE_WINDOW_HEIGHT = SIZE_WINDOW_BOARD_HEIGHT + SIZE_WINDOW_KEYBAG_HEIGHT;
-	public static final int SIZE_WINDOW_WIDTH = SIZE_WINDOW_BOARD_WIDTH + SIZE_WINDOW_MINIMAP_WIDTH;
-	
 	public static final int SIZE_ROOM_WIDTH = 200;
 	public static final int SIZE_ROOM_HEIGHT = 200;
 	public static final int SIZE_HEALTHBAR_WIDTH = 20;
@@ -30,16 +18,12 @@ public final class Config {
 	public static final int SIZE_DOOR_MINIMAP = 80;	//relative to room width/height
 	public static final int SIZE_THICKNESS_WALL = 7; // width/height of wall and corner image
 	public static final int SIZE_THICKNESS_DOOR = 8;
-	public static final int SIZE_PLAYERPANEL_SWITCHTAB_HEIGHT = 30;
 	
 	//Paddings
-	public static final int PADDING_INVENTORY_INTERNAL = 5;
-	public static final int PADDING_INVENTORY_EXTERNAL = 20;
 	public static final int PADDING_BOARD_ROOM_EXTERNAL = 100;
 	public static final int PADDING_BOARD_ROOM_INTERNAL = 20;
 	public static final int PADDING_MINIMAP_ROOM_INTERNAL = 60;	//relative to room width/height
 	public static final int PADDING_MINIMAP_ROOM_EXTERNAL = 100;	//relative to room width/height
-	public static final int PADDING_KEY_IMAGE = 5;
 	public static final int PADDING_HEALTHBAR = 5;
 	public static final int PADDING_MOUSE_CLICK = 5;
 	
@@ -67,8 +51,6 @@ public final class Config {
 	public static final Color COLOR_ROOM_LOCKED = Color.DARK_GRAY;
 	public static final Color COLOR_DOOR = Color.LIGHT_GRAY;
 	public static final Color COLOR_ROOM_START = Color.LIGHT_GRAY;
-	public static final Color COLOR_HEALTHBAR_HEALTHY = Color.GREEN;
-	public static final Color COLOR_HEALTHBAR_DAMAGED = Color.RED;
 	
 	//Images
 	public static final String IMAGES_FOLDER = "/images/";
