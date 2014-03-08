@@ -1,6 +1,8 @@
 package main.game.util;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
@@ -16,6 +18,11 @@ public class Util {
 		throw new IllegalAccessError("Util class must not be initialized");
 	}
 	
+	/**
+	 * Reads and returns image. Subsequent reads of image with same name are done from cache.
+	 * @param fileName
+	 * @return image
+	 */
 	public static Image readImage(String fileName){
 		Image image = ImageHolder.getImage(fileName);
 		if (image == null){
@@ -35,39 +42,19 @@ public class Util {
 	}
 	
 	/**
-	 * Creates point with random position within given area. Same as {@code randomPointInArea(0,0,width,height)}
+	 * Creates point with random position within given area.
 	 * @param width 
 	 * @param height
 	 * @return random Point
 	 */
 	public static Point randomPointInArea(int width, int height){
-		return randomPointInArea(0, 0, width, height);
-	}
-
-	/**
-	 * Return point with random position within given area with specified top-left corner.
-	 * @param x
-	 * @param y
-	 * @param width
-	 * @param height
-	 * @return
-	 */
-	public static Point randomPointInArea(int x, int y, int width, int height){
 		if (width < 0 || height < 0){
 			throw new IllegalArgumentException("you're trying to fit something "
 					+ "too large into gap too small. W:" + width + " H:" + height);
 		}
 		Random rnd = new Random();
-		return new Point(x+rnd.nextInt(width),y+rnd.nextInt(height));
+		return new Point(rnd.nextInt(width),rnd.nextInt(height));
 	}
-	
-	/** Check whether two areas with given points as corners and dimensions as sizes overlap. Same as
-	 *  {@link Util#areasOverlap(Point areaCorner1, Dimension areaSize1, Point areaCorner2, Dimension areaSize2, int padding)}
-	 *  with padding 0
-	 */
-	public static boolean areasOverlap(Point areaCorner1, Size areaSize1, Point areaCorner2, Size areaSize2){
-		return areasOverlap(areaCorner1, areaSize1, areaCorner2, areaSize2, 0);
-	}	
 
 	/** Check whether two areas with given points as corners and dimensions as sizes overlap, where one area's 
 	 * dimensions are increased by padding (and corner shifted by same amount)
@@ -91,14 +78,14 @@ public class Util {
 
 	/**
 	 * Same as graphics.drawImage(image, point.x, point.y, dimension.width, dimension.height, null.
-	 * @param g
+	 * @param graphics
 	 * @param image
 	 * @param point
-	 * @param dimension
+	 * @param size
 	 */
-	public static void drawImage(Graphics g, Image image, Point point,
-			Size dimension) {
-		g.drawImage(image,point.x, point.y, dimension.width, dimension.height, null);
+	public static void drawImage(Graphics graphics, Image image, Point point,
+			Size size) {
+		graphics.drawImage(image,point.x, point.y, size.width, size.height, null);
 		
 	}
 
@@ -110,6 +97,29 @@ public class Util {
 	 */
 	public static Point placeInMiddleOf(Size size1, Size size2) {
 		return new Point((size1.width-size2.width)/2,(size1.height-size2.height)/2);
+	}
+
+	/**
+	 * Draws small white string {@code text} with 1px stroke with top left corner of {@code point}
+	 * on Graphics {@code g}.
+	 * @param g Graphics to draw on
+	 * @param point top left corner of text
+	 * @param text string to draw
+	 */
+	public static void drawTextSmall(Graphics g, Point point, String text) {
+		Font f = new Font("Helvetica", Font.PLAIN, 12);
+		g.setFont(f);
+		g.setColor(Color.BLACK);
+		for (int m = -1; m < 2; m+=2){
+			for (int n = -1; n < 2; n+=2){
+				g.drawString(text, point.x + m, point.y + g.getFont().getSize() + n);
+				
+			}
+		}
+		f = new Font("Helvetica", Font.PLAIN, 12);
+		g.setFont(f);
+		g.setColor(Color.WHITE);
+		g.drawString(text, point.x, point.y + g.getFont().getSize());
 	}
 
 }

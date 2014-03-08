@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
+import main.game.Config;
 import main.game.maze.interactable.creature.player.Player;
 import main.game.maze.mechanics.shop.Stock;
 import main.game.ui.Board;
@@ -30,7 +31,15 @@ public class ShopInterface implements GameInterface {
 		g.fillRect(cornerOfScreen.x, cornerOfScreen.y, screenSize.width, screenSize.height);
 		g.setColor(COLOR_BACKGROUND);
 		Point interfaceCorner = Util.placeInMiddleOf(screenSize, SIZE_INTERFACE);
-		g.fillRect(interfaceCorner.x+cornerOfScreen.x, interfaceCorner.y+cornerOfScreen.y, SIZE_INTERFACE.width, SIZE_INTERFACE.height);
+		g.fillRect(interfaceCorner.x + cornerOfScreen.x, interfaceCorner.y + cornerOfScreen.y, SIZE_INTERFACE.width, SIZE_INTERFACE.height);
+		Point textLocation = new Point(interfaceCorner.x + cornerOfScreen.x, interfaceCorner.y + cornerOfScreen.y + SIZE_INTERFACE.height);		
+		Util.drawTextSmall(g, textLocation, String.format("Press %S to close the interface", KeyEvent.getKeyText(Config.KEYBIND_CLOSE_INTERFACE)));
+		drawStock(g, interfaceCorner);
+	}
+
+	private void drawStock(Graphics g, Point interfaceCorner) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
@@ -42,7 +51,7 @@ public class ShopInterface implements GameInterface {
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
 		switch (keyCode) {
-		case KeyEvent.VK_ESCAPE: player.setInterface(null); break;
+		case Config.KEYBIND_CLOSE_INTERFACE: player.setInterface(null); break;
 		default: break;
 		}
 	}

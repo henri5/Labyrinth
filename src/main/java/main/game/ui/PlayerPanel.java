@@ -1,7 +1,6 @@
 package main.game.ui;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
@@ -27,6 +26,9 @@ import main.game.util.Util;
 
 public class PlayerPanel extends JPanel {
 	private static final long serialVersionUID = 8598148008009578889L;
+	private static final Color COLOR_BACKGROUND = Color.BLACK;
+	private static final Color COLOR_INVENTORY_SLOT_STROKE = Color.GRAY;
+	private static final Color COLOR_INVENTORY_SLOT_CONTENT_EQUIPPED = Color.LIGHT_GRAY;
 	private static final int PADDING_INVENTORY_INTERNAL = 5;
 	private static final int PADDING_INVENTORY_EXTERNAL = 20;
 	private static final int SWITCHTAB_HEIGHT = 30;
@@ -50,7 +52,7 @@ public class PlayerPanel extends JPanel {
 	@Override
 	public void paint(Graphics g){
 		super.paint(g);
-		setBackground(Config.COLOR_BACKGROUND);
+		setBackground(COLOR_BACKGROUND);
 		drawInventorySlots(g);
 		drawItems(g);
 	}
@@ -67,21 +69,8 @@ public class PlayerPanel extends JPanel {
 					g.drawImage(image, imageCorner.x, imageCorner.y, imageSize, imageSize, null);
 					if (item instanceof Stackable){
 						Stackable sItem = (Stackable) item;
-						String quantity = Integer.toString(sItem.getQuantity());
-					    Font f = new Font("Helvetica", Font.BOLD, 12);
-					    g.setFont(f);
-					    g.setColor(Color.BLACK);
-						for (int m = -1; m < 2; m++){
-							for (int n = -1; n < 2; n++){
-								g.drawString(quantity, imageCorner.x + m, imageCorner.y + g.getFont().getSize() + n);
-								
-							}
-						}
-						f = new Font("Helvetica", Font.PLAIN, 12);
-					    g.setFont(f);
-					    g.setColor(Color.WHITE);
-						g.drawString(quantity, imageCorner.x, imageCorner.y + g.getFont().getSize());
-						
+						String text = Integer.toString(sItem.getQuantity());
+					    Util.drawTextSmall(g, imageCorner, text);						
 					}
 				} else {
 					return;
@@ -95,9 +84,15 @@ public class PlayerPanel extends JPanel {
 		for (int i = 0; i < Config.INVENTORY_COUNT_HORIZONTAL; i++){
 			for (int j = 0; j < Config.INVENTORY_COUNT_VERTICAL; j++){
 				Point imageCorner = getItemCorner(i,j);
-				g.setColor(Color.DARK_GRAY);
+				g.setColor(COLOR_INVENTORY_SLOT_STROKE);
+				int inventorySlot = i+j*Config.INVENTORY_COUNT_HORIZONTAL;
+				if (maze.getPlayer().getItems().size() > inventorySlot){
+					if (maze.getPlayer().hasEquipped(maze.getPlayer().getItems().get(inventorySlot))){
+						g.setColor(COLOR_INVENTORY_SLOT_CONTENT_EQUIPPED);
+					}
+				}
 				g.fillOval(imageCorner.x, imageCorner.y, imageSize, imageSize);
-				g.setColor(Config.COLOR_BACKGROUND);
+				g.setColor(COLOR_BACKGROUND);
 				g.fillOval(imageCorner.x+4, imageCorner.y+4, imageSize-8, imageSize-8);
 			}
 		}
@@ -145,7 +140,7 @@ public class PlayerPanel extends JPanel {
 					Size dim = new Size(menu.getSize());
 					@Override
 					public void mouseExited(MouseEvent e) {
-						if (!Util.areasOverlap(new Point(0,0), dim, e.getPoint(), new Size(1,1))){
+						if (!Util.areasOverlap(new Point(0,0), dim, e.getPoint(), new Size(1,1), 0)){
 							menu.setVisible(false);
 						}
 					}

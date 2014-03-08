@@ -28,17 +28,18 @@ public final class Config {
 	public static final int PADDING_MOUSE_CLICK = 5;
 	
 	//KeyBindings
-	public static final int PLAYER_MOVE_UP = KeyEvent.VK_W;
-	public static final int PLAYER_MOVE_DOWN = KeyEvent.VK_S;
-	public static final int PLAYER_MOVE_LEFT = KeyEvent.VK_A;
-	public static final int PLAYER_MOVE_RIGHT = KeyEvent.VK_D;
-	public static final int PLAYER_DROP_GATESTONE_PERSONAL = KeyEvent.VK_Q;
-	public static final int PLAYER_TELEPORT_TO_GATESTONE_PERSONAL = KeyEvent.VK_E;
-	public static final int PLAYER_DROP_GATESTONE_GROUP = KeyEvent.VK_1;
-	public static final int PLAYER_TELEPORT_TO_GATESTONE_GROUP = KeyEvent.VK_2;
-	public static final int PLAYER_PICK_UP_ITEM = KeyEvent.VK_SPACE;
-	public static final int PLAYER_INTERACT_WITH_DOOR = KeyEvent.VK_SHIFT;
-	public static final int PLAYER_TELEPORT_TO_BASE = KeyEvent.VK_H;
+	public static final int KEYBIND_MOVE_UP = KeyEvent.VK_W;
+	public static final int KEYBIND_MOVE_DOWN = KeyEvent.VK_S;
+	public static final int KEYBIND_MOVE_LEFT = KeyEvent.VK_A;
+	public static final int KEYBIND_MOVE_RIGHT = KeyEvent.VK_D;
+	public static final int KEYBIND_DROP_GATESTONE_PERSONAL = KeyEvent.VK_Q;
+	public static final int KEYBIND_TELEPORT_TO_GATESTONE_PERSONAL = KeyEvent.VK_E;
+	public static final int KEYBIND_DROP_GATESTONE_GROUP = KeyEvent.VK_1;
+	public static final int KEYBIND_TELEPORT_TO_GATESTONE_GROUP = KeyEvent.VK_2;
+	public static final int KEYBIND_PICK_UP_ITEM = KeyEvent.VK_SPACE;
+	public static final int KEYBIND_INTERACT_WITH_DOOR = KeyEvent.VK_SHIFT;
+	public static final int KEYBIND_TELEPORT_TO_BASE = KeyEvent.VK_H;
+	public static final int KEYBIND_CLOSE_INTERFACE = KeyEvent.VK_ESCAPE;
 
 	public static final int DEBUG_MOVE_ROOM_UP = KeyEvent.VK_UP;
 	public static final int DEBUG_MOVE_ROOM_DOWN = KeyEvent.VK_DOWN;

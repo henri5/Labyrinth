@@ -248,10 +248,10 @@ public abstract class Room implements Comparable<Room>{
 		return roomObjects;
 	}
 	
-	public boolean collidesWithRoomObject(Point point, Size dimension) {
+	public boolean collidesWithRoomObject(Point point, Size size) {
 		for (RoomObject ro: roomObjects){
 			if (!ro.isPassable()){
-				if (Util.areasOverlap(ro.getPosition().getPoint(), ro.getImageSize(), point, dimension)){
+				if (Util.areasOverlap(ro.getPosition().getPoint(), ro.getImageSize(), point, size, 0)){
 					return true;
 				};
 			}

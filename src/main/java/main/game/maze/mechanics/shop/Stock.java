@@ -5,9 +5,8 @@ import java.util.List;
 
 public class Stock {
 	private List<StockItem> items;
-	private Stock(){
-		
-	}
+	
+	private Stock(){}
 	
 	public static class Builder{
 		private List<StockItem> items = new ArrayList<StockItem>();

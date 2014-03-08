@@ -24,7 +24,7 @@ public class MonsterController {
 			destination = Util.randomPointInArea(Config.SIZE_ROOM_WIDTH-monster.getImageSize().width, Config.SIZE_ROOM_HEIGHT-monster.getImageSize().height);
 			destinationReached = false;
 		}
-		if (Util.areasOverlap(monster.getPosition().getPoint(), monster.getImageSize(), destination, new Size(1,1))){
+		if (Util.areasOverlap(monster.getPosition().getPoint(), monster.getImageSize(), destination, new Size(1,1), 0)){
 			destinationReached = true;
 			destinationReachedTime = System.currentTimeMillis();
 			return;

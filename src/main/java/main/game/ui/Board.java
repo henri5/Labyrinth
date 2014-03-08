@@ -401,27 +401,27 @@ public class Board extends JPanel {
 			case Config.DEBUG_MOVE_ROOM_RIGHT: player.move(Direction.EAST); break;
 			case Config.DEBUG_MOVE_ROOM_DOWN: player.move(Direction.SOUTH); break;
 			case Config.DEBUG_MOVE_ROOM_LEFT: player.move(Direction.WEST); break;
-			case Config.PLAYER_PICK_UP_ITEM: player.pickUpItems(); break;
-			case Config.PLAYER_DROP_GATESTONE_PERSONAL: player.getPersonalGateStone().dropGateStone(); break;
-			case Config.PLAYER_TELEPORT_TO_GATESTONE_PERSONAL: player.getPersonalGateStone().teleportTo(); break;
-			case Config.PLAYER_DROP_GATESTONE_GROUP: player.getGroupGateStone().dropGateStone(); break;
-			case Config.PLAYER_TELEPORT_TO_GATESTONE_GROUP: player.getGroupGateStone().teleportTo(); break;
-			case Config.PLAYER_INTERACT_WITH_DOOR: player.interactWithDoor(); break;
-			case Config.PLAYER_TELEPORT_TO_BASE: player.teleportToBase(); break;
-			case Config.PLAYER_MOVE_UP: keyPressed[Config.PLAYER_MOVE_UP] = true; break;
-			case Config.PLAYER_MOVE_RIGHT: keyPressed[Config.PLAYER_MOVE_RIGHT] = true; break;
-			case Config.PLAYER_MOVE_DOWN: keyPressed[Config.PLAYER_MOVE_DOWN] = true; break;
-			case Config.PLAYER_MOVE_LEFT: keyPressed[Config.PLAYER_MOVE_LEFT] = true; break;
+			case Config.KEYBIND_PICK_UP_ITEM: player.pickUpItems(); break;
+			case Config.KEYBIND_DROP_GATESTONE_PERSONAL: player.getPersonalGateStone().dropGateStone(); break;
+			case Config.KEYBIND_TELEPORT_TO_GATESTONE_PERSONAL: player.getPersonalGateStone().teleportTo(); break;
+			case Config.KEYBIND_DROP_GATESTONE_GROUP: player.getGroupGateStone().dropGateStone(); break;
+			case Config.KEYBIND_TELEPORT_TO_GATESTONE_GROUP: player.getGroupGateStone().teleportTo(); break;
+			case Config.KEYBIND_INTERACT_WITH_DOOR: player.interactWithDoor(); break;
+			case Config.KEYBIND_TELEPORT_TO_BASE: player.teleportToBase(); break;
+			case Config.KEYBIND_MOVE_UP: keyPressed[Config.KEYBIND_MOVE_UP] = true; break;
+			case Config.KEYBIND_MOVE_RIGHT: keyPressed[Config.KEYBIND_MOVE_RIGHT] = true; break;
+			case Config.KEYBIND_MOVE_DOWN: keyPressed[Config.KEYBIND_MOVE_DOWN] = true; break;
+			case Config.KEYBIND_MOVE_LEFT: keyPressed[Config.KEYBIND_MOVE_LEFT] = true; break;
 			default: return;
 			}
 		}
 		public void keyReleased(KeyEvent e){
 			int keyCode = e.getKeyCode();
 			switch (keyCode){
-			case Config.PLAYER_MOVE_UP: keyPressed[Config.PLAYER_MOVE_UP] = false; break;
-			case Config.PLAYER_MOVE_RIGHT: keyPressed[Config.PLAYER_MOVE_RIGHT] = false; break;
-			case Config.PLAYER_MOVE_DOWN: keyPressed[Config.PLAYER_MOVE_DOWN] = false; break;
-			case Config.PLAYER_MOVE_LEFT: keyPressed[Config.PLAYER_MOVE_LEFT] = false; break;
+			case Config.KEYBIND_MOVE_UP: keyPressed[Config.KEYBIND_MOVE_UP] = false; break;
+			case Config.KEYBIND_MOVE_RIGHT: keyPressed[Config.KEYBIND_MOVE_RIGHT] = false; break;
+			case Config.KEYBIND_MOVE_DOWN: keyPressed[Config.KEYBIND_MOVE_DOWN] = false; break;
+			case Config.KEYBIND_MOVE_LEFT: keyPressed[Config.KEYBIND_MOVE_LEFT] = false; break;
 			default: return;
 			}
 		}
@@ -429,16 +429,16 @@ public class Board extends JPanel {
 		
 		private void processKeys() {
 			int dx = 0, dy = 0;
-			if (keyPressed[Config.PLAYER_MOVE_UP]){
+			if (keyPressed[Config.KEYBIND_MOVE_UP]){
 				dy--;
 			}
-			if (keyPressed[Config.PLAYER_MOVE_RIGHT]){
+			if (keyPressed[Config.KEYBIND_MOVE_RIGHT]){
 				dx++;
 			}
-			if (keyPressed[Config.PLAYER_MOVE_DOWN]){
+			if (keyPressed[Config.KEYBIND_MOVE_DOWN]){
 				dy++;
 			}
-			if (keyPressed[Config.PLAYER_MOVE_LEFT]){
+			if (keyPressed[Config.KEYBIND_MOVE_LEFT]){
 				dx--;
 			}
 			player.moveInRoom(dx*player.getMovementSpeed(),dy*player.getMovementSpeed());
@@ -494,7 +494,7 @@ public class Board extends JPanel {
 				Size dim = new Size(menu.getSize());
 				@Override
 				public void mouseExited(MouseEvent e) {
-					if (!Util.areasOverlap(new Point(0,0), dim, e.getPoint(), new Size(1,1))){
+					if (!Util.areasOverlap(new Point(0,0), dim, e.getPoint(), new Size(1,1), 0)){
 						menu.setVisible(false);
 					}
 				}

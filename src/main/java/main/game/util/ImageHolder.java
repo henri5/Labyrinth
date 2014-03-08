@@ -10,11 +10,11 @@ public class ImageHolder {
 	private ImageHolder(){
 		throw new IllegalAccessError("ImageHolder class must not be initialized");
 	}
-	protected static Image getImage(String imageName){
+	static Image getImage(String imageName){
 		return imageMap.get(imageName);
 	}
 	
-	protected static void putImage(String imageName, Image image){
+	static void putImage(String imageName, Image image){
 		imageMap.put(imageName, image);
 	}
 }
