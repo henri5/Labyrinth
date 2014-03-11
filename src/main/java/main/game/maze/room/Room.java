@@ -260,7 +260,6 @@ public abstract class Room implements Comparable<Room>{
 	}
 	
 	public Size getRoomSize(){
-		// TODO: this might cause problems, as I do not know how safe it is. maybe create own immutable dimension?
 		return roomSize;
 	}
 	

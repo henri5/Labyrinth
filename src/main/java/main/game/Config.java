@@ -7,8 +7,6 @@ public final class Config {
 	public static final int SCREEN_REFRESH_DELAY = 50;
 	public static final int ROOM_COUNT_HORIZONTAL = 8;
 	public static final int ROOM_COUNT_VERTICAL = 8;
-	public static final int INVENTORY_COUNT_HORIZONTAL = 5;
-	public static final int INVENTORY_COUNT_VERTICAL = 6;
 	
 	public static final int SIZE_ROOM_WIDTH = 200;
 	public static final int SIZE_ROOM_HEIGHT = 200;

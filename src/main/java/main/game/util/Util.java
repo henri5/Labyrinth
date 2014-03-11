@@ -106,20 +106,22 @@ public class Util {
 	 * @param point top left corner of text
 	 * @param text string to draw
 	 */
-	public static void drawTextSmall(Graphics g, Point point, String text) {
-		Font f = new Font("Helvetica", Font.PLAIN, 12);
-		g.setFont(f);
-		g.setColor(Color.BLACK);
-		for (int m = -1; m < 2; m+=2){
-			for (int n = -1; n < 2; n+=2){
-				g.drawString(text, point.x + m, point.y + g.getFont().getSize() + n);
-				
+	public static void drawTextSmall(Graphics g, Point point, String... strings) {
+		int fontSize = 12;
+		Font f = new Font("Helvetica", Font.PLAIN, fontSize);
+		for (int i = 0; i < strings.length; i++) {
+			g.setFont(f);
+			g.setColor(Color.BLACK);
+			for (int m = -1; m < 2; m+=2){
+				for (int n = -1; n < 2; n+=2){
+					g.drawString(strings[i], point.x + m, point.y + fontSize*(i+1) + n);
+					
+				}
 			}
+			g.setColor(Color.WHITE);
+			g.drawString(strings[i], point.x, point.y + fontSize*(i+1));
+			
 		}
-		f = new Font("Helvetica", Font.PLAIN, 12);
-		g.setFont(f);
-		g.setColor(Color.WHITE);
-		g.drawString(text, point.x, point.y + g.getFont().getSize());
 	}
 
 }

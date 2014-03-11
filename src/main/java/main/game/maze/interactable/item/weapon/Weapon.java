@@ -16,14 +16,20 @@ public abstract class Weapon extends NonStackable{
 	private static final Size imageSize = new Size(SIZE_WIDTH, SIZE_HEIGHT);
 	private static final ItemType itemType = ItemType.WEAPON;
 	private static final RightClickBehaviour rightClickBehaviour = ItemBehaviourFactory.getRightClickBehaviour(itemType);
+	private final String shortDescription;
 	int weaponRange;
 	int weaponDamage;
 	int weaponDelay;
-	ItemStats itemStats;
+	private final ItemStats itemStats;
 	WeaponType weaponType;
 
-	public Weapon(String name, String imageSrc) {
-		super(name, imageSrc, imageSize);
+	public Weapon(String name, String imageSrc, String description, ItemStats stats) {
+		super(name, imageSrc, imageSize, description);
+		itemStats = stats;
+		shortDescription = String.format("str: %d dex: %d int: %d sta: %d",
+				itemStats.getStrength(), itemStats.getDexterity(),
+				itemStats.getIntelligence(), itemStats.getStamina());
+		
 	}
 
 	public int getWeaponRange() {
@@ -72,4 +78,9 @@ public abstract class Weapon extends NonStackable{
 		default: return;
 		}
 	}
+
+	@Override
+	public String getShortDescription() {
+		return shortDescription;
+	} 
 }

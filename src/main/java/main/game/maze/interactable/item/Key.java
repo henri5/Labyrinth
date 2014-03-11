@@ -10,9 +10,10 @@ import main.game.maze.interactable.Option;
 import main.game.maze.interactable.creature.player.Player;
 import main.game.util.Size;
 
-public final class Key extends Item {
+public final class Key extends NonInventoryItem {
 	private static final int SIZE_WIDTH = 20;
 	private static final int SIZE_HEIGHT = 20;
+	private static final String DESCRIPTION_SHORT = "";
 	public static final Size SIZE_IMAGE_KEYBAG = new Size(20,20);
 	private final static Size imageSize = new Size(SIZE_WIDTH,SIZE_HEIGHT);
 	public static enum Color{
@@ -37,7 +38,7 @@ public final class Key extends Item {
 	private final Shape shape;
 	private final Color color;
 	private Key(Color color, Shape shape){
-		super(String.format("%s %s", color, shape).toLowerCase(), String.format("%s%s_%s_key.png", Config.IMAGES_FOLDER_KEYS, color, shape), imageSize);
+		super(String.format("%s %s", color, shape).toLowerCase(), String.format("%s%s_%s_key.png", Config.IMAGES_FOLDER_KEYS, color, shape), imageSize, String.format("A %s %s key.", color, shape).toLowerCase());
 		this.color = color;
 		this.shape = shape;
 	}
@@ -106,5 +107,10 @@ public final class Key extends Item {
 		case PICKUP: tryPickUp(player); break;
 		default: return;
 		}
+	}
+
+	@Override
+	public String getShortDescription() {
+		return DESCRIPTION_SHORT;
 	}
 }

@@ -49,12 +49,7 @@ public abstract class Monster extends Creature implements Interactable{
 	@Override
 	public void doAction(Option option, Player player) {
 		switch (option){
-		case ATTACK: 
-			player.attackCreature(this); 
-			if (isDead()){
-				die();
-			}
-			break;
+		case ATTACK: player.attackCreature(this); break;
 		default: return;
 		}
 	}

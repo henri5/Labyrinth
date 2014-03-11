@@ -25,6 +25,7 @@ import main.game.maze.interactable.item.weapon.Sword;
 import main.game.maze.interactable.item.weapon.Weapon;
 import main.game.maze.mechanics.stats.Stats;
 import main.game.maze.room.Room;
+import main.game.ui.PlayerPanel;
 import main.game.ui.gameinterface.GameInterface;
 import main.game.util.Size;
 import main.game.util.Util;
@@ -119,11 +120,11 @@ public class Player extends Creature{
 	}
 
 	public boolean hasItemSpace() {
-		return items.size() < Config.INVENTORY_COUNT_VERTICAL*Config.INVENTORY_COUNT_HORIZONTAL;
+		return items.size() < PlayerPanel.INVENTORY_SIZE;
 	}
 
-	public void addItem(Item item) {
-		controller.addItem(item);
+	public boolean addItem(Item item) {
+		return controller.addItem(item);
 	}
 
 	public List<Item> getItems() {
@@ -190,5 +191,18 @@ public class Player extends Creature{
 	
 	public GameInterface getGameInterface(){
 		return gameInterface;
+	}
+
+	public Item getItemForClass(Class<?> clazz) {
+		for (Item item : items) {
+			if (item.getClass().equals(clazz)){
+				return item;
+			}
+		}
+		return null;
+	}
+
+	public void removeItem(Item item) {
+		items.remove(item);
 	}
 }

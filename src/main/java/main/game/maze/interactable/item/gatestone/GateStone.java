@@ -2,17 +2,18 @@ package main.game.maze.interactable.item.gatestone;
 
 import main.game.maze.interactable.Option;
 import main.game.maze.interactable.creature.player.Player;
-import main.game.maze.interactable.item.Item;
+import main.game.maze.interactable.item.NonInventoryItem;
 import main.game.util.Size;
 
-public abstract class GateStone extends Item{
+public abstract class GateStone extends NonInventoryItem{
 	private static final int SIZE_WIDTH = 16;
 	private static final int SIZE_HEIGHT = 16;
 	private static final Size imageSize = new Size(SIZE_WIDTH,SIZE_HEIGHT);
+	private static final String DESCRIPTION_SHORT = "";
 	private final Player player;
 	
-	public GateStone(String imageSource, Player player, String name) {
-		super(name, imageSource, imageSize);
+	public GateStone(String imageSource, Player player, String name, String description) {
+		super(name, imageSource, imageSize, description);
 		this.player = player;
 	}
 
@@ -54,5 +55,10 @@ public abstract class GateStone extends Item{
 		case DROP: player.drop(this); break;
 		default: return;
 		}
+	}
+	
+	@Override
+	public String getShortDescription() {
+		return DESCRIPTION_SHORT;
 	}
 }

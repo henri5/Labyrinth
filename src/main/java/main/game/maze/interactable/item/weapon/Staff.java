@@ -9,14 +9,15 @@ public class Staff extends Weapon{
 	private static final int DAMAGE = 22;
 	private static final int RANGE = 50;
 	private static final String IMAGE_SRC = Config.IMAGES_FOLDER_ITEMS + "weapon_staff.png";
+	private static final String DESCRIPTION = "A magical staff to increase your arcane damage.";
+	private static final ItemStats STATS = new ItemStats(0,0,3,0);
 	public static final String NAME = "staff";
 	
 	public Staff(){
-		super(NAME, IMAGE_SRC);
+		super(NAME, IMAGE_SRC, DESCRIPTION, STATS);
 		weaponRange = RANGE;
 		weaponDamage = DAMAGE;
 		weaponDelay = DELAY;
-		itemStats = new ItemStats(0,0,3,0);
 		weaponType = new MagicWeapon();
 	}
 }

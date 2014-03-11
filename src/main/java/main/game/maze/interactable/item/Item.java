@@ -13,18 +13,20 @@ public abstract class Item implements Interactable{
 	private String name;
 	private Position position;
 	private Size imageSize;
+	private String description;
 	
-	public Item(String name, String imageSrc, Size imagesize2) {
+	public Item(String name, String imageSrc, Size imagesize, String description) {
 		this.name = name;
-		this.imageSize = imagesize2;
+		this.imageSize = imagesize;
+		this.description = description;
 		if (imageSrc != null){
 			this.image = Util.readImage(imageSrc);
 		}
 	}
 
-	public abstract void resetPosition();
-	
+	public abstract void resetPosition();	
 	public abstract void pickUp(Player player);
+	public abstract String getShortDescription();
 
 	@Override
 	public Position getPosition() {
@@ -63,5 +65,9 @@ public abstract class Item implements Interactable{
 		if (player.isCloseToInteractable(this)){
 			pickUp(player);
 		}
+	}
+
+	public String getDescription() {
+		return description;
 	}
 }

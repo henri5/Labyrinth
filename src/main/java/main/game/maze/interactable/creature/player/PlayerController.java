@@ -2,6 +2,7 @@ package main.game.maze.interactable.creature.player;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.util.List;
 
 import main.game.Config;
 import main.game.GameAction;
@@ -10,6 +11,8 @@ import main.game.maze.Direction;
 import main.game.maze.interactable.Position;
 import main.game.maze.interactable.item.Item;
 import main.game.maze.interactable.item.Key;
+import main.game.maze.interactable.item.NonStackable;
+import main.game.maze.interactable.item.Stackable;
 import main.game.maze.interactable.item.food.Food;
 import main.game.maze.interactable.item.weapon.NoWeapon;
 import main.game.maze.interactable.item.weapon.Weapon;
@@ -90,12 +93,32 @@ public class PlayerController {
 		});
 	}
 
-	void addItem(Item item) {
-		if (player.hasItemSpace()){
-			player.getItems().add(item);
+	synchronized boolean addItem(Item item) {
+		if (item instanceof NonStackable){
+			if (player.hasItemSpace()){
+				player.getItems().add(item);
+				return true;
+			}
+		} else if (item instanceof Stackable) {
+			if (!player.ownsItem(item)){
+				List<Item> playerItems = player.getItems();
+				for (Item playerItem: playerItems){
+					if (playerItem.getClass().equals(item.getClass())){
+						Stackable newItem = (Stackable) item;
+						Stackable oldItem = (Stackable) playerItem;
+						oldItem.addQuantity(newItem.getQuantity());
+						return true;
+					}
+				}
+				if (player.hasItemSpace()){
+					player.getItems().add(item);
+					return true;
+				}			
+			}
 		} else {
-			throw new IllegalStateException("player has no room for extra stuff");
+			throw new IllegalStateException("player cant pick this up");
 		}
+		return false;
 	}
 
 	void drop(Item item) {

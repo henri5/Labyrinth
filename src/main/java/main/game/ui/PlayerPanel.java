@@ -15,7 +15,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
-import main.game.Config;
 import main.game.maze.Maze;
 import main.game.maze.interactable.Option;
 import main.game.maze.interactable.creature.player.Player;
@@ -32,8 +31,11 @@ public class PlayerPanel extends JPanel {
 	private static final int PADDING_INVENTORY_INTERNAL = 5;
 	private static final int PADDING_INVENTORY_EXTERNAL = 20;
 	private static final int SWITCHTAB_HEIGHT = 30;
+	private static final int INVENTORY_SLOTS_HORIZONTAL = 5;
+	private static final int INVENTORY_SLOTS_VERTICAL = 6;
 	public static final int WIDTH = MiniMap.WIDTH;
 	public static final int HEIGHT = Board.HEIGHT + KeyBag.HEIGHT - MiniMap.HEIGHT;
+	public static final int INVENTORY_SIZE = INVENTORY_SLOTS_HORIZONTAL*INVENTORY_SLOTS_VERTICAL;
 
 	private Maze maze;
 	private int imageSize;
@@ -46,7 +48,7 @@ public class PlayerPanel extends JPanel {
 	
 	private void calculateInventorySlotSize() {
 		imageSize = (WIDTH - 2 * PADDING_INVENTORY_EXTERNAL - 
-				(Config.INVENTORY_COUNT_HORIZONTAL - 1) * PADDING_INVENTORY_INTERNAL) / Config.INVENTORY_COUNT_HORIZONTAL;
+				(INVENTORY_SLOTS_HORIZONTAL - 1) * PADDING_INVENTORY_INTERNAL) / INVENTORY_SLOTS_HORIZONTAL;
 	}
 
 	@Override
@@ -60,8 +62,8 @@ public class PlayerPanel extends JPanel {
 	private void drawItems(Graphics g) {
 		List<Item> items = maze.getPlayer().getItems();
 		Iterator<Item> it = items.iterator();
-		for (int i = 0; i < Config.INVENTORY_COUNT_VERTICAL; i++){
-			for (int j = 0; j < Config.INVENTORY_COUNT_HORIZONTAL; j++){
+		for (int i = 0; i < INVENTORY_SLOTS_VERTICAL; i++){
+			for (int j = 0; j < INVENTORY_SLOTS_HORIZONTAL; j++){
 				if (it.hasNext()){
 					Item item = it.next();
 					Point imageCorner = getItemCorner(j,i);
@@ -81,11 +83,11 @@ public class PlayerPanel extends JPanel {
 	}
 
 	private void drawInventorySlots(Graphics g) {
-		for (int i = 0; i < Config.INVENTORY_COUNT_HORIZONTAL; i++){
-			for (int j = 0; j < Config.INVENTORY_COUNT_VERTICAL; j++){
+		for (int i = 0; i < INVENTORY_SLOTS_HORIZONTAL; i++){
+			for (int j = 0; j < INVENTORY_SLOTS_VERTICAL; j++){
 				Point imageCorner = getItemCorner(i,j);
 				g.setColor(COLOR_INVENTORY_SLOT_STROKE);
-				int inventorySlot = i+j*Config.INVENTORY_COUNT_HORIZONTAL;
+				int inventorySlot = i+j*INVENTORY_SLOTS_HORIZONTAL;
 				if (maze.getPlayer().getItems().size() > inventorySlot){
 					if (maze.getPlayer().hasEquipped(maze.getPlayer().getItems().get(inventorySlot))){
 						g.setColor(COLOR_INVENTORY_SLOT_CONTENT_EQUIPPED);
@@ -106,12 +108,12 @@ public class PlayerPanel extends JPanel {
 	
 	private class MouceClickListener extends MouseAdapter {
 		public void mousePressed(MouseEvent me){
-			for (int i = 0; i < Config.INVENTORY_COUNT_HORIZONTAL; i++){
-				for (int j = 0; j < Config.INVENTORY_COUNT_VERTICAL; j++){
+			for (int i = 0; i < INVENTORY_SLOTS_HORIZONTAL; i++){
+				for (int j = 0; j < INVENTORY_SLOTS_VERTICAL; j++){
 					Point corner = getItemCorner(i,j);
 					if (me.getPoint().x >= corner.x && me.getPoint().x < corner.x + imageSize){
 						if (me.getPoint().y >= corner.y && me.getPoint().y < corner.y + imageSize){
-							int inventorySlot = i+j*Config.INVENTORY_COUNT_HORIZONTAL;
+							int inventorySlot = i+j*INVENTORY_SLOTS_HORIZONTAL;
 							if (me.getButton() == MouseEvent.BUTTON1){
 								doLeftClick(inventorySlot);
 							} else if (me.getButton() == MouseEvent.BUTTON3){

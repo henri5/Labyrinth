@@ -8,9 +8,8 @@ import main.game.util.Size;
 public abstract class Stackable extends Item {
 	private int quantity = 0;
 	
-	public Stackable(String name, String imageSrc, Size imagesize,
-			int quantity) {
-		super(name, imageSrc, imagesize);
+	public Stackable(String name, String imageSrc, Size imagesize, int quantity, String description) {
+		super(name, imageSrc, imagesize, description);
 		if (quantity < 0){
 			throw new IllegalArgumentException("quantity cannot be negative");
 		}
@@ -39,25 +38,13 @@ public abstract class Stackable extends Item {
 	}
 	
 	public void pickUp(Player player) {
-		if (!player.ownsItem(this)){
-			List<Item> playerItems = player.getItems();
-			for (Item playerItem: playerItems){
-				if (playerItem.getClass().equals(getClass())){
-					Stackable sPlayerItem = (Stackable) playerItem;
-					sPlayerItem.addQuantity(getQuantity());
-					removeFromMaze();
-					return;
-				}
-			}
-			if (player.hasItemSpace()){
-					removeFromMaze();
-					player.addItem(this);
-			}
+		if (player.addItem(this)){
+			removeFromMaze();
 		}
 	}
 	
 	private void removeFromMaze() {	
 		getPosition().getRoom().removeDroppedItem(this);
 		resetPosition();
-	}
+	}	
 }

@@ -15,13 +15,15 @@ public abstract class Food extends NonStackable {
 	private static final ItemType itemType = ItemType.EDIBLE;
 	private static final RightClickBehaviour rightClickBehaviour = ItemBehaviourFactory.getRightClickBehaviour(itemType);
 	private final int healAmount;
+	private final String shortDescription;
 	
-	public Food(int healAmount, String name, String imageSrc) {
-		super(name, imageSrc, imageSize);
+	public Food(int healAmount, String name, String imageSrc, String description) {
+		super(name, imageSrc, imageSize, description);
 		if (healAmount <= 0){
 			throw new IllegalArgumentException("heal amount must be greater than zero");
 		}
 		this.healAmount = healAmount;
+		shortDescription = String.format("heals %d", healAmount);
 	}
 
 	@Override
@@ -52,6 +54,11 @@ public abstract class Food extends NonStackable {
 
 	public int getHealAmount() {
 		return healAmount;
+	}
+	
+	@Override
+	public String getShortDescription(){
+		return shortDescription;
 	}
 	
 }

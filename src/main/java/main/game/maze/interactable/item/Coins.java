@@ -12,9 +12,11 @@ public class Coins extends Stackable {
 	private static final int SIZE_WIDTH = 20;
 	private static final int SIZE_HEIGHT = 20;
 	private static final String IMAGE_SRC = Config.IMAGES_FOLDER_ITEMS + "coins.png";
-	public static final String NAME = "coins";
 	private static final Size imageSize = new Size(SIZE_WIDTH, SIZE_HEIGHT);
 	private static final ItemType itemType = ItemType.COINS;
+	private static final String DESCRIPTION = "You can spend those at merchant to buy goods.";
+	private static final String DESCRIPTION_SHORT = "";
+	public static final String NAME = "coins";
 	
 	private final RightClickBehaviour rightClickBehaviour = ItemBehaviourFactory.getRightClickBehaviour(itemType);
 
@@ -23,7 +25,7 @@ public class Coins extends Stackable {
 	}
 	
 	public Coins(int quantity){
-		super(NAME, IMAGE_SRC, imageSize, quantity);
+		super(NAME, IMAGE_SRC, imageSize, quantity, DESCRIPTION);
 	}
 	
 	@Override
@@ -49,6 +51,11 @@ public class Coins extends Stackable {
 		case DROP: player.drop(this); break;
 		default: return;
 		}
+	}
+
+	@Override
+	public String getShortDescription() {
+		return DESCRIPTION_SHORT;
 	}
 
 }
