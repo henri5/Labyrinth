@@ -3,6 +3,7 @@ package main.game.util;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
@@ -76,6 +77,10 @@ public class Util {
 		return false;
 	}
 
+	public static boolean clickedOn(Point mouseClickPosition, Point areaCorner, Size areaSize, int padding){
+		return areasOverlap(mouseClickPosition, Size.MOUSECLICK, areaCorner, areaSize, padding);
+	}
+	
 	/**
 	 * Same as graphics.drawImage(image, point.x, point.y, dimension.width, dimension.height, null.
 	 * @param graphics
@@ -114,14 +119,36 @@ public class Util {
 			g.setColor(Color.BLACK);
 			for (int m = -1; m < 2; m+=2){
 				for (int n = -1; n < 2; n+=2){
-					g.drawString(strings[i], point.x + m, point.y + fontSize*(i+1) + n);
+					g.drawString(strings[i], point.x + m, point.y + (fontSize+1)*(i+1) + n);
 					
 				}
 			}
 			g.setColor(Color.WHITE);
-			g.drawString(strings[i], point.x, point.y + fontSize*(i+1));
+			g.drawString(strings[i], point.x, point.y + (fontSize+1)*(i+1));
 			
 		}
+	}
+	
+	public static void drawTextLarge(Graphics g, Point point, Size size, int fontSize, String string) {
+		Font f = new Font("Helvetica", Font.BOLD, fontSize);
+		g.setFont(f);
+		FontMetrics fm = g.getFontMetrics();
+		int textWidth = fm.stringWidth(string);
+		g.setColor(Color.BLACK);
+		Point textCorner;
+		if (size == null){
+			textCorner = point;
+		} else {
+			textCorner = new Point(point.x + (size.width - textWidth)/2, point.y + (size.height - fontSize)/2);
+		}
+		for (int m = -1; m < 2; m+=2){
+			for (int n = -1; n < 2; n+=2){
+				g.drawString(string, textCorner.x + m, textCorner.y + fontSize + n);
+				
+			}
+		}
+		g.setColor(Color.WHITE);
+		g.drawString(string, textCorner.x, textCorner.y + fontSize);			
 	}
 
 }

@@ -6,13 +6,14 @@ import java.util.List;
 
 import main.game.Config;
 import main.game.maze.Direction;
+import main.game.maze.DummyObject;
 import main.game.maze.interactable.Interactable;
+import main.game.maze.interactable.Option;
 import main.game.maze.interactable.Position;
 import main.game.maze.interactable.creature.Creature;
 import main.game.maze.interactable.item.Coins;
 import main.game.maze.interactable.item.Item;
 import main.game.maze.interactable.item.Key;
-import main.game.maze.interactable.item.armour.NoArmour;
 import main.game.maze.interactable.item.food.Cake;
 import main.game.maze.interactable.item.food.Fish;
 import main.game.maze.interactable.item.food.Food;
@@ -25,8 +26,8 @@ import main.game.maze.interactable.item.weapon.Sword;
 import main.game.maze.interactable.item.weapon.Weapon;
 import main.game.maze.mechanics.stats.Stats;
 import main.game.maze.room.Room;
-import main.game.ui.PlayerPanel;
 import main.game.ui.gameinterface.GameInterface;
+import main.game.ui.playerpanel.PlayerPanel;
 import main.game.util.Size;
 import main.game.util.Util;
 
@@ -47,17 +48,15 @@ public class Player extends Creature{
 	
 	public Player(String name){
 		super(name, new Size(SIZE_WIDTH,SIZE_HEIGHT));
-		new PlayerGameAction(this);
 		controller = new PlayerController(this);
 		image = Util.readImage(IMAGE);
 		stats = new Stats(5,5,5,10,HEALTH,MOVEMENT_SPEED);
 		//increaseLevel(1000);
 		weapon = new Sword();
-		armour = new NoArmour();
 		addItem(weapon);
 		addItem(new Bow());
 		addItem(new Staff());
-		addItem(new Coins(1000));
+		addItem(new Coins(10000));
 		addItem(new Cake());
 		addItem(new Fish());
 	}
@@ -110,8 +109,13 @@ public class Player extends Creature{
 		setPosition(startingPosition);
 	}
 
-	public void interactWith(Interactable interactable) {
-		interactable.doInteract(this);
+	public void interactWith(Option option, Interactable interactable) {
+		if (interactable instanceof DummyObject){
+			return;
+		}
+		if (getPosition().getRoom() == interactable.getPosition().getRoom()){
+			interactable.doAction(option, this);
+		}
 	}
 	
 	@Override

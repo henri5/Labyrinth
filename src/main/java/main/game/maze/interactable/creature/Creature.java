@@ -6,6 +6,8 @@ import java.awt.Point;
 import main.game.Config;
 import main.game.maze.interactable.Position;
 import main.game.maze.interactable.item.armour.Armour;
+import main.game.maze.interactable.item.armour.NoArmour;
+import main.game.maze.interactable.item.weapon.NoWeapon;
 import main.game.maze.interactable.item.weapon.Weapon;
 import main.game.maze.mechanics.damageCalculation.DamageCalculation;
 import main.game.maze.mechanics.damageCalculation.SimpleDamageCalculation;
@@ -17,8 +19,8 @@ public class Creature {
 	private static final int DELAY_HEALTHBAR_FADEOUT = 5000;	//time after being attacked the healthbar disappears
 	private static final DamageCalculation damageCalculation = new SimpleDamageCalculation();
 	private String name;
-	protected Weapon weapon;
-	protected Armour armour;
+	protected Weapon weapon = new NoWeapon();
+	protected Armour armour = new NoArmour();
 	protected Image image;
 	protected Size imageSize;
 	private long lastOpponentAttackedTime;

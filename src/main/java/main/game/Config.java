@@ -38,6 +38,7 @@ public final class Config {
 	public static final int KEYBIND_INTERACT_WITH_DOOR = KeyEvent.VK_SHIFT;
 	public static final int KEYBIND_TELEPORT_TO_BASE = KeyEvent.VK_H;
 	public static final int KEYBIND_CLOSE_INTERFACE = KeyEvent.VK_ESCAPE;
+	public static final int KEYBIND_OPEN_MENU = KeyEvent.VK_ESCAPE;
 
 	public static final int DEBUG_MOVE_ROOM_UP = KeyEvent.VK_UP;
 	public static final int DEBUG_MOVE_ROOM_DOWN = KeyEvent.VK_DOWN;

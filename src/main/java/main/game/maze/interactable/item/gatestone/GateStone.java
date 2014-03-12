@@ -8,12 +8,12 @@ import main.game.util.Size;
 public abstract class GateStone extends NonInventoryItem{
 	private static final int SIZE_WIDTH = 16;
 	private static final int SIZE_HEIGHT = 16;
-	private static final Size imageSize = new Size(SIZE_WIDTH,SIZE_HEIGHT);
+	private static final Size SIZE = new Size(SIZE_WIDTH,SIZE_HEIGHT);
 	private static final String DESCRIPTION_SHORT = "";
 	private final Player player;
 	
 	public GateStone(String imageSource, Player player, String name, String description) {
-		super(name, imageSource, imageSize, description);
+		super(name, imageSource, SIZE, description);
 		this.player = player;
 	}
 
@@ -29,11 +29,6 @@ public abstract class GateStone extends NonInventoryItem{
 	}
 	
 	@Override
-	public void doInteract(Player player) {
-		doAction(Option.PICKUP, player);
-	}
-	
-	@Override
 	public Option[] getOptions(Player player) {
 		return new Option[]{Option.PICKUP};
 	}
@@ -44,7 +39,7 @@ public abstract class GateStone extends NonInventoryItem{
 	}
 	
 	@Override
-	public void pickUp(Player player){
+	protected void pickUp(Player player){
 		resetPosition();
 	}
 	
@@ -53,7 +48,7 @@ public abstract class GateStone extends NonInventoryItem{
 		switch (option){
 		case PICKUP: tryPickUp(player); break;
 		case DROP: player.drop(this); break;
-		default: return;
+		default: tryPickUp(player); break;
 		}
 	}
 	

@@ -14,8 +14,7 @@ public final class Key extends NonInventoryItem {
 	private static final int SIZE_WIDTH = 20;
 	private static final int SIZE_HEIGHT = 20;
 	private static final String DESCRIPTION_SHORT = "";
-	public static final Size SIZE_IMAGE_KEYBAG = new Size(20,20);
-	private final static Size imageSize = new Size(SIZE_WIDTH,SIZE_HEIGHT);
+	private final static Size SIZE = new Size(SIZE_WIDTH,SIZE_HEIGHT);
 	public static enum Color{
 		PURPLE, YELLOW, GOLD, BLUE, SILVER, GREEN, CRIMSON, ORANGE;
 	}
@@ -38,7 +37,7 @@ public final class Key extends NonInventoryItem {
 	private final Shape shape;
 	private final Color color;
 	private Key(Color color, Shape shape){
-		super(String.format("%s %s", color, shape).toLowerCase(), String.format("%s%s_%s_key.png", Config.IMAGES_FOLDER_KEYS, color, shape), imageSize, String.format("A %s %s key.", color, shape).toLowerCase());
+		super(String.format("%s %s", color, shape).toLowerCase(), String.format("%s%s_%s_key.png", Config.IMAGES_FOLDER_KEYS, color, shape), SIZE, String.format("A %s %s key.", color, shape).toLowerCase());
 		this.color = color;
 		this.shape = shape;
 	}
@@ -69,11 +68,6 @@ public final class Key extends NonInventoryItem {
 	}
 
 	@Override
-	public void doInteract(Player player) {
-		doAction(Option.PICKUP, player);
-	}
-
-	@Override
 	public Option[] getOptions(Player player) {
 		return new Option[]{Option.PICKUP};
 	}
@@ -85,7 +79,7 @@ public final class Key extends NonInventoryItem {
 	}
 
 	@Override
-	public void pickUp(Player player) {
+	protected void pickUp(Player player) {
 		player.addKey(this);
 		getPosition().getRoom().removeKey();
 		resetPosition();
@@ -105,7 +99,7 @@ public final class Key extends NonInventoryItem {
 	public void doAction(Option option, Player player) {
 		switch (option){
 		case PICKUP: tryPickUp(player); break;
-		default: return;
+		default: tryPickUp(player); break;
 		}
 	}
 

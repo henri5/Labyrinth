@@ -10,7 +10,6 @@ import main.game.Config;
 import main.game.maze.builder.Builder;
 import main.game.maze.builder.SimpleBuilder;
 import main.game.maze.door.SimpleDoor;
-import main.game.maze.interactable.creature.monster.MonsterGameAction;
 import main.game.maze.interactable.creature.player.Player;
 import main.game.maze.interactable.item.Key;
 import main.game.maze.room.Room;
@@ -37,7 +36,6 @@ public class Maze {
 		buildLabyrinth();
 		createCriticalPath();
 		addMonsters();
-		new MonsterGameAction(this);
 	}
 	
 	public void rebuild(){

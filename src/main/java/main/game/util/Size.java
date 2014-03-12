@@ -8,6 +8,7 @@ import java.awt.Dimension;
  *
  */
 public class Size {
+	public static final Size MOUSECLICK = new Size(0,0);
 	public final int width;
 	public final int height;
 	

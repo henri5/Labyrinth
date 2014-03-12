@@ -32,11 +32,6 @@ public abstract class Monster extends Creature implements Interactable{
 		getPosition().setPoint(Util.randomPointInArea(Config.SIZE_ROOM_WIDTH-imageSize.width, Config.SIZE_ROOM_HEIGHT-imageSize.height));
 	}
 	
-	@Override
-	public void doInteract(Player player) {
-		doAction(Option.ATTACK, player);
-	}
-	
 	public void die(){
 		controller.die();
 	}
@@ -50,7 +45,7 @@ public abstract class Monster extends Creature implements Interactable{
 	public void doAction(Option option, Player player) {
 		switch (option){
 		case ATTACK: player.attackCreature(this); break;
-		default: return;
+		default: player.attackCreature(this); break;
 		}
 	}
 }

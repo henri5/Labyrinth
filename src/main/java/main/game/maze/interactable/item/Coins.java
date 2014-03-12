@@ -12,7 +12,7 @@ public class Coins extends Stackable {
 	private static final int SIZE_WIDTH = 20;
 	private static final int SIZE_HEIGHT = 20;
 	private static final String IMAGE_SRC = Config.IMAGES_FOLDER_ITEMS + "coins.png";
-	private static final Size imageSize = new Size(SIZE_WIDTH, SIZE_HEIGHT);
+	private static final Size SIZE = new Size(SIZE_WIDTH, SIZE_HEIGHT);
 	private static final ItemType itemType = ItemType.COINS;
 	private static final String DESCRIPTION = "You can spend those at merchant to buy goods.";
 	private static final String DESCRIPTION_SHORT = "";
@@ -25,17 +25,12 @@ public class Coins extends Stackable {
 	}
 	
 	public Coins(int quantity){
-		super(NAME, IMAGE_SRC, imageSize, quantity, DESCRIPTION);
+		super(NAME, IMAGE_SRC, SIZE, quantity, DESCRIPTION);
 	}
 	
 	@Override
 	public Option[] getOptions(Player player) {
 		return rightClickBehaviour.getOptions(this, player);
-	}
-
-	@Override
-	public void doInteract(Player player) {
-		doAction(Option.PICKUP, player);
 	}
 
 	@Override
@@ -49,7 +44,7 @@ public class Coins extends Stackable {
 		switch (option){
 		case PICKUP: tryPickUp(player); break;
 		case DROP: player.drop(this); break;
-		default: return;
+		default: tryPickUp(player); break;
 		}
 	}
 

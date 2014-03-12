@@ -11,14 +11,14 @@ import main.game.util.Size;
 public abstract class Food extends NonStackable {
 	private static final int SIZE_WIDTH = 20;
 	private static final int SIZE_HEIGHT = 20;
-	private static final Size imageSize = new Size(SIZE_WIDTH, SIZE_HEIGHT);
+	private static final Size SIZE = new Size(SIZE_WIDTH, SIZE_HEIGHT);
 	private static final ItemType itemType = ItemType.EDIBLE;
 	private static final RightClickBehaviour rightClickBehaviour = ItemBehaviourFactory.getRightClickBehaviour(itemType);
 	private final int healAmount;
 	private final String shortDescription;
 	
 	public Food(int healAmount, String name, String imageSrc, String description) {
-		super(name, imageSrc, imageSize, description);
+		super(name, imageSrc, SIZE, description);
 		if (healAmount <= 0){
 			throw new IllegalArgumentException("heal amount must be greater than zero");
 		}
@@ -29,11 +29,6 @@ public abstract class Food extends NonStackable {
 	@Override
 	public Option[] getOptions(Player player) {
 		return rightClickBehaviour.getOptions(this, player);
-	}
-
-	@Override
-	public void doInteract(Player player) {
-		doAction(Option.PICKUP, player);
 	}
 
 	@Override
@@ -48,7 +43,7 @@ public abstract class Food extends NonStackable {
 		case PICKUP: tryPickUp(player); break;
 		case DROP: player.drop(this); break;
 		case EAT: player.eat(this); break;
-		default: return;
+		default: tryPickUp(player); break;
 		}
 	}
 

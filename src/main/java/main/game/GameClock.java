@@ -13,6 +13,7 @@ public class GameClock {
 	}
 	
 	public void addGameAction(GameAction gameAction) {
+		System.out.println(gameAction.getClass());
 		synchronized(gameActions){
 			gameActions.add(gameAction);
 		}
@@ -52,5 +53,11 @@ public class GameClock {
 		synchronized(toBeRemoved){
 			toBeRemoved.add(gameAction);
 		}		
+	}
+
+	public void reset() {
+		synchronized (gameActions){
+			gameActions.clear();
+		}
 	}
 }

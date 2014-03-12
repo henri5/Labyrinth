@@ -35,15 +35,10 @@ public class Merchant extends RoomObject {
 	}
 
 	@Override
-	public void doInteract(Player player) {
-		doAction(Option.TRADE, player);
-	}
-
-	@Override
 	public void doAction(Option option, Player player) {
 		switch (option){
 		case TRADE: player.setInterface(new ShopInterface(STOCK, player)); break;
-		default: throw new IllegalArgumentException("Illegal option: " + option);
+		default: player.setInterface(new ShopInterface(STOCK, player)); break;
 		}
 	}
 

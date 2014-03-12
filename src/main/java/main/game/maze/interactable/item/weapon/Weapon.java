@@ -39,11 +39,6 @@ public abstract class Weapon extends NonStackable{
 	public int getWeaponDelay() {
 		return weaponDelay;
 	}
-	
-	@Override
-	public void doInteract(Player player){
-		doAction(Option.PICKUP, player);
-	}
 
 	@Override
 	public Option[] getOptions(Player player) {
@@ -75,7 +70,7 @@ public abstract class Weapon extends NonStackable{
 		case EQUIP: player.equip(this); break;
 		case UNEQUIP: player.unequip(this); break;
 		case DROP: player.drop(this); break;
-		default: return;
+		default: tryPickUp(player); break;
 		}
 	}
 

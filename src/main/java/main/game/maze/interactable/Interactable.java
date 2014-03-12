@@ -7,7 +7,6 @@ import main.game.util.Size;
 
 public interface Interactable {
 	Option[] getOptions(Player player);
-	void doInteract(Player player);
 	Position getPosition();
 	String getName();
 	Image getImage();

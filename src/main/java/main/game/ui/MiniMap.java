@@ -10,7 +10,6 @@ import javax.swing.JPanel;
 
 import main.game.Config;
 import main.game.maze.Direction;
-import main.game.maze.Maze;
 import main.game.maze.interactable.creature.player.Player;
 import main.game.maze.room.Room;
 
@@ -19,7 +18,7 @@ public class MiniMap extends JPanel {
 	public static final int HEIGHT = 200;
 	private final Dimension IMAGE_SIZE = new Dimension(100,100);
 	private static final long serialVersionUID = -3846521993094337688L;
-	private Maze maze;
+	private GameWindow gameWindow;
 	private double scale;
 	private Dimension totalSize;
 	private Point offset;	//to put minimap in middle of its designated area while compensating for keeping ratio
@@ -29,8 +28,8 @@ public class MiniMap extends JPanel {
 	private int paddingExternal;
 	private int doorSize;
 	private int imageSize;
-	public MiniMap(Maze maze) {
-		this.maze = maze;
+	public MiniMap(GameWindow gameWindow) {
+		this.gameWindow = gameWindow;
 		calculateTotalSize();
 		calculateScale();
 		calculateSizesToScale();
@@ -81,7 +80,7 @@ public class MiniMap extends JPanel {
 	}
 
 	private void drawPlayer(Graphics g) {
-		Player player = maze.getPlayer();
+		Player player = gameWindow.getMaze().getPlayer();
 		Image image = player.getImage();
 		Point p = player.getPosition().getRoom().getCoordinates();
 		Point corner = getRoomCorner(p.x,p.y);
@@ -91,10 +90,10 @@ public class MiniMap extends JPanel {
 	}
 
 	private void drawRooms(Graphics g) {
-		for (int i = 0; i < maze.getWidth(); i++){
-			for (int j = 0; j < maze.getHeight(); j++){
+		for (int i = 0; i < gameWindow.getMaze().getWidth(); i++){
+			for (int j = 0; j < gameWindow.getMaze().getHeight(); j++){
 				Point corner = getRoomCorner(i,j);
-				Room room = maze.getRooms().get(i).get(j);
+				Room room = gameWindow.getMaze().getRooms().get(i).get(j);
 				if (room != null){
 					if (!room.isLocked()){
 						g.setColor(Config.COLOR_ROOM_UNLOCKED);
@@ -110,9 +109,9 @@ public class MiniMap extends JPanel {
 	
 	private void drawDoors(Graphics g) {
 		g.setColor(Config.COLOR_DOOR);
-		for (int i = 0; i < maze.getWidth(); i++){
-			for (int j = 0; j < maze.getHeight(); j++){
-				Room room = maze.getRooms().get(i).get(j);
+		for (int i = 0; i < gameWindow.getMaze().getWidth(); i++){
+			for (int j = 0; j < gameWindow.getMaze().getHeight(); j++){
+				Room room = gameWindow.getMaze().getRooms().get(i).get(j);
 				if (room != null){
 					if (!room.isPreviousRoomLocked()){
 						Direction direction = room.getDirectionOfPreviousRoom();
@@ -143,7 +142,7 @@ public class MiniMap extends JPanel {
 	}
 
 	private void drawGroupGateStone(Graphics g) {
-		Player player = maze.getPlayer();
+		Player player = gameWindow.getMaze().getPlayer();
 		if (player.getGroupGateStone().exists()){
 			Image image = player.getGroupGateStone().getImage();
 			Point p = player.getGroupGateStone().getPosition().getRoom().getCoordinates();
@@ -156,7 +155,7 @@ public class MiniMap extends JPanel {
 	}
 
 	private void drawPersonalGateStone(Graphics g) {
-		Player player = maze.getPlayer();
+		Player player = gameWindow.getMaze().getPlayer();
 		if (player.getPersonalGateStone().exists()){
 			Image image = player.getPersonalGateStone().getImage();
 			Point p = player.getPersonalGateStone().getPosition().getRoom().getCoordinates();
@@ -171,6 +170,4 @@ public class MiniMap extends JPanel {
 		return new Point(paddingExternal+i*(paddingInternal + roomWidth)+offset.x,
 				paddingExternal+j*(paddingInternal + roomHeight)+offset.y);
 	}
-	
-
 }

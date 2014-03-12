@@ -25,7 +25,7 @@ public abstract class Item implements Interactable{
 	}
 
 	public abstract void resetPosition();	
-	public abstract void pickUp(Player player);
+	protected abstract void pickUp(Player player);
 	public abstract String getShortDescription();
 
 	@Override
@@ -61,10 +61,12 @@ public abstract class Item implements Interactable{
 		position.getRoom().addDroppedItem(this);
 	}
 	
-	public void tryPickUp(Player player){
+	public boolean tryPickUp(Player player){
 		if (player.isCloseToInteractable(this)){
 			pickUp(player);
+			return true;
 		}
+		return false;
 	}
 
 	public String getDescription() {

@@ -2,20 +2,21 @@ package main.game.maze.interactable.creature.player;
 
 import main.game.GameAction;
 import main.game.MainController;
+import main.game.ui.GameWindow;
 
 public class PlayerGameAction implements GameAction {
-	private Player player;
+	private GameWindow gameWindow;
 	
-	public PlayerGameAction(Player player){
-		this.player = player;
+	public PlayerGameAction(GameWindow gameWindow){
+		this.gameWindow = gameWindow;
 		MainController.addGameAction(this);
 	}
 
 	@Override
 	public void doAction() {
-		if (player.isDead()){
+		if (gameWindow.getMaze().getPlayer().isDead()){
 			System.out.println("Am dead");
-			player.respawn();
+			gameWindow.getMaze().getPlayer().respawn();
 		}
 	}
 

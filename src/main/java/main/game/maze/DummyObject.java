@@ -15,10 +15,7 @@ public final class DummyObject implements Interactable {
 	public static DummyObject getInstance(){
 		return dummyObject;
 	}
-
-	@Override
-	public void doInteract(Player player) {}
-
+	
 	@Override
 	public Position getPosition() {
 		return null;

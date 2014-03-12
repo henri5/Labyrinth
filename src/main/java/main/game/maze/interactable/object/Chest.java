@@ -22,15 +22,10 @@ public abstract class Chest extends RoomObject {
 	}
 
 	@Override
-	public void doInteract(Player player) {
-		doAction(Option.OPEN, player);
-	}
-
-	@Override
 	public void doAction(Option option, Player player) {
 		switch (option){
 		case OPEN: open(player); break;
-		default: throw new IllegalArgumentException("Illegal option: " + option);
+		default: open(player); break;
 		}
 		
 	}
@@ -41,9 +36,7 @@ public abstract class Chest extends RoomObject {
 				opened = true;
 				for (Item item: lootTable.getRandomDrops()){
 					item.dropAt(player.getPosition());
-					if (player.hasItemSpace()){
-						item.pickUp(player);;
-					}
+					item.tryPickUp(player);
 				}
 			}			
 		}

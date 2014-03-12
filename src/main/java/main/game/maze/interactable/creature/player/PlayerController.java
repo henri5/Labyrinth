@@ -32,8 +32,7 @@ public class PlayerController {
 	private void pickUpDroppedItems() {
 		if (player.getPosition().getRoom().hasDroppedItems()){
 			for (Item item: player.getPosition().getRoom().getDroppedItems()){
-				if (player.isCloseToInteractable(item)){
-					item.pickUp(player);
+				if (item.tryPickUp(player)){
 					return;
 				}
 			}
@@ -53,9 +52,7 @@ public class PlayerController {
 	void pickUpKeys() {
 		Key key = player.getPosition().getRoom().getKey();
 		if (key != null){
-			if (player.isCloseToInteractable(key)){
-				key.pickUp(player);
-			}
+			key.tryPickUp(player);
 		}
 	}
 	
