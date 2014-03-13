@@ -1,10 +1,13 @@
-package main.game;
+package main.game.system;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+
+import main.game.Config;
+import main.game.GameAction;
 
 public class GameClock {
 	private List<GameAction> gameActions = new ArrayList<GameAction>();

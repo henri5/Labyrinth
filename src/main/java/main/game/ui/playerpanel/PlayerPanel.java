@@ -7,8 +7,8 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 
+import main.game.system.Session;
 import main.game.ui.Board;
-import main.game.ui.GameWindow;
 import main.game.ui.KeyBag;
 import main.game.ui.MiniMap;
 
@@ -22,12 +22,12 @@ public class PlayerPanel extends JPanel {
 	public static final int HEIGHT = Board.HEIGHT + KeyBag.HEIGHT - MiniMap.HEIGHT;
 	public static final int INVENTORY_SIZE = INVENTORY_SLOTS_HORIZONTAL*INVENTORY_SLOTS_VERTICAL;
 
-	private GameWindow gameWindow;
+	private Session session;
 	private PlayerPanelInterface openInterface;
 	
-	public PlayerPanel(GameWindow gameWindow) {
-		this.gameWindow = gameWindow;
-		openInterface = new PlayerPanelInventory(gameWindow);
+	public PlayerPanel(Session session) {
+		this.session = session;
+		openInterface = new PlayerPanelInventory(session);
 		addMouseListener(new MouceClickListener());
 	}
 	

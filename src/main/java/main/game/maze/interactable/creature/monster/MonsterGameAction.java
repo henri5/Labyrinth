@@ -6,18 +6,18 @@ import main.game.GameAction;
 import main.game.MainController;
 import main.game.maze.Maze;
 import main.game.maze.room.Room;
-import main.game.ui.GameWindow;
+import main.game.system.Session;
 
 public class MonsterGameAction implements GameAction{
-	private GameWindow gameWindow;
-	public MonsterGameAction(GameWindow gameWindow){
-		this.gameWindow = gameWindow;
+	private Session session;
+	public MonsterGameAction(Session session){
+		this.session = session;
 		MainController.addGameAction(this);
 	}
 	
 	@Override
 	public void doAction() {
-		Maze maze = gameWindow.getMaze();
+		Maze maze = session.getMaze();
 		for (int i = 0; i < maze.getWidth(); i++){
 			for (int j = 0; j < maze.getHeight(); j++){
 				Room room = maze.getRooms().get(i).get(j);

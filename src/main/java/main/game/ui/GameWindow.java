@@ -1,11 +1,12 @@
 package main.game.ui;
 
 import java.awt.Dimension;
+
 import javax.swing.JFrame;
 
 import main.game.GameAction;
 import main.game.MainController;
-import main.game.maze.Maze;
+import main.game.system.Session;
 import main.game.ui.menu.MenuInterface;
 import main.game.ui.misc.KeyPressListener;
 import main.game.ui.playerpanel.PlayerPanel;
@@ -16,17 +17,17 @@ public class GameWindow extends JFrame implements GameAction {
 	public static final int HEIGHT = Board.HEIGHT + KeyBag.HEIGHT;
 	public static final int WIDTH = Board.WIDTH + MiniMap.WIDTH;
 	public static final Size SIZE = new Size(WIDTH, HEIGHT);
-	private Maze maze;
+	private Session session;
 	
-	public GameWindow(Maze maze){
-		this.maze = maze;
+	public GameWindow(Session session){
+		this.session = session;
 		setTitle("Labyrinth");
 		getContentPane().setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		Board board = new Board(this);
-		MiniMap miniMap = new MiniMap(this);
-		KeyBag keyBag = new KeyBag(this);
-		PlayerPanel playerPanel = new PlayerPanel(this);
+		Board board = new Board(session);
+		MiniMap miniMap = new MiniMap(session);
+		KeyBag keyBag = new KeyBag(session);
+		PlayerPanel playerPanel = new PlayerPanel(session);
 		setLayout(null);
 		add(board);
 		add(miniMap);
@@ -65,11 +66,7 @@ public class GameWindow extends JFrame implements GameAction {
 		return getGlassPane().isVisible();
 	}
 
-	public void setMaze(Maze maze) {
-		this.maze = maze;
-	}
-	
-	public Maze getMaze(){
-		return maze;
+	public Session getSession() {
+		return session;
 	}
 }

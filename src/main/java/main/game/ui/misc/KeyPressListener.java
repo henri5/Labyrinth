@@ -21,7 +21,7 @@ public class KeyPressListener extends KeyAdapter implements GameAction {
 	
 	@Override
 	public void keyPressed(KeyEvent e){
-		Player player = gameWindow.getMaze().getPlayer();
+		Player player = gameWindow.getSession().getMaze().getPlayer();
 		if (gameWindow.isMenuInterfaceOpen()){
 			if (e.getKeyCode() == Config.KEYBIND_CLOSE_INTERFACE){
 				gameWindow.closeMenuInterface();
@@ -69,7 +69,7 @@ public class KeyPressListener extends KeyAdapter implements GameAction {
 	public void keyTyped(KeyEvent e){}
 	
 	private void processKeys() {
-		Player player = gameWindow.getMaze().getPlayer();
+		Player player = gameWindow.getSession().getMaze().getPlayer();
 		int dx = 0, dy = 0;
 		if (keyPressed[Config.KEYBIND_MOVE_UP]){
 			dy--;

@@ -18,7 +18,7 @@ import main.game.maze.interactable.Option;
 import main.game.maze.interactable.creature.player.Player;
 import main.game.maze.interactable.item.Item;
 import main.game.maze.interactable.item.Stackable;
-import main.game.ui.GameWindow;
+import main.game.system.Session;
 import main.game.util.Size;
 import main.game.util.Util;
 import static main.game.ui.playerpanel.PlayerPanel.*;
@@ -30,10 +30,10 @@ public class PlayerPanelInventory implements PlayerPanelInterface {
 	private static final int PADDING_INVENTORY_EXTERNAL = 20;
 
 	private int imageSize;
-	private GameWindow gameWindow;
+	private Session session;
 	
-	public PlayerPanelInventory(GameWindow gameWindow) {
-		this.gameWindow = gameWindow;
+	public PlayerPanelInventory(Session session) {
+		this.session = session;
 		calculateInventorySlotSize();
 	}
 	
@@ -49,7 +49,7 @@ public class PlayerPanelInventory implements PlayerPanelInterface {
 	}
 
 	private void drawInventorySlots(Graphics g) {
-		Player player = gameWindow.getMaze().getPlayer();
+		Player player = session.getMaze().getPlayer();
 		for (int i = 0; i < INVENTORY_SLOTS_HORIZONTAL; i++){
 			for (int j = 0; j < INVENTORY_SLOTS_VERTICAL; j++){
 				Point imageCorner = getItemCorner(i,j);
@@ -68,7 +68,7 @@ public class PlayerPanelInventory implements PlayerPanelInterface {
 	}
 	
 	private void drawItems(Graphics g) {
-		List<Item> items = gameWindow.getMaze().getPlayer().getItems();
+		List<Item> items = session.getMaze().getPlayer().getItems();
 		Iterator<Item> it = items.iterator();
 		for (int i = 0; i < INVENTORY_SLOTS_VERTICAL; i++){
 			for (int j = 0; j < INVENTORY_SLOTS_HORIZONTAL; j++){
@@ -101,8 +101,8 @@ public class PlayerPanelInventory implements PlayerPanelInterface {
 		private static final long serialVersionUID = 6176663489076570027L;
 		private Item item;
 		private RightClickMenu(int inventorySlot){
-			item = gameWindow.getMaze().getPlayer().getItems().get(inventorySlot);
-			Option[] options = item.getOptions(gameWindow.getMaze().getPlayer());
+			item = session.getMaze().getPlayer().getItems().get(inventorySlot);
+			Option[] options = item.getOptions(session.getMaze().getPlayer());
 			setFocusable(false);
 			for (Option option: options){
 				final Option optionFinal = option;
@@ -111,7 +111,7 @@ public class PlayerPanelInventory implements PlayerPanelInterface {
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						item.doAction(optionFinal, gameWindow.getMaze().getPlayer());
+						item.doAction(optionFinal, session.getMaze().getPlayer());
 					}
 				});
 		        add(menuItem);
@@ -139,7 +139,7 @@ public class PlayerPanelInventory implements PlayerPanelInterface {
 	}
 	
 	private void doRightClick(MouseEvent me, int inventorySlot) {
-		if (gameWindow.getMaze().getPlayer().getItems().size() > inventorySlot){
+		if (session.getMaze().getPlayer().getItems().size() > inventorySlot){
 			final RightClickMenu menu = new RightClickMenu(inventorySlot);
 			
 			menu.setVisible(true);	//to initalize menu and generate size
@@ -165,7 +165,7 @@ public class PlayerPanelInventory implements PlayerPanelInterface {
 	}
 
 	private void doLeftClick(int inventorySlot) {
-		Player player = gameWindow.getMaze().getPlayer();
+		Player player = session.getMaze().getPlayer();
 		if (player.getItems().size() > inventorySlot){
 			Item item = player.getItems().get(inventorySlot);
 			Option[] options = item.getOptions(player);

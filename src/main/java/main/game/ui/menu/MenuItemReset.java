@@ -1,6 +1,5 @@
 package main.game.ui.menu;
 
-import main.game.MainController;
 import main.game.ui.GameWindow;
 
 public class MenuItemReset implements MenuItem {
@@ -13,6 +12,7 @@ public class MenuItemReset implements MenuItem {
 
 	@Override
 	public void click(GameWindow gameWindow) {
-		MainController.reset();
+		gameWindow.getSession().reset();
+		gameWindow.closeMenuInterface();
 	}
 }

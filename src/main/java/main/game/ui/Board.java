@@ -28,6 +28,7 @@ import main.game.maze.interactable.item.Key;
 import main.game.maze.interactable.item.gatestone.GateStone;
 import main.game.maze.interactable.object.RoomObject;
 import main.game.maze.room.Room;
+import main.game.system.Session;
 import main.game.util.Size;
 import main.game.util.Util;
 
@@ -38,11 +39,11 @@ public class Board extends JPanel {
 	public static final int WIDTH = 1000;
 	public static final int HEIGHT = 600;
 	private static final Size SIZE = new Size(WIDTH, HEIGHT);
-	private GameWindow gameWindow;
+	private Session session;
 	private Size totalSize;
 	
-	public Board(GameWindow gameWindow){
-		this.gameWindow = gameWindow;
+	public Board(Session session){
+		this.session = session;
 		//addKeyListener(new MovementListener());
 		addMouseListener(new MouseClickListener());
 		//setFocusable(true);
@@ -73,15 +74,15 @@ public class Board extends JPanel {
 		Point temp = getPlayerWindowCorner();
 		setBounds(-temp.x, -temp.y, temp.x + WIDTH, temp.y + HEIGHT);	
 		
-		if (gameWindow.getMaze().getPlayer().getGameInterface() != null){
-			gameWindow.getMaze().getPlayer().getGameInterface().drawInterface(g, temp, SIZE);
+		if (session.getMaze().getPlayer().getGameInterface() != null){
+			session.getMaze().getPlayer().getGameInterface().drawInterface(g, temp, SIZE);
 		}
 	}
 
 	private void drawRoomObjects(Graphics g) {
-		for (int i = 0; i < gameWindow.getMaze().getWidth(); i++){
-			for (int j = 0; j < gameWindow.getMaze().getHeight(); j++){
-				Room room = gameWindow.getMaze().getRooms().get(i).get(j);
+		for (int i = 0; i < session.getMaze().getWidth(); i++){
+			for (int j = 0; j < session.getMaze().getHeight(); j++){
+				Room room = session.getMaze().getRooms().get(i).get(j);
 				if (room != null){
 					if (!room.isLocked()){
 						Point corner = getRoomCorner(room);
@@ -99,9 +100,9 @@ public class Board extends JPanel {
 	}
 
 	private void drawItems(Graphics g) {
-		for (int i = 0; i < gameWindow.getMaze().getWidth(); i++){
-			for (int j = 0; j < gameWindow.getMaze().getHeight(); j++){
-				Room room = gameWindow.getMaze().getRooms().get(i).get(j);
+		for (int i = 0; i < session.getMaze().getWidth(); i++){
+			for (int j = 0; j < session.getMaze().getHeight(); j++){
+				Room room = session.getMaze().getRooms().get(i).get(j);
 				if (room != null){
 					if (room.hasDroppedItems()){
 						if (!room.isLocked()){
@@ -126,7 +127,7 @@ public class Board extends JPanel {
 	}
 
 	private void drawGroupGateStone(Graphics g) {
-		GateStone groupGateStone = gameWindow.getMaze().getPlayer().getGroupGateStone();
+		GateStone groupGateStone = session.getMaze().getPlayer().getGroupGateStone();
 		if (groupGateStone.exists()){
 			Image image = groupGateStone.getImage();
 			Point corner = getRoomCorner(groupGateStone.getPosition().getRoom());
@@ -138,7 +139,7 @@ public class Board extends JPanel {
 	}
 
 	private void drawPersonalGateStone(Graphics g) {
-		GateStone personalGateStone = gameWindow.getMaze().getPlayer().getPersonalGateStone();
+		GateStone personalGateStone = session.getMaze().getPlayer().getPersonalGateStone();
 		if (personalGateStone.exists()){
 			Image image = personalGateStone.getImage();
 			Point corner = getRoomCorner(personalGateStone.getPosition().getRoom());
@@ -150,7 +151,7 @@ public class Board extends JPanel {
 	}
 
 	private void drawPlayer(Graphics g) {
-		Player player = gameWindow.getMaze().getPlayer();
+		Player player = session.getMaze().getPlayer();
 		Image image = player.getImage();
 		Point corner = getRoomCorner(player.getPosition().getRoom());
 		Point p = player.getPosition().getPoint();
@@ -168,9 +169,9 @@ public class Board extends JPanel {
 	}	
 	
 	private void drawKeysInRooms(Graphics g){
-		for (int i = 0; i < gameWindow.getMaze().getWidth(); i++){
-			for (int j = 0; j < gameWindow.getMaze().getHeight(); j++){
-				Room room = gameWindow.getMaze().getRooms().get(i).get(j);
+		for (int i = 0; i < session.getMaze().getWidth(); i++){
+			for (int j = 0; j < session.getMaze().getHeight(); j++){
+				Room room = session.getMaze().getRooms().get(i).get(j);
 				if (room != null){
 					if (room.getKey() != null){
 						if (!room.isLocked()){
@@ -188,9 +189,9 @@ public class Board extends JPanel {
 	}
 	
 	private void drawMonsters(Graphics g) {
-		for (int i = 0; i < gameWindow.getMaze().getWidth(); i++){
-			for (int j = 0; j < gameWindow.getMaze().getHeight(); j++){
-				Room room = gameWindow.getMaze().getRooms().get(i).get(j);
+		for (int i = 0; i < session.getMaze().getWidth(); i++){
+			for (int j = 0; j < session.getMaze().getHeight(); j++){
+				Room room = session.getMaze().getRooms().get(i).get(j);
 				if (room != null){
 					if (!room.isLocked()){
 						List<Monster> monsters = room.getMonsters();
@@ -221,9 +222,9 @@ public class Board extends JPanel {
 	}
 	
 	private void drawKeysOnDoors(Graphics g) {
-		for (int i = 0; i < gameWindow.getMaze().getWidth(); i++){
-			for (int j = 0; j < gameWindow.getMaze().getHeight(); j++){
-				Room room = gameWindow.getMaze().getRooms().get(i).get(j);
+		for (int i = 0; i < session.getMaze().getWidth(); i++){
+			for (int j = 0; j < session.getMaze().getHeight(); j++){
+				Room room = session.getMaze().getRooms().get(i).get(j);
 				if (room != null){
 					if (room.isLockedWithKey()){
 						if (!room.isPreviousRoomLocked()){
@@ -268,9 +269,9 @@ public class Board extends JPanel {
 		Image imageDoorWest = Util.readImage(Config.IMAGE_ROOM_DOOR_WEST);
 		Point c = new Point((Config.SIZE_ROOM_WIDTH-Config.SIZE_THICKNESS_DOOR)/2,(Config.SIZE_ROOM_HEIGHT-Config.SIZE_THICKNESS_DOOR)/2);
 		Direction[] directions = Direction.values();
-		for (int i = 0; i < gameWindow.getMaze().getWidth(); i++){
-			for (int j = 0; j < gameWindow.getMaze().getHeight(); j++){
-				Room room = gameWindow.getMaze().getRooms().get(i).get(j);
+		for (int i = 0; i < session.getMaze().getWidth(); i++){
+			for (int j = 0; j < session.getMaze().getHeight(); j++){
+				Room room = session.getMaze().getRooms().get(i).get(j);
 				if (room != null){
 					if (!room.isLocked()){
 						Point corner = getRoomCorner(i,j);
@@ -325,9 +326,9 @@ public class Board extends JPanel {
 		Image imageWallSouth = Util.readImage(Config.IMAGE_ROOM_WALL_SOUTH);
 		Image imageFloor = Util.readImage(Config.IMAGE_ROOM_FLOOR);
 		Image imageCorner = Util.readImage(Config.IMAGE_ROOM_CORNER);
-		for (int i = 0; i < gameWindow.getMaze().getWidth(); i++){
-			for (int j = 0; j < gameWindow.getMaze().getHeight(); j++){
-				Room room = gameWindow.getMaze().getRooms().get(i).get(j);
+		for (int i = 0; i < session.getMaze().getWidth(); i++){
+			for (int j = 0; j < session.getMaze().getHeight(); j++){
+				Room room = session.getMaze().getRooms().get(i).get(j);
 				if (room != null){
 					if (!room.isLocked()){
 						Point corner = getRoomCorner(i,j);
@@ -348,7 +349,7 @@ public class Board extends JPanel {
 								 Config.SIZE_THICKNESS_WALL, Config.SIZE_ROOM_HEIGHT, null);
 						g.drawImage(imageWallSouth, corner.x, corner.y + Config.SIZE_ROOM_HEIGHT, 
 								Config.SIZE_ROOM_WIDTH, Config.SIZE_THICKNESS_WALL, null);
-					} else if (!gameWindow.getMaze().getRooms().get(i).get(j).isPreviousRoomLocked()){
+					} else if (!session.getMaze().getRooms().get(i).get(j).isPreviousRoomLocked()){
 						Point corner = getRoomCorner(i,j);
 						g.setColor(Config.COLOR_ROOM_LOCKED);
 						g.fillRect(corner.x, corner.y, Config.SIZE_ROOM_WIDTH, Config.SIZE_ROOM_HEIGHT);
@@ -359,7 +360,7 @@ public class Board extends JPanel {
 	}
 	
 	private Point getPlayerWindowCorner(){		
-		Player player = gameWindow.getMaze().getPlayer();
+		Player player = session.getMaze().getPlayer();
 		Point pos_room = player.getPosition().getPoint();
 		Point corner = getRoomCorner(player.getPosition().getRoom());
 		int x = corner.x + pos_room.x - WIDTH/2;
@@ -381,8 +382,8 @@ public class Board extends JPanel {
 	
 	private class MouseClickListener extends MouseAdapter {
 		public void mousePressed(MouseEvent me){
-			if (gameWindow.getMaze().getPlayer().getGameInterface() != null){
-				gameWindow.getMaze().getPlayer().getGameInterface().mousePressed(me);
+			if (session.getMaze().getPlayer().getGameInterface() != null){
+				session.getMaze().getPlayer().getGameInterface().mousePressed(me);
 				return;
 			}
 			final Point p = me.getPoint();
@@ -391,7 +392,7 @@ public class Board extends JPanel {
 					Point corner = getRoomCorner(i,j);
 					if (p.x >= corner.x && p.x < corner.x + Config.SIZE_ROOM_WIDTH){
 						if (p.y >= corner.y && p.y < corner.y + Config.SIZE_ROOM_HEIGHT){
-							final Room room = gameWindow.getMaze().getRooms().get(i).get(j);
+							final Room room = session.getMaze().getRooms().get(i).get(j);
 							if (room != null){
 								if (!room.isLocked()){
 									final Point clickInRoom = new Point(p.x - corner.x, p.y - corner.y);
@@ -434,7 +435,7 @@ public class Board extends JPanel {
 
 		private void doLeftClick(final Room room, final Point clickInRoom) {
 			Interactable interactable = getFirstInteractable(room, clickInRoom);
-			gameWindow.getMaze().getPlayer().interactWith(Option.DEFAULT, interactable);
+			session.getMaze().getPlayer().interactWith(Option.DEFAULT, interactable);
 		}
 	}
 	private class RightClickMenu extends JPopupMenu {
@@ -442,7 +443,7 @@ public class Board extends JPanel {
 
 		private RightClickMenu(Room room, Point mouseClickInRoomPosition){
 			setFocusable(false);
-			Player player = gameWindow.getMaze().getPlayer();
+			Player player = session.getMaze().getPlayer();
 			Interactable[] interactables = getAllInteractables(room, mouseClickInRoomPosition);
 			for (Interactable interactable: interactables){
 				Option[] options = interactable.getOptions(player);
@@ -453,7 +454,7 @@ public class Board extends JPanel {
 					menuItem.addActionListener(new ActionListener() {						
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							gameWindow.getMaze().getPlayer().interactWith(optionFinal, interactableFinal);
+							session.getMaze().getPlayer().interactWith(optionFinal, interactableFinal);
 						}
 					});
 			        add(menuItem);
@@ -493,8 +494,8 @@ public class Board extends JPanel {
 				interactables.add(key);
 			}
 		}
-		if (gameWindow.getMaze().getPlayer().getGroupGateStone().exists()){
-			GateStone ggs = gameWindow.getMaze().getPlayer().getGroupGateStone();
+		if (session.getMaze().getPlayer().getGroupGateStone().exists()){
+			GateStone ggs = session.getMaze().getPlayer().getGroupGateStone();
 			Room gateStoneRoom = ggs.getPosition().getRoom();
 			if (gateStoneRoom == room){
 				if (wasClickedOn(mouseClickInRoomPosition, ggs)){
@@ -502,8 +503,8 @@ public class Board extends JPanel {
 				}
 			}
 		}
-		if (gameWindow.getMaze().getPlayer().getPersonalGateStone().exists()){
-			GateStone pgs = gameWindow.getMaze().getPlayer().getPersonalGateStone();
+		if (session.getMaze().getPlayer().getPersonalGateStone().exists()){
+			GateStone pgs = session.getMaze().getPlayer().getPersonalGateStone();
 			Room gateStoneRoom = pgs.getPosition().getRoom();
 			if (gateStoneRoom == room){
 				if (wasClickedOn(mouseClickInRoomPosition, pgs)){
