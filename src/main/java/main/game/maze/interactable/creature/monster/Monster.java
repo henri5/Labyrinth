@@ -1,11 +1,11 @@
 package main.game.maze.interactable.creature.monster;
 
-import main.game.Config;
 import main.game.maze.interactable.Interactable;
 import main.game.maze.interactable.Option;
 import main.game.maze.interactable.creature.Creature;
 import main.game.maze.interactable.creature.player.Player;
 import main.game.maze.mechanics.lootTable.LootTable;
+import main.game.maze.room.Room;
 import main.game.util.Size;
 import main.game.util.Util;
 
@@ -17,7 +17,6 @@ public abstract class Monster extends Creature implements Interactable{
 	public Monster(String name, Size imageSize) {
 		super(name, imageSize);
 		controller = new MonsterController(this);
-		setStartingPosition();
 	}
 
 	public void actIdle() {
@@ -28,8 +27,9 @@ public abstract class Monster extends Creature implements Interactable{
 		controller.target(creature);
 	}
 	
-	private void setStartingPosition() {
-		getPosition().setPoint(Util.randomPointInArea(Config.SIZE_ROOM_WIDTH-imageSize.width, Config.SIZE_ROOM_HEIGHT-imageSize.height));
+	public void setStartingPosition(Room room) {
+		getPosition().setPoint(Util.randomPointInRoom(getImageSize(), room));
+		getPosition().setRoom(room);
 	}
 	
 	public void die(){

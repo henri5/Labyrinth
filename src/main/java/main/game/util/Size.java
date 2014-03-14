@@ -27,4 +27,11 @@ public class Size {
 		width = dim.width;
 		height = dim.height;
 	}
+
+	@Override
+	public String toString() {
+		return "Size [width=" + width + ", height=" + height + "]";
+	}
+	
+	
 }

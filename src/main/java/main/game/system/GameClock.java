@@ -16,7 +16,6 @@ public class GameClock {
 	}
 	
 	public void addGameAction(GameAction gameAction) {
-		System.out.println(gameAction.getClass());
 		synchronized(gameActions){
 			gameActions.add(gameAction);
 		}

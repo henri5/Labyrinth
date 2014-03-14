@@ -19,6 +19,7 @@ public class Session {
 	}
 	
 	public Maze getMaze(){
+		Maze maze = this.maze;
 		return maze;
 	}
 }

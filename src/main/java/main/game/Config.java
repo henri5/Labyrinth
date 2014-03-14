@@ -69,6 +69,7 @@ public final class Config {
 	public static final String IMAGE_ROOM_DOOR_NORTH = IMAGES_FOLDER_ROOMS + "room_door_north.png";
 	public static final String IMAGE_ROOM_DOOR_EAST = IMAGES_FOLDER_ROOMS + "room_door_east.png";
 	public static final String IMAGE_ROOM_DOOR_SOUTH = IMAGES_FOLDER_ROOMS + "room_door_south.png";
+	public static final String IMAGES_NULL = "null.png";
 	
 	public static final int DELAY_TELEPORT_TO_BASE = 4000;
 	public static final int MAX_INTERACTION_DISTANCE = 5;

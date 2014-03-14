@@ -3,7 +3,7 @@ package main.game.maze.interactable.creature.monster;
 import main.game.Config;
 import main.game.maze.interactable.item.Coins;
 import main.game.maze.interactable.item.armour.NoArmour;
-import main.game.maze.interactable.item.weapon.Sword;
+import main.game.maze.interactable.item.weapon.DragonBreath;
 import main.game.maze.mechanics.lootTable.LootEntry;
 import main.game.maze.mechanics.lootTable.LootTable;
 import main.game.maze.mechanics.stats.Stats;
@@ -24,7 +24,7 @@ public class Dragon extends Monster {
 	
 	public Dragon() {
 		super("dragon", new Size(SIZE_WIDTH, SIZE_HEIGHT));
-		weapon = new Sword();
+		weapon = new DragonBreath();
 		armour = new NoArmour();
 		image = Util.readImage(IMAGE_SRC);
 		stats = new Stats(4,4,4,4,HEALTH,Monster.MOVEMENT_SPEED);

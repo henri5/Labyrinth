@@ -2,7 +2,6 @@ package main.game.maze.interactable.creature.monster;
 
 import java.awt.Point;
 
-import main.game.Config;
 import main.game.maze.interactable.creature.Creature;
 import main.game.maze.interactable.item.Item;
 import main.game.util.Size;
@@ -21,7 +20,7 @@ public class MonsterController {
 	
 	public void actIdle() {
 		if (destinationReached){
-			destination = Util.randomPointInArea(Config.SIZE_ROOM_WIDTH-monster.getImageSize().width, Config.SIZE_ROOM_HEIGHT-monster.getImageSize().height);
+			destination = Util.randomPointInRoom(monster.getImageSize(), monster.getPosition().getRoom());
 			destinationReached = false;
 		}
 		if (Util.areasOverlap(monster.getPosition().getPoint(), monster.getImageSize(), destination, new Size(1,1), 0)){

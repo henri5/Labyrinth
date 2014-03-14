@@ -1,7 +1,5 @@
 package main.game.maze.interactable.item;
 
-import java.util.List;
-
 import main.game.maze.interactable.creature.player.Player;
 import main.game.util.Size;
 

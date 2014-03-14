@@ -13,6 +13,7 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 import main.game.Config;
+import main.game.maze.room.Room;
 
 public class Util {
 	private Util(){
@@ -55,6 +56,25 @@ public class Util {
 		}
 		Random rnd = new Random();
 		return new Point(rnd.nextInt(width),rnd.nextInt(height));
+	}
+	
+	/**
+	 * Returns point in room for object with size of {@code size} that won't collide with any of the room objects.
+	 * @param size size of object
+	 * @param destination room
+	 * @return random Point
+	 */
+	public static Point randomPointInRoom(Size size, Room room){
+		Point point = null;
+		int counter = 0;
+		do {
+			if (counter++ > 100){
+				System.out.printf("Util.randomPointInRoom(): trouble getting random location in room %s for object with size %s.%n", room.getClass(), size.toString());
+				break;
+			}
+			point = randomPointInArea(room.getRoomSize().width, room.getRoomSize().height);
+		} while (room.collidesWithRoomObject(point, size));
+		return point;
 	}
 
 	/** Check whether two areas with given points as corners and dimensions as sizes overlap, where one area's 

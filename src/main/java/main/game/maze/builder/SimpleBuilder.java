@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import main.game.Config;
 import main.game.maze.Direction;
 import main.game.maze.Maze;
 import main.game.maze.door.Door;
@@ -75,8 +74,7 @@ public class SimpleBuilder implements Builder {
 				break;
 			}
 		}
-		key.setPosition(new Position(Util.randomPointInArea(Config.SIZE_ROOM_WIDTH-key.getImageSize().width, 
-				Config.SIZE_ROOM_HEIGHT-key.getImageSize().height), randomRoom));
+		key.setPosition(new Position(Util.randomPointInRoom(key.getImageSize(), randomRoom), randomRoom));
 		randomRoom.setKey(key);
 		maze.removeKey(key);
 		return key;
@@ -90,7 +88,7 @@ public class SimpleBuilder implements Builder {
 			Monster monster = monsterFactory.getNormalMonster();
 			monster.increaseLevel(getRandomLevelNormal(room));
 			room.addMonster(monster);
-			monster.getPosition().setRoom(room);
+			monster.setStartingPosition(room);
 		}
 	}
 
@@ -202,7 +200,6 @@ public class SimpleBuilder implements Builder {
 		List<Room> usableRooms = new ArrayList<Room>(currentRooms);
 		Collections.shuffle(usableRooms);
 		maze.removeKey(destinationRoom);
-		// TODO: clean this obscurity up if you can
 		Direction[] directions = Direction.values();
 		for (Room room: usableRooms){	//for each room we currently hold
 			for (Direction dir: directions){	//for each direction
@@ -224,8 +221,7 @@ public class SimpleBuilder implements Builder {
 							room.setDoor(dir, new KeyDoor(candidateRoom, key));
 						}
 						//position the key is farthest position in the maze
-						key.setPosition(new Position(Util.randomPointInArea(Config.SIZE_ROOM_WIDTH-key.getImageSize().width, 
-								Config.SIZE_ROOM_HEIGHT-key.getImageSize().height), destinationRoom));
+						key.setPosition(new Position(Util.randomPointInRoom(key.getImageSize(), destinationRoom), destinationRoom));
 						destinationRoom.setKey(key);
 						maze.setBossRoom(candidateRoom);
 						return true;
@@ -258,8 +254,7 @@ public class SimpleBuilder implements Builder {
 			keys.remove(key);
 			keyCount.incrementAndGet();
 		}
-		key.setPosition(new Position(Util.randomPointInArea(Config.SIZE_ROOM_WIDTH-key.getImageSize().width, 
-				Config.SIZE_ROOM_HEIGHT-key.getImageSize().height), currentFurthestRoom));
+		key.setPosition(new Position(Util.randomPointInRoom(key.getImageSize(), currentFurthestRoom), currentFurthestRoom));
 		currentFurthestRoom.setKey(key);
 	}
 
