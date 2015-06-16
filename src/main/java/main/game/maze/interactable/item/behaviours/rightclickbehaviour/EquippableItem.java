@@ -16,11 +16,6 @@ public class EquippableItem implements RightClickBehaviour{
 	public Option[] getOptions(Item item, Player player) {
 		List<Option> options = new ArrayList<Option>();
 		if (player.ownsItem(item)){
-			if (player.hasEquipped(item)){
-				options.add(Option.UNEQUIP);
-			} else {
-				options.add(Option.EQUIP);
-			}
 			options.add(Option.DROP);
 		} else {
 			options.add(Option.PICKUP);

@@ -1,6 +1,5 @@
 package main.game;
 
-import main.game.maze.interactable.creature.monster.MonsterGameAction;
 import main.game.maze.interactable.creature.player.PlayerGameAction;
 import main.game.system.GameClock;
 import main.game.system.Session;
@@ -16,7 +15,6 @@ public class MainController {
 		session = new Session();
 		gameWindow = new GameWindow(session);
 		new PlayerGameAction(session);
-		new MonsterGameAction(session);
 		gameWindow.setVisible(true);	
 		gameClock.run();
 	}

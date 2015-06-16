@@ -18,7 +18,7 @@ public class Maze {
 	Room startingRoom;
 	int width;
 	int height;
-	private List<Key> availableKeys = new ArrayList<Key>(Key.KEYS);
+	private List<Key> availableKeys = new ArrayList<>(Key.KEYS);
 	private Player player;
 	private Builder builder = new SimpleBuilder(this);
 	private Room bossRoom;
@@ -35,11 +35,10 @@ public class Maze {
 		createStartingRoom();
 		buildLabyrinth();
 		createCriticalPath();
-		addMonsters();
 	}
 	
 	public void rebuild(){
-		availableKeys = new ArrayList<Key>(Key.KEYS);
+		availableKeys = new ArrayList<>(Key.KEYS);
 		Key.resetAllPositions();
 		initializeLabyrinth();
 		createStartingRoom();
@@ -189,10 +188,6 @@ public class Maze {
 
 	protected Key placeKeyInMaze(List<Room> currentRooms) {
 		return builder.placeKeyInMaze(currentRooms);
-	}
-
-	private void addMonsters(){
-		builder.addMonsters(this);
 	}
 
 	public void setBossRoom(Room room) {

@@ -1,27 +1,10 @@
 package main.game.ui;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-
 import main.game.Config;
 import main.game.maze.Direction;
 import main.game.maze.DummyObject;
 import main.game.maze.interactable.Interactable;
 import main.game.maze.interactable.Option;
-import main.game.maze.interactable.creature.Creature;
-import main.game.maze.interactable.creature.monster.Monster;
 import main.game.maze.interactable.creature.player.Player;
 import main.game.maze.interactable.item.Item;
 import main.game.maze.interactable.item.Key;
@@ -31,6 +14,15 @@ import main.game.maze.room.Room;
 import main.game.system.Session;
 import main.game.util.Size;
 import main.game.util.Util;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Board extends JPanel {
 	private static final long serialVersionUID = -5300839540150130114L;
@@ -67,7 +59,6 @@ public class Board extends JPanel {
 		drawItems(g);
 		drawKeys(g);
 		drawGateStones(g);
-		drawMonsters(g);
 		drawPlayer(g);		
 		
 		//a hack to move player to center of the screen.
@@ -157,10 +148,6 @@ public class Board extends JPanel {
 		Point p = player.getPosition().getPoint();
 		Point temp = new Point(corner.x + p.x, corner.y + p.y);
 		Util.drawImage(g, image, temp, player.getImageSize());
-		if (player.drawHealthBar()){
-			drawHealthBar(g, corner.x, corner.y, player);
-		}
-		
 	}
 
 	private void drawKeys(Graphics g) {
@@ -187,40 +174,7 @@ public class Board extends JPanel {
 			}
 		}
 	}
-	
-	private void drawMonsters(Graphics g) {
-		for (int i = 0; i < session.getMaze().getWidth(); i++){
-			for (int j = 0; j < session.getMaze().getHeight(); j++){
-				Room room = session.getMaze().getRooms().get(i).get(j);
-				if (room != null){
-					if (!room.isLocked()){
-						List<Monster> monsters = room.getMonsters();
-						Point corner = getRoomCorner(i,j);
-						for (Monster monster: monsters){
-							Point p = monster.getPosition().getPoint();
-							Image image = monster.getImage();
-							Point temp = new Point(corner.x + p.x, corner.y + p.y);
-							Util.drawImage(g, image, temp, monster.getImageSize());
-							if (monster.drawHealthBar()){
-								drawHealthBar(g, corner.x, corner.y, monster);
-							}
-						}
-					}
-				}
-			}
-		}
-	}
 
-	private void drawHealthBar(Graphics g, int x, int y, Creature creature) {
-		Point p = creature.getPosition().getPoint();
-		g.setColor(COLOR_HEALTHBAR_DAMAGED);
-		p = new Point(x + p.x, y + p.y-Config.SIZE_HEALTHBAR_HEIGHT-Config.PADDING_HEALTHBAR);
-		g.fillRect(p.x, p.y, Config.SIZE_HEALTHBAR_WIDTH, Config.SIZE_HEALTHBAR_HEIGHT);
-		g.setColor(COLOR_HEALTHBAR_HEALTHY);
-		int width = (int) (((double) creature.getCurrentHealth()/ (double) creature.getMaxHealth())*Config.SIZE_HEALTHBAR_WIDTH);
-		g.fillRect(p.x, p.y, width, Config.SIZE_HEALTHBAR_HEIGHT);
-	}
-	
 	private void drawKeysOnDoors(Graphics g) {
 		for (int i = 0; i < session.getMaze().getWidth(); i++){
 			for (int j = 0; j < session.getMaze().getHeight(); j++){
@@ -473,11 +427,6 @@ public class Board extends JPanel {
 
 	public Interactable[] getAllInteractables(Room room, Point mouseClickInRoomPosition) {
 		List<Interactable> interactables = new ArrayList<Interactable>();
-		for (Monster monster: room.getMonsters()){
-			if (wasClickedOn(mouseClickInRoomPosition, monster)){
-				interactables.add(monster);
-			}
-		}
 		for (Item item: room.getDroppedItems()){
 			if (wasClickedOn(mouseClickInRoomPosition, item)){
 				interactables.add(item);

@@ -1,9 +1,5 @@
 package main.game.maze.interactable.creature.player;
 
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
-
 import main.game.Config;
 import main.game.maze.Direction;
 import main.game.maze.DummyObject;
@@ -20,16 +16,15 @@ import main.game.maze.interactable.item.food.Food;
 import main.game.maze.interactable.item.gatestone.GateStone;
 import main.game.maze.interactable.item.gatestone.GroupGateStone;
 import main.game.maze.interactable.item.gatestone.PersonalGateStone;
-import main.game.maze.interactable.item.weapon.Bow;
-import main.game.maze.interactable.item.weapon.Staff;
-import main.game.maze.interactable.item.weapon.Sword;
-import main.game.maze.interactable.item.weapon.Weapon;
-import main.game.maze.mechanics.stats.Stats;
 import main.game.maze.room.Room;
 import main.game.ui.gameinterface.GameInterface;
 import main.game.ui.playerpanel.PlayerPanel;
 import main.game.util.Size;
 import main.game.util.Util;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Player extends Creature{
 	private static final int HEALTH = 1000;
@@ -50,12 +45,7 @@ public class Player extends Creature{
 		super(name, new Size(SIZE_WIDTH,SIZE_HEIGHT));
 		controller = new PlayerController(this);
 		image = Util.readImage(IMAGE);
-		stats = new Stats(5,5,5,10,HEALTH,MOVEMENT_SPEED);
 		//increaseLevel(1000);
-		weapon = new Sword();
-		addItem(weapon);
-		addItem(new Bow());
-		addItem(new Staff());
 		addItem(new Coins(10000));
 		addItem(new Cake());
 		addItem(new Fish());
@@ -95,8 +85,9 @@ public class Player extends Creature{
 		getPosition().setPoint(positionInRoom);
 	}
 
+	//TODO set movement speed
 	public int getMovementSpeed() {
-		return stats.getMovementSpeed();
+		return 5;
 	}
 
 	public void createStartingPosition(Room startingRoom) {
@@ -116,11 +107,6 @@ public class Player extends Creature{
 		if (getPosition().getRoom() == interactable.getPosition().getRoom()){
 			interactable.doAction(option, this);
 		}
-	}
-	
-	@Override
-	protected long getWeaponDelay() {
-		return 0;
 	}
 
 	public boolean hasItemSpace() {
@@ -147,15 +133,6 @@ public class Player extends Creature{
 		controller.drop(item);
 	}
 
-	public boolean hasEquipped(Item item) {
-		if (item instanceof Weapon){
-			if (weapon == item){
-				return true;
-			}
-		}
-		return false;
-	}
-
 	public void unequip(Item item) {
 		controller.unequip(item);
 	}
@@ -179,10 +156,6 @@ public class Player extends Creature{
 
 	public void pickUpItems() {
 		controller.pickUpItems();
-	}
-
-	public void setWeapon(Weapon weapon) {
-		this.weapon = weapon;
 	}
 
 	public void respawn() {

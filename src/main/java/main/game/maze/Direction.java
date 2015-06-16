@@ -13,7 +13,7 @@ public enum Direction {
 	
 	private final Point coordinates;
 	
-	private Direction(int x, int y){
+	Direction(int x, int y){
 		coordinates = new Point(x,y);
 	}
 	

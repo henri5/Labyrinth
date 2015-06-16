@@ -1,21 +1,11 @@
 package main.game.maze.builder;
 
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import main.game.maze.Direction;
 import main.game.maze.Maze;
 import main.game.maze.door.Door;
 import main.game.maze.door.KeyDoor;
 import main.game.maze.door.SimpleDoor;
 import main.game.maze.interactable.Position;
-import main.game.maze.interactable.creature.monster.Monster;
-import main.game.maze.interactable.creature.monster.MonsterFactory;
 import main.game.maze.interactable.item.Key;
 import main.game.maze.room.ChestRoom;
 import main.game.maze.room.Room;
@@ -23,12 +13,15 @@ import main.game.maze.room.SimpleRoom;
 import main.game.maze.room.StartingRoom;
 import main.game.util.Util;
 
+import java.awt.*;
+import java.util.*;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class SimpleBuilder implements Builder {
 	private static final double CHANCE_KEYDOOR_START = 0.1;	//must not be larger than CHANCE_KEYDOOR_END
 	private static final double CHANCE_KEYDOOR_END = 0.6;	//must not be larger than 1
-	private static final int MONSTERS_MAX_COUNT = 6;	//per room, that is
 	private static final double CHANCE_CHESTROOM = 0.1;
-	private final MonsterFactory monsterFactory = MonsterFactory.getInstance();
 	private Maze maze;
 	
 	public SimpleBuilder(Maze maze) {
@@ -78,42 +71,6 @@ public class SimpleBuilder implements Builder {
 		randomRoom.setKey(key);
 		maze.removeKey(key);
 		return key;
-	}
-
-	
-	private void addNormalMonsters(Room room) {
-		Random rnd = new Random();
-		int monsterCount = rnd.nextInt(MONSTERS_MAX_COUNT);
-		for (int i = 0; i < monsterCount; i++){
-			Monster monster = monsterFactory.getNormalMonster();
-			monster.increaseLevel(getRandomLevelNormal(room));
-			room.addMonster(monster);
-			monster.setStartingPosition(room);
-		}
-	}
-
-	@Override
-	public void addMonsters(Maze maze) {
-		addNormalMonsters(maze);
-		addBossMonster(maze.getBossRoom());
-	}
-
-	private void addNormalMonsters(Maze maze) {
-		for (int i = 0; i < maze.getWidth(); i++){
-			for (int j = 0; j < maze.getHeight(); j++){
-				Room room = maze.getRooms().get(i).get(j);
-				if (room != null && room != maze.getStartingRoom() && room != maze.getBossRoom()){
-					addNormalMonsters(room);
-				}
-			}
-		}
-	}
-
-	private void addBossMonster(Room room) {
-		Monster monster = monsterFactory.getBossMonster();
-		monster.increaseLevel(getRandomLevelSpecial(room));
-		room.addMonster(monster);
-		monster.getPosition().setRoom(room);		
 	}
 
 	private int getRandomLevelSpecial(Room room) {
@@ -241,7 +198,7 @@ public class SimpleBuilder implements Builder {
 			return;
 		}
 		maze.removeKey(currentFurthestRoom);
-		Key key = null;
+		Key key;
 		if (destinationRoom.isLockedWithKey()){
 			key = destinationRoom.getLockingKey();
 			key.getPosition().getRoom().setKey(null);

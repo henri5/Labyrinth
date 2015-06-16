@@ -40,10 +40,10 @@ public abstract class Food extends NonStackable {
 	@Override
 	public void doAction(Option option, Player player) {
 		switch (option){
-		case PICKUP: tryPickUp(player); break;
-		case DROP: player.drop(this); break;
-		case EAT: player.eat(this); break;
-		default: tryPickUp(player); break;
+			case PICKUP: tryPickUp(player); break;
+			case DROP: player.drop(this); break;
+			case EAT: player.eat(this); break;
+			default: tryPickUp(player); break;
 		}
 	}
 

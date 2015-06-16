@@ -6,10 +6,8 @@ import java.util.Map;
 
 public class ImageHolder {
 	private static Map<String,Image> imageMap = new HashMap<String,Image>();
-	
-	private ImageHolder(){
-		throw new IllegalAccessError("ImageHolder class must not be initialized");
-	}
+
+	private ImageHolder(){}
 	static Image getImage(String imageName){
 		return imageMap.get(imageName);
 	}

@@ -16,9 +16,7 @@ import main.game.Config;
 import main.game.maze.room.Room;
 
 public class Util {
-	private Util(){
-		throw new IllegalAccessError("Util class must not be initialized");
-	}
+	private Util(){}
 	
 	/**
 	 * Reads and returns image. Subsequent reads of image with same name are done from cache.

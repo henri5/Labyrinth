@@ -4,7 +4,7 @@ import main.game.ui.GameWindow;
 
 public interface MenuItem {
 
-	public String getText();
-	public void click(GameWindow gameWindow);
+	String getText();
+	void click(GameWindow gameWindow);
 
 }

@@ -1,9 +1,5 @@
 package main.game.maze.interactable.creature.player;
 
-import java.awt.Dimension;
-import java.awt.Point;
-import java.util.List;
-
 import main.game.Config;
 import main.game.GameAction;
 import main.game.MainController;
@@ -14,8 +10,9 @@ import main.game.maze.interactable.item.Key;
 import main.game.maze.interactable.item.NonStackable;
 import main.game.maze.interactable.item.Stackable;
 import main.game.maze.interactable.item.food.Food;
-import main.game.maze.interactable.item.weapon.NoWeapon;
-import main.game.maze.interactable.item.weapon.Weapon;
+
+import java.awt.*;
+import java.util.List;
 
 public class PlayerController {
 	private Player player;
@@ -60,7 +57,6 @@ public class PlayerController {
 		if (!player.getGroupGateStone().exists()){
 			player.getGroupGateStone().dropGateStone();
 		}
-		player.getStats().resetHealth();
 		player.setStartingPosition();
 	}
 	
@@ -68,7 +64,6 @@ public class PlayerController {
 		MainController.addGameAction(new GameAction() {
 			final long startTeleportTime = System.currentTimeMillis();
 			final Position startTeleportPosition= new Position(player.getPosition());
-			final long startLastBeingAttackedTime = player.getLastBeingAttackedTime();
 			
 			@Override
 			public void doAction() {
@@ -81,11 +76,6 @@ public class PlayerController {
 					MainController.disposeAction(this);
 					return;
 				}
-				if (startLastBeingAttackedTime != player.getLastBeingAttackedTime()){
-					MainController.disposeAction(this);
-					return;
-				}
-				
 			}
 		});
 	}
@@ -119,38 +109,24 @@ public class PlayerController {
 	}
 
 	void drop(Item item) {
-		if (!player.hasEquipped(item)){
-			if (player.getItems().contains(item)){
-				player.getItems().remove(item);
-				item.setPosition(player.getPosition());
-				player.getPosition().getRoom().addDroppedItem(item);
-			}
-		} else {
-			System.out.println("PlayerController.drop(): cant drop, equipped item");
+		if (player.getItems().contains(item)){
+			player.getItems().remove(item);
+			item.setPosition(player.getPosition());
+			player.getPosition().getRoom().addDroppedItem(item);
 		}
 	}
 
 	void equip(Item item) {
-		if (item instanceof Weapon){
-			System.out.println("PlayerController.equip(): " + item.getName());
-			player.setWeapon((Weapon) item);
-		} else {
-			throw new IllegalArgumentException("cant equip item " + item.getName());
-		}
+		//TODO equip what?
 	}
 
 	void unequip(Item item) {
-		if (item instanceof Weapon){
-			if (player.getWeapon() == item){
-				System.out.println("PlayerController.unequip(): " + item.getName());
-				player.setWeapon(new NoWeapon());
-			}
-		}
+		//TODO unequip what?
 	}
 
 	void eat(Food food) {
 		if (player.ownsItem(food)){
-			player.getStats().heal(food.getHealAmount());
+			//TODO why eat?
 			player.getItems().remove(food);
 		}
 	}

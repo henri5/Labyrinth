@@ -15,10 +15,10 @@ public final class Key extends NonInventoryItem {
 	private static final int SIZE_HEIGHT = 20;
 	private static final String DESCRIPTION_SHORT = "";
 	private final static Size SIZE = new Size(SIZE_WIDTH,SIZE_HEIGHT);
-	public static enum Color{
+	public enum Color{
 		PURPLE, YELLOW, GOLD, BLUE, SILVER, GREEN, CRIMSON, ORANGE;
 	}
-	public static enum Shape{
+	public enum Shape{
 		TRIANGLE, PENTAGON, CRESCENT, SHIELD, RECTANGLE, DIAMOND, WEDGE, CORNER;
 	}
 	public final static List<Key> KEYS;

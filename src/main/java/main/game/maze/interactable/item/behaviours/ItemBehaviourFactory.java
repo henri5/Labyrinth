@@ -10,9 +10,7 @@ public final class ItemBehaviourFactory {
 	public static RightClickBehaviour getRightClickBehaviour(ItemType itemType){
 		switch(itemType){
 		case EDIBLE: return ConsumableFood.getInstance();
-		case WEAPON: return EquippableItem.getInstance();
 		case COINS: return UsableItem.getInstance();
-		case ARMOUR: return EquippableItem.getInstance();
 		default:
 			throw new IllegalArgumentException("undefined item type: " + itemType);
 		}		

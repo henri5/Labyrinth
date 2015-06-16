@@ -49,17 +49,10 @@ public class PlayerPanelInventory implements PlayerPanelInterface {
 	}
 
 	private void drawInventorySlots(Graphics g) {
-		Player player = session.getMaze().getPlayer();
 		for (int i = 0; i < INVENTORY_SLOTS_HORIZONTAL; i++){
 			for (int j = 0; j < INVENTORY_SLOTS_VERTICAL; j++){
 				Point imageCorner = getItemCorner(i,j);
 				g.setColor(COLOR_INVENTORY_SLOT_STROKE);
-				int inventorySlot = i+j*INVENTORY_SLOTS_HORIZONTAL;
-				if (player.getItems().size() > inventorySlot){
-					if (player.hasEquipped(player.getItems().get(inventorySlot))){
-						g.setColor(COLOR_INVENTORY_SLOT_CONTENT_EQUIPPED);
-					}
-				}
 				g.fillOval(imageCorner.x, imageCorner.y, imageSize, imageSize);
 				g.setColor(COLOR_BACKGROUND);
 				g.fillOval(imageCorner.x+4, imageCorner.y+4, imageSize-8, imageSize-8);

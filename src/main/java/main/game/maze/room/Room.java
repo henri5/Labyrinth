@@ -1,21 +1,20 @@
 package main.game.maze.room;
 
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
-
 import main.game.Config;
 import main.game.maze.Direction;
 import main.game.maze.Maze;
 import main.game.maze.door.Door;
 import main.game.maze.door.KeyDoor;
 import main.game.maze.door.SimpleDoor;
-import main.game.maze.interactable.creature.monster.Monster;
 import main.game.maze.interactable.item.Item;
 import main.game.maze.interactable.item.Key;
 import main.game.maze.interactable.object.RoomObject;
 import main.game.util.Size;
 import main.game.util.Util;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Room implements Comparable<Room>{
 	private static int ROOM_WIDTH = Config.SIZE_ROOM_WIDTH;
@@ -31,7 +30,6 @@ public abstract class Room implements Comparable<Room>{
 	private Direction directionOfPreviousRoom;
 	private Key key;
 	private boolean isLocked = true;
-	private List<Monster> monsters = new ArrayList<Monster>();
 	private Maze maze;
 	private List<Item> droppedItems = new ArrayList<Item>();
 	private List<RoomObject> roomObjects = new ArrayList<RoomObject>();
@@ -178,20 +176,12 @@ public abstract class Room implements Comparable<Room>{
 		return directionOfPreviousRoom;
 	}
 
-	public void addMonster(Monster monster) {
-		monsters.add(monster);
-	}
-
-	public List<Monster> getMonsters() {
-		return monsters;
-	}
-
 	@Override
 	public String toString() {
 		return "Room [north=" + hasDoorAtDirection(Direction.NORTH) + ", east="  + hasDoorAtDirection(Direction.EAST) + 
 				", south="  + hasDoorAtDirection(Direction.SOUTH) + ", west="  + hasDoorAtDirection(Direction.WEST) + 
 				", coordinates=[" + coordinates.x + "," + coordinates.y + "], key=" + key + ", isLocked=" + isLocked +
-				", monsterCount=" + monsters.size() + ", droppedItemCount=" + droppedItems.size() + "]";
+				", droppedItemCount=" + droppedItems.size() + "]";
 	}
 
 	public Maze getMaze() {

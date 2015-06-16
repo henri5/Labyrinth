@@ -14,10 +14,7 @@ public class PlayerGameAction implements GameAction {
 
 	@Override
 	public void doAction() {
-		if (session.getMaze().getPlayer().isDead()){
-			System.out.println("Am dead");
-			session.getMaze().getPlayer().respawn();
-		}
+
 	}
 
 }

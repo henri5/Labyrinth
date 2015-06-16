@@ -5,7 +5,6 @@ import main.game.maze.interactable.Option;
 import main.game.maze.interactable.creature.player.Player;
 import main.game.maze.interactable.item.food.Cake;
 import main.game.maze.interactable.item.food.Fish;
-import main.game.maze.interactable.item.weapon.Sword;
 import main.game.maze.mechanics.shop.Stock;
 import main.game.maze.mechanics.shop.StockItem;
 import main.game.ui.gameinterface.ShopInterface;
@@ -21,8 +20,7 @@ public class Merchant extends RoomObject {
 	private static final Stock STOCK;
 	static {
 		STOCK = new Stock.Builder().addItems(new StockItem(new Cake(), 1000), 
-					new StockItem(new Fish(), 500), 
-					new StockItem(new Sword(), 2000)).build();
+					new StockItem(new Fish(), 500)).build();
 	}
 	
 	public Merchant() {
