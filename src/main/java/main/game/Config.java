@@ -73,8 +73,8 @@ public final class Config {
 	
 	public static final int DELAY_TELEPORT_TO_BASE = 4000;
 	public static final int MAX_INTERACTION_DISTANCE = 5;
+
+	public static final int PLAYER_MOVEMENT_SPEED = 5;
 		
-	private Config(){
-		throw new IllegalAccessError("Config must not be initiated");
-	};
+	private Config(){};
 }

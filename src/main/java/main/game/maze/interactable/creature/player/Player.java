@@ -87,7 +87,7 @@ public class Player extends Creature{
 
 	//TODO set movement speed
 	public int getMovementSpeed() {
-		return 5;
+		return Config.PLAYER_MOVEMENT_SPEED;
 	}
 
 	public void createStartingPosition(Room startingRoom) {

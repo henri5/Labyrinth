@@ -12,8 +12,7 @@ import main.game.GameAction;
 public class GameClock {
 	private List<GameAction> gameActions = new ArrayList<GameAction>();
 	private List<GameAction> toBeRemoved = new ArrayList<GameAction>();
-	public GameClock(){
-	}
+	public GameClock(){}
 	
 	public void addGameAction(GameAction gameAction) {
 		synchronized(gameActions){
@@ -26,9 +25,6 @@ public class GameClock {
 		executor.scheduleAtFixedRate(new Runnable() {			
 			@Override
 			public void run() {
-//				if (!jframe.isFocused()){
-//					return;
-//				}
 				long start = System.currentTimeMillis();
 				synchronized (gameActions) {
 					for (GameAction gameAction: gameActions){
@@ -55,11 +51,5 @@ public class GameClock {
 		synchronized(toBeRemoved){
 			toBeRemoved.add(gameAction);
 		}		
-	}
-
-	public void reset() {
-		synchronized (gameActions){
-			gameActions.clear();
-		}
 	}
 }

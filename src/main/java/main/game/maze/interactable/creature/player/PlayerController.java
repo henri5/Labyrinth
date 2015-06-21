@@ -67,11 +67,13 @@ public class PlayerController {
 			
 			@Override
 			public void doAction() {
+        //has enought time passed for teleport to happen?
 				if (startTeleportTime < System.currentTimeMillis() - Config.DELAY_TELEPORT_TO_BASE){
 					player.setStartingPosition();
 					MainController.disposeAction(this);
 					return;
 				}
+        //have me moved since we began to cast the teleport?
 				if (!startTeleportPosition.equals(player.getPosition())){
 					MainController.disposeAction(this);
 					return;
@@ -86,7 +88,8 @@ public class PlayerController {
 				player.getItems().add(item);
 				return true;
 			}
-		} else if (item instanceof Stackable) {
+		}
+    else if (item instanceof Stackable) {
 			if (!player.ownsItem(item)){
 				List<Item> playerItems = player.getItems();
 				for (Item playerItem: playerItems){
@@ -102,7 +105,8 @@ public class PlayerController {
 					return true;
 				}			
 			}
-		} else {
+		}
+    else {
 			throw new IllegalStateException("player cant pick this up");
 		}
 		return false;
