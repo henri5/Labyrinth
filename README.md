@@ -3,12 +3,6 @@
 
 Simple 2D game where adventurer has to solve a maze
 
-###Motivation
-
-I wanted to work on something that would be interesting for me and give me experience in Java. I started developing the game for Android (and still do) but considered it easier first to figure out possible problems via developing it for PC and later port to Android. I first even tried Unity because its ability to work on all platform with nearly no extra work, but left it at that as the learning curve initially felt too steep.
-
-Idealistically, game would be multiplayer game with large amount of different monsters located in variety of puzzling rooms in disorienting maze. While initially for the player the goal would be to just to solve the maze, for more experienced players the goal would be to complete the labyrinth as fast as possible. For that, generating identical mazes should be implemented as then players can compete against each other.
-
 ###Progress
 
 ####Currently working:
